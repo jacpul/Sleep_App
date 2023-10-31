@@ -16,8 +16,17 @@ class MyApp extends StatelessWidget {
         builder: (context) => Scaffold(
           appBar: AppBar(
             title: Text("Sweet Dreams"),
+            backgroundColor: Colors.deepOrange,
           ),
-          body: Center(
+          body: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(32),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/sun.jpg'),
+                fit: BoxFit.cover,
+            ),
+          ),
             child: Column(
               children: <Widget>[
                 Padding(
@@ -43,6 +52,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 
 class SplashScreen extends StatefulWidget {
   @override
