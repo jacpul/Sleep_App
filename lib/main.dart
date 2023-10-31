@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       home: Builder(
         builder: (context) => Scaffold(
           appBar: AppBar(
-            title: Text("Sweet Dreams"),
+            title: Text("Omega Dreams"),
           ),
           body: Center(
             child: Column(
@@ -24,14 +24,43 @@ class MyApp extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: Text("Sweet Dreams!",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 3,)
                   ,),
+
+                // Button to bring you to the calculate page
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       primary: Colors.blueAccent
                   ),
-                  child: Text('Begin'),
+                  child: Text('Calculate'),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                       return SplashScreen();
+                    }));
+                  },
+                ),
+
+                // Button to bring you to your calendar page
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.blueAccent
+                  ),
+                  child: Text('Your Calendar'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      //return SplashScreen();
+                      return new CalendarScreen();
+                    }));
+                  },
+                ),
+
+                // Button to bring you to your notifications page
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.blueAccent
+                  ),
+                  child: Text('Your Notifications'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      return NotificationScreen();
                     }));
                   },
                 )
@@ -55,3 +84,35 @@ class _SplashScreen extends State<SplashScreen> {
     return new HomePage(new BasicPresenter(), title: 'Sweet Dreams', key: Key("UNITS"),);
   }
 }
+
+class CalendarScreen extends StatefulWidget {
+  @override
+  _CalendarScreen createState() => _CalendarScreen();
+}
+
+class _CalendarScreen extends State<CalendarScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Calendar')),
+          backgroundColor: Colors.red,
+    );
+  }
+}
+
+class NotificationScreen extends StatefulWidget {
+  @override
+  _NotificationScreen createState() => _NotificationScreen();
+}
+
+class _NotificationScreen extends State<NotificationScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Notifications')),
+      backgroundColor: Colors.red,
+    );
+  }
+}
+
+

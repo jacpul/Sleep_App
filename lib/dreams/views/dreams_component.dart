@@ -365,5 +365,4 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     FocusScope.of(context).requestFocus(nextFocus);
   }
 
-
 }
