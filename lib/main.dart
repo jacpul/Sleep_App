@@ -40,6 +40,8 @@ class MyApp extends StatelessWidget {
                                                                       textScaleFactor: 3,)
                   ,),
 
+
+
                 // Button to bring you to the calculate page
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -58,9 +60,14 @@ class MyApp extends StatelessWidget {
                   },
                 ),
 
+
+
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 ),
+
+
+
 
                 // Button to bring you to your calendar page
                 ElevatedButton(
@@ -80,9 +87,15 @@ class MyApp extends StatelessWidget {
                   },
                 ),
 
+
+
+
                 Padding(
                   padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                 ),
+
+
+
 
                 // Button to bring you to your notifications page
                 ElevatedButton(
