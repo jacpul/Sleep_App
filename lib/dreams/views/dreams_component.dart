@@ -19,19 +19,26 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   var _sleepMinuteController = TextEditingController();
   var _hourController = TextEditingController();
   var _minuteController = TextEditingController();
+  var monthController = TextEditingController();
+  var dayController = TextEditingController();
+  var yearController = TextEditingController();
+  var notesController = TextEditingController();
   String _hour = "0.0";
   String _minute = "0.0";
   String _sleepMinute = "0.0";
   String _sleepHour = "0.0";
+  String month = "0.0";
+  String day = "0.0";
+  String year = "0.0";
+  String notes = "";
   var _resultString = '';
   var _timeString = '';
   var _message = '';
   var _value = 0;
-  var _valueTime = 0;
-  final FocusNode _hourFocus = FocusNode();
-  final FocusNode _sleepHourFocus = FocusNode();
-  final FocusNode _sleepMinuteFocus = FocusNode();
-  final FocusNode _minuteFocus = FocusNode();
+  var _valueSleepTime = 0;
+  var _valueWakeTime = 0;
+  double currentSliderValue = 0;
+  final String yearNow = DateTime.now().year.toString();
 
   var _formKey = GlobalKey<FormState>();
 
@@ -108,59 +115,58 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   @override
   void updateTimeUnit(int value){
     setState(() {
-      _valueTime = value;
+      _valueSleepTime = value;
     });
   }
 
   @override
   Widget build(BuildContext context) {
 
-    var _unitView = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Radio<int>(
-          activeColor: Colors.blueAccent.shade700,
-          value: 0, groupValue: _value, onChanged: handleRadioValueChanged,
-        ),
-        Text(
-          'Wake up at',
-          style: TextStyle(color: Colors.blueAccent.shade700),
-        ),
-        Radio<int>(
-          activeColor: Colors.blueAccent.shade700,
-          value: 1, groupValue: _value, onChanged: handleRadioValueChanged,
-        ),
-        Text(
-          'Go to bed at',
-          style: TextStyle(color: Colors.blueAccent.shade700),
-        ),
-      ],
-    );
-
     var _unitViewTime = Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Radio<int>(
-          activeColor: Colors.blueAccent.shade700,
-          value: 0, groupValue: _valueTime, onChanged: handleRadioValueChangedTime,
+          activeColor: Colors.blueAccent.shade400,
+          value: 0, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedTime,
         ),
         Text(
           'AM',
-          style: TextStyle(color: Colors.blueAccent.shade700),
+          style: TextStyle(color: Colors.blueAccent.shade400),
         ),
         Radio<int>(
-          activeColor: Colors.blueAccent.shade700,
-          value: 1, groupValue: _valueTime, onChanged: handleRadioValueChangedTime,
+          activeColor: Colors.blueAccent.shade400,
+          value: 1, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedTime,
         ),
         Text(
           'PM',
-          style: TextStyle(color: Colors.blueAccent.shade700),
+          style: TextStyle(color: Colors.blueAccent.shade400),
+        ),
+      ],
+    );
+    var _unitViewWakeTime = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Radio<int>(
+          activeColor: Colors.blueAccent.shade400,
+          value: 0, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedTime,
+        ),
+        Text(
+          'AM',
+          style: TextStyle(color: Colors.blueAccent.shade400),
+        ),
+        Radio<int>(
+          activeColor: Colors.blueAccent.shade400,
+          value: 1, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedTime,
+        ),
+        Text(
+          'PM',
+          style: TextStyle(color: Colors.blueAccent.shade400),
         ),
       ],
     );
 
     var _mainPartView = Container(
-      color: Colors.grey.shade300,
+      color: Colors.yellowAccent.shade100,
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(8.0),
       child: SingleChildScrollView(
@@ -170,23 +176,22 @@ class _HomePageState extends State<HomePage> implements UNITSView {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
-                child: Text("I want to:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
+                child: Text("I went to bed at:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
                 ,),
-              _unitView,
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: hourFormField(context),
+                    child: wakeHourFormField(context),
                   ),
                   Expanded(
-                    child: minFormField(context),
+                    child: wakeMinFormField(context),
                   )
                 ],
               ),
               _unitViewTime,
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
-                child: Text("I want to sleep for:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
+                child: Text("I woke up at:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
                 ,),
               Row(
                 children: <Widget>[
@@ -197,6 +202,46 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                     child: sleepMinuteFormField(),
                   ),
                 ],
+              ),
+              _unitViewWakeTime,
+              Padding(
+                  padding: EdgeInsets.only(top: 10.0),
+                  child: Text("Enter Date:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: monthFormField(context)
+                  ),
+                  Expanded(
+                      child: dayFormField(context)
+                  ),
+                  Expanded(
+                      child: yearFormField(context)
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text("Select Sleep Quality:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
+              ),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                      child: sleepQuality(context)
+                  ),
+                ]
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text("Enter notes:",style: const TextStyle(fontWeight: FontWeight.bold), textScaleFactor: 1.5,)
+              ),
+              Row(
+                  children: <Widget>[
+                    Expanded(
+                        child: notesFormField(context),
+                    ),
+                  ]
               ),
               Padding(
                 padding: EdgeInsets.only(top: 10.0),
@@ -214,7 +259,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
           child: Text(
             '$_message $_resultString $_timeString',
             style: TextStyle(
-                color: Colors.blueAccent.shade700,
+                color: Colors.deepOrange,
                 fontSize: 24.0,
                 fontWeight: FontWeight.w700,
                 fontStyle: FontStyle.italic
@@ -226,11 +271,11 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sleep Calculator'),
+          title: Text('Sleep Log'),
           centerTitle: true,
-          backgroundColor: Colors.blueAccent.shade700,
+          backgroundColor: Colors.deepOrangeAccent,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.yellow.shade800,
         body: ListView(
           children: <Widget>[
             Padding(padding: EdgeInsets.all(5.0)),
@@ -246,11 +291,11 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     return ElevatedButton(
       onPressed: _calculator,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.blueAccent.shade700,
+        backgroundColor: Colors.deepOrangeAccent,
         textStyle: TextStyle(color: Colors.white70)
       ),
       child: Text(
-        'Calculate',
+        'Enter Into Log',
         style: TextStyle(fontSize: 16.9),
       ),
     );
@@ -261,10 +306,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       controller: _sleepMinuteController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
-      focusNode: _sleepMinuteFocus,
-      onFieldSubmitted: (value){
-        _sleepMinuteFocus.unfocus();
-      },
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 0 || double.parse(value) > 59)) {
           return ('Minute between 0 - 59');
@@ -276,7 +317,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       decoration: InputDecoration(
           hintText: 'e.g.) 40',
           labelText: 'Minute',
-          icon: Icon(Icons.assessment),
+          icon: Icon(Icons.access_time_rounded),
           fillColor: Colors.white
       ),
     );
@@ -287,10 +328,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       controller: _sleepHourController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
-      focusNode: _sleepHourFocus,
-      onFieldSubmitted: (term) {
-        _fieldFocusChange(context, _sleepHourFocus, _sleepMinuteFocus);
-      },
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
           return ('Hour between 1 - 12');
@@ -302,21 +339,17 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       decoration: InputDecoration(
         hintText: "e.g.) 7",
         labelText: "Hour",
-        icon: Icon(Icons.assessment),
+        icon: Icon(Icons.access_time_rounded),
         fillColor: Colors.white,
       ),
     );
   }
 
-  TextFormField hourFormField(BuildContext context) {
+  TextFormField wakeHourFormField(BuildContext context) {
     return TextFormField(
       controller: _hourController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
-      focusNode: _hourFocus,
-      onFieldSubmitted: (term){
-        _fieldFocusChange(context, _hourFocus, _minuteFocus);
-      },
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
           return ('Hour between 1 - 12');
@@ -328,21 +361,17 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       decoration: InputDecoration(
         hintText: 'e.g.) 6',
         labelText: 'Hour',
-        icon: Icon(Icons.assessment),
+        icon: Icon(Icons.access_time_rounded),
         fillColor: Colors.white,
       ),
     );
   }
 
-  TextFormField minFormField(BuildContext context) {
+  TextFormField wakeMinFormField(BuildContext context) {
     return TextFormField(
       controller: _minuteController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
-      focusNode: _minuteFocus,
-      onFieldSubmitted: (term){
-        _fieldFocusChange(context, _minuteFocus, _sleepHourFocus);
-      },
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 0 || double.parse(value) > 59)) {
           return ('Minute between 0 - 59');
@@ -354,16 +383,103 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       decoration: InputDecoration(
         hintText: 'e.g.) 30',
         labelText: 'Minute',
-        icon: Icon(Icons.assessment),
+        icon: Icon(Icons.access_time_rounded),
         fillColor: Colors.white,
       ),
     );
   }
 
-  _fieldFocusChange(BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
-    currentFocus.unfocus();
-    FocusScope.of(context).requestFocus(nextFocus);
+  TextFormField monthFormField(BuildContext context) {
+    return TextFormField(
+      controller: monthController,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      validator: (value) {
+        if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
+          return ('Month between 1 - 12');
+        }
+      },
+      onSaved: (value){
+        month = value!;
+      },
+      decoration: InputDecoration(
+        hintText: 'e.g.) 11',
+        labelText: 'Month',
+        icon: Icon(Icons.date_range),
+      ),
+    );
   }
 
+  TextFormField dayFormField(BuildContext context) {
+    return TextFormField(
+      controller: dayController,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      validator: (value) {
+        if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 31)) {
+          return ('Day between 1 - 31');
+        }
+      },
+      onSaved: (value){
+        day = value!;
+      },
+      decoration: InputDecoration(
+        hintText: 'e.g.) 27',
+        labelText: 'Day',
+        icon: Icon(Icons.date_range),
+      ),
+    );
+  }
 
+  TextFormField yearFormField(BuildContext context) {
+    return TextFormField(
+      controller: yearController,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      validator: (value) {
+        if (value != yearNow) {
+          return ("year must be today's year");
+        }
+      },
+      onSaved: (value){
+        year = value!;
+      },
+      decoration: InputDecoration(
+        hintText: '2023',
+        labelText: 'Year',
+        icon: Icon(Icons.date_range),
+      ),
+    );
+  }
+
+  Slider sleepQuality(BuildContext context) {
+    return Slider(
+        value: currentSliderValue,
+        max: 10,
+        divisions: 10,
+        label: currentSliderValue.round().toString(),
+        onChanged: (value) {
+          setState(() {
+            currentSliderValue = value;
+          });
+        }
+    );
+  }
+
+  TextFormField notesFormField(BuildContext context) {
+    return TextFormField(
+      controller: notesController,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.next,
+      maxLength: 200,
+      onSaved: (value){
+        notes = value!;
+      },
+      decoration: InputDecoration(
+        hintText: 'Enter Notes Here',
+        labelText: 'Sleep Notes',
+        icon: Icon(Icons.book_outlined),
+      ),
+    );
+  }
 }

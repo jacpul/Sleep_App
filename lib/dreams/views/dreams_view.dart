@@ -10,3 +10,6 @@ class UNITSView {
   void updateUnit(int value){}
   void updateTimeUnit(int value){}
 }
+class LOGView {
+
+}
