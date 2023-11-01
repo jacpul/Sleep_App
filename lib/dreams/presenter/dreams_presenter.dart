@@ -4,9 +4,11 @@ import '../utils/dreams_constant.dart';
 import '../utils/dreams_utils.dart';
 
 class UNITSPresenter {
+  /*
   void onCalculateClicked(String hourString, String minuteString, String sleepMinuteString, String sleepHourString){
 
   }
+  */
   void onOptionChanged(int value, {required String sleepMinuteString, required String sleepHourString}) {
 
   }
@@ -15,10 +17,14 @@ class UNITSPresenter {
   }
   set unitsView(UNITSView value){}
 
-  void onHourSubmitted(String hour){}
-  void onMinuteSubmitted(String minute){}
   void onSleepHourSubmitted(String sleepHour){}
   void onSleepMinuteSubmitted(String sleepMinute){}
+  void onWakeMinuteSubmitted(String wakeMinute){}
+  void onWakeHourSubmitted(String wakeHour){}
+  void onDateSubmitted(int month, int day, int year){}
+  void onSleepQualitySubmitted(int sleepQuality){}
+  void onNotesSubmitted(String notes){}
+
 }
 
 
@@ -44,7 +50,7 @@ class BasicPresenter implements UNITSPresenter{
     _view.updateUnit(_viewModel.value);
     _view.updateTimeUnit(_viewModel.valueTime);
   }
-
+  /*
   @override
   void onCalculateClicked(String hourString, String minuteString, String sleepMinuteString, String sleepHourString) {
     var hour = 0.0;
@@ -100,7 +106,7 @@ class BasicPresenter implements UNITSPresenter{
     _view.updateTimeString(_viewModel.timeType);
     _view.updateResultValue(_viewModel.resultInString);
   }
-
+  */
   @override
   void onOptionChanged(int value, {required String sleepMinuteString, required String sleepHourString})  {
 
@@ -139,39 +145,47 @@ class BasicPresenter implements UNITSPresenter{
     }
   }
 
-  @override
-  void onHourSubmitted(String hour) {
-    try{
-      _viewModel.hour = double.parse(hour);
-    }catch(e){
-
-    }
-  }
-
-  @override
-  void onMinuteSubmitted(String minute) {
-    try{
-      _viewModel.minute = double.parse(minute);
-    }catch(e){
-
-    }
-  }
 
   @override
   void onSleepHourSubmitted(String sleepHour) {
-    try {
       _viewModel.sleepHour = double.parse(sleepHour);
-    } catch (e){
-
-    }
   }
 
   @override
   void onSleepMinuteSubmitted(String sleepMinute) {
-    try {
       _viewModel.sleepMinute = double.parse(sleepMinute);
-    } catch (e){
-
-    }
   }
+
+  @override
+  void onWakeHourSubmitted(String wakeHour) {
+    // TODO: implement onWakeHourSubmitted
+    _viewModel.wakeHour = double.parse(wakeHour);
+  }
+
+  @override
+  void onWakeMinuteSubmitted(String wakeMinute) {
+    // TODO: implement onWakeMinuteSubmitted
+    _viewModel.wakeMinute = double.parse(wakeMinute);
+  }
+
+  @override
+  void onDateSubmitted(int month, int day, int year) {
+    // TODO: implement onDateSubmitted
+    _viewModel.month = month;
+    _viewModel.day = day;
+    _viewModel.year = year;
+  }
+
+  @override
+  void onSleepQualitySubmitted(int sleepQuality) {
+    // TODO: implement onSleepQualitySubmitted
+    _viewModel.sleepQuality = sleepQuality;
+  }
+
+  @override
+  void onNotesSubmitted(String notes) {
+    // TODO: implement onNotesSubmitted
+    _viewModel.sleepNotes = notes;
+  }
+
 }

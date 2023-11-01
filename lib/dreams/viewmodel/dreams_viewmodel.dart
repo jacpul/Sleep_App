@@ -8,10 +8,16 @@ class UNITSViewModel {
   String _timeType = "";
   String _message = "";
 
-  double hour = 0.0;
-  double minute = 0.0;
   double sleepHour = 0.0;
   double sleepMinute = 0.0;
+  double wakeHour = 0.0;
+  double wakeMinute = 0.0;
+  int month = 0;
+  int day = 0;
+  int year = 0;
+  int sleepQuality = -1;
+  String sleepNotes = "";
+
 
   double get units => _units;
   set units(double outResult){

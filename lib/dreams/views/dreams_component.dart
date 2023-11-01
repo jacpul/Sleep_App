@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   void _calculator() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      this.widget.presenter.onCalculateClicked(_hour, _minute, _sleepMinute, _sleepHour);
+      //this.widget.presenter.onCalculateClicked(_hour, _minute, _sleepMinute, _sleepHour);
     }
   }
 
