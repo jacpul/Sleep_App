@@ -12,46 +12,68 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Builder(
-            builder: (context) => Scaffold(
+      home: Builder(
+        builder: (context) =>
+            Scaffold(
               appBar: AppBar(
                 title: Text("Login"),
                 backgroundColor: Colors.deepOrange,
               ),
               body: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(32),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/sun.jpg'),
-                      fit: BoxFit.cover,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(32),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/sun.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: Text(
+                        "Login",
+                        style: const TextStyle(fontWeight: FontWeight.bold,
+                            color: Colors.blueAccent),
+                        textScaleFactor: 3,
+                      ),
                     ),
 
-                  ),
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                        child: Text("Login",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 3,)
-                        ,),
-
-                      // Button to bring you to the calculate page
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.blueAccent
-                        ),
-                        child: Text('Login'),
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                            return Home();
-                          }));
-                        },
+                    // Username Textfield
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: InputDecoration(labelText: 'Username'),
                       ),
-                    ],
-                  )
+                    ),
+
+                    // Password Textfield
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        decoration: InputDecoration(labelText: 'Password'),
+                        obscureText: true, // Hide the password input
+                      ),
+                    ),
+
+                    // Button to bring you to the main page
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.blueAccent),
+                      child: Text('Login'),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                              return Home();
+                            }));
+                      },
+                    ),
+                  ],
+                ),
               ),
-            )
-        )
+            ),
+      ),
     );
   }
 }
