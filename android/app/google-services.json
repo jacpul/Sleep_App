@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "497916766002",
+    "project_id": "codingomega-a0d98",
+    "storage_bucket": "codingomega-a0d98.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497916766002:android:b06f1a063ef1e4c187592b",
+        "android_client_info": {
+          "package_name": "com.example.Coding_Omega"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwaH-_XqOw3FBpuwdfRnDeaQMiEh_rqjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
