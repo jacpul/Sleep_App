@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
+import 'calendar_screen.dart';
+import 'notification_screen.dart';
+import 'reminder_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +76,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-       )
+      )
     );
   }
 }
@@ -90,6 +93,7 @@ class _SplashScreen extends State<SplashScreen> {
     return new HomePage(new BasicPresenter(), title: 'Sweet Dreams', key: Key("UNITS"),);
   }
 }
+
 
 // Call a new screen that brings user to the Calendar screen
 class CalendarScreen extends StatefulWidget {
@@ -133,6 +137,7 @@ class _NotificationScreen extends State<NotificationScreen> {
     );
   }
 }
+
 
 class Home extends StatefulWidget {
   @override
@@ -202,6 +207,18 @@ class _Home extends State<Home>{
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return NotificationScreen();
+                          }));
+                        },
+                      ),
+                      // Button to bring you to your reminders page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent
+                        ),
+                        child: Text('Reminders'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return ReminderScreen();
                           }));
                         },
                       )
