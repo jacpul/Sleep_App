@@ -24,7 +24,6 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core: ^1.17.1
-  firebase_auth: ^3.11.2
   firebase_core_platform_interface: 4.5.1
   shared_preferences: ^2.0.6
 
