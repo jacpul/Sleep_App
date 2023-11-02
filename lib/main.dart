@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
+import 'calendar_screen.dart';
+import 'notification_screen.dart';
+import 'reminder_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,7 +76,7 @@ class MyApp extends StatelessWidget {
                 ),
               ),
             ),
-      ),
+          ),
     );
   }
 }
@@ -88,36 +91,6 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return new HomePage(new BasicPresenter(), title: 'Sweet Dreams', key: Key("UNITS"),);
-  }
-}
-
-class CalendarScreen extends StatefulWidget {
-  @override
-  _CalendarScreen createState() => _CalendarScreen();
-}
-
-class _CalendarScreen extends State<CalendarScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Calendar')),
-          backgroundColor: Colors.red,
-    );
-  }
-}
-
-class NotificationScreen extends StatefulWidget {
-  @override
-  _NotificationScreen createState() => _NotificationScreen();
-}
-
-class _NotificationScreen extends State<NotificationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Notifications')),
-      backgroundColor: Colors.red,
-    );
   }
 }
 
@@ -191,6 +164,18 @@ class _Home extends State<Home>{
                             return NotificationScreen();
                           }));
                         },
+                      ),
+                      // Button to bring you to your reminders page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent
+                        ),
+                        child: Text('Reminders'),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return ReminderScreen();
+                          }));
+                        },
                       )
                     ],
                   )
@@ -200,4 +185,5 @@ class _Home extends State<Home>{
     );
   }
 }
+
 
