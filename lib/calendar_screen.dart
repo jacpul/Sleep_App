@@ -17,7 +17,7 @@ class _CalendarScreen extends State<CalendarScreen> {
       appBar: AppBar(
         title: Text("Calendar"),
           backgroundColor: Colors.deepOrangeAccent,
-        actions: [
+        actions: [ //appbar functions
 
           //log button
           IconButton(

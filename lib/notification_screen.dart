@@ -17,7 +17,7 @@ class _NotificationScreen extends State<NotificationScreen> {
       appBar: AppBar(
           title: Text("Notifications"),
           backgroundColor: Colors.deepOrangeAccent,
-          actions: [
+          actions: [ //appbar functions
 
             //log button
             IconButton(

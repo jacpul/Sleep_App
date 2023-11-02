@@ -17,7 +17,7 @@ class _ReminderScreen extends State<ReminderScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
-          actions: [
+          actions: [ // appbar functions
 
           //log button
           IconButton(

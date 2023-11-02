@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
           title: Text('Sleep Log'),
           backgroundColor: Colors.deepOrangeAccent,
 
-            actions: [
+            actions: [ //appbar functions
 
               //log button
               IconButton(
