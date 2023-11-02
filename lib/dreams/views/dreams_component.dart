@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../calendar_screen.dart';
+import '../../main.dart';
+import '../../notification_screen.dart';
+import '../../reminder_screen.dart';
 import '../views/dreams_view.dart';
 import '../presenter/dreams_presenter.dart';
 
@@ -272,8 +276,56 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     return Scaffold(
         appBar: AppBar(
           title: Text('Sleep Log'),
-          centerTitle: true,
           backgroundColor: Colors.deepOrangeAccent,
+
+            actions: [
+
+              //log button
+              IconButton(
+                icon: const Icon(Icons.mode_edit_outlined),
+                tooltip: 'Log',
+                onPressed: () {
+                  //returns nothing, already in log
+                },
+              ),
+
+              // Calendar Button
+              IconButton(
+                icon: const Icon(Icons.calendar_month),
+                tooltip: 'Calendar',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
+                  {
+                    return CalendarScreen();
+                  }));
+                },
+              ),
+
+              //Notifications Button
+              IconButton(
+                icon: const Icon(Icons.new_releases_outlined),
+                tooltip: 'Notifications',
+                onPressed: ()  {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
+                  {
+                    return NotificationScreen();
+                  }));
+                },
+              ),
+
+              //Calendar Button
+
+              //Reminder Button
+              IconButton(
+                icon: const Icon(Icons.add_alert_outlined),
+                tooltip: 'Reminders',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                    return ReminderScreen();
+                  }));
+                },
+              )
+            ]
         ),
         backgroundColor: Colors.yellow.shade800,
         body: ListView(

@@ -95,50 +95,6 @@ class _SplashScreen extends State<SplashScreen> {
 }
 
 
-// Call a new screen that brings user to the Calendar screen
-class CalendarScreen extends StatefulWidget {
-  @override
-  _CalendarScreen createState() => _CalendarScreen();
-}
-
-class _CalendarScreen extends State<CalendarScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Calendar', style: const TextStyle(color: Colors.blueAccent,
-          fontWeight: FontWeight.bold,
-          fontSize: 35)),
-      centerTitle: true,
-        backgroundColor: Colors.deepOrangeAccent
-      ),
-          backgroundColor: Colors.yellow.shade800,
-    );
-  }
-}
-
-
-// calls new screen that brings user to the notification screen
-class NotificationScreen extends StatefulWidget {
-  @override
-  _NotificationScreen createState() => _NotificationScreen();
-}
-
-class _NotificationScreen extends State<NotificationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Notifications', style: const TextStyle(color: Colors.blueAccent,
-          fontWeight: FontWeight.bold,
-          fontSize: 35)),
-      centerTitle: true,
-      backgroundColor: Colors.deepOrangeAccent
-      ),
-      backgroundColor: Colors.yellow.shade800,
-    );
-  }
-}
-
-
 class Home extends StatefulWidget {
   @override
   _Home createState() => _Home();
@@ -176,7 +132,10 @@ class _Home extends State<Home>{
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Calculate'),
+                        child: Text('Your Log', style: const TextStyle(fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.orange),
+                                                textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return SplashScreen();
@@ -184,12 +143,20 @@ class _Home extends State<Home>{
                         },
                       ),
 
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your calendar page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Your Calendar'),
+                        child: Text('Your Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
+                                                      fontSize: 18,
+                                                      color: Colors.orange),
+                                                      textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             //return SplashScreen();
@@ -198,24 +165,41 @@ class _Home extends State<Home>{
                         },
                       ),
 
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your notifications page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Your Notifications'),
+                        child: Text('Your Notifications',  style: const TextStyle(fontWeight: FontWeight.bold,
+                                                            fontSize: 18,
+                                                            color: Colors.orange),
+                                                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return NotificationScreen();
                           }));
                         },
                       ),
+
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your reminders page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Reminders'),
+                        child: Text('Reminders',  style: const TextStyle(fontWeight: FontWeight.bold,
+                                                  fontSize: 18,
+                                                  color: Colors.orange),
+                                                  textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return ReminderScreen();
