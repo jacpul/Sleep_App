@@ -4,15 +4,15 @@ import '../utils/dreams_constant.dart';
 import '../utils/dreams_utils.dart';
 
 class UNITSPresenter {
-  /*
+
   void onCalculateClicked(String hourString, String minuteString, String sleepMinuteString, String sleepHourString){
 
   }
-  */
-  void onOptionChanged(int value, {required String sleepMinuteString, required String sleepHourString}) {
+
+  void onWakeTimeOptionChanged(int value) {
 
   }
-  void onTimeOptionChanged(int value) {
+  void onSleepTimeOptionChanged(int value) {
 
   }
   set unitsView(UNITSView value){}
@@ -21,7 +21,7 @@ class UNITSPresenter {
   void onSleepMinuteSubmitted(String sleepMinute){}
   void onWakeMinuteSubmitted(String wakeMinute){}
   void onWakeHourSubmitted(String wakeHour){}
-  void onDateSubmitted(int month, int day, int year){}
+  void onDateSubmitted(String month, String day, String year){}
   void onSleepQualitySubmitted(int sleepQuality){}
   void onNotesSubmitted(String notes){}
 
@@ -38,60 +38,45 @@ class BasicPresenter implements UNITSPresenter{
   }
 
   void _loadUnit() async{
-    _viewModel.value = await loadValue();
-    _viewModel.valueTime = await loadValue();
-    _view.updateUnit(_viewModel.value);
-    _view.updateTimeUnit(_viewModel.valueTime);
+    _viewModel.wakeValue = await loadValue();
+    _viewModel.sleepValue = await loadValue();
+    _view.updateWakeTimeRadio(_viewModel.wakeValue);
+    _view.updateSleepTimeRadio(_viewModel.sleepValue);
   }
 
   @override
   set unitsView(UNITSView value) {
     _view = value;
-    _view.updateUnit(_viewModel.value);
-    _view.updateTimeUnit(_viewModel.valueTime);
+    _view.updateWakeTimeRadio(_viewModel.wakeValue);
+    _view.updateSleepTimeRadio(_viewModel.sleepValue);
   }
-  /*
+
   @override
-  void onCalculateClicked(String hourString, String minuteString, String sleepMinuteString, String sleepHourString) {
-    var hour = 0.0;
-    var minute = 0.0;
+  void onCalculateClicked(String wakeHourString, String wakeMinuteString, String sleepHourString, String sleepMinuteString) {
+    var wakeHour = 0.0;
+    var wakeMinute = 0.0;
     var sleepHour = 0.0;
     var sleepMinute = 0.0;
-    try {
-      hour = double.parse(hourString);
-    } catch (e){
 
-    }
-    try {
-      minute = double.parse(minuteString);
-    } catch (e){
+    wakeHour = double.parse(wakeHourString);
+    wakeMinute = double.parse(wakeMinuteString);
+    sleepHour = double.parse(sleepHourString);
+    sleepMinute = double.parse(sleepMinuteString);
 
-    }
-    try {
-      sleepHour = double.parse(sleepHourString);
-    } catch (e){
-
-    }
-    try {
-      sleepMinute = double.parse(sleepMinuteString);
-    } catch (e) {
-
-    }
-
-    List temp = new List.filled(3, null, growable: false);
+    /*List temp = new List.filled(3, null, growable: false);
     _viewModel.hour = hour;
     _viewModel.minute = minute;
     _viewModel.sleepHour = sleepHour;
-    _viewModel.sleepMinute = sleepMinute;
-    temp = calculator(hour,minute,sleepHour, sleepMinute, _viewModel.unitType, _viewModel.unitTypeTime);
+    _viewModel.sleepMinute = sleepMinute;*/
+    double temp = calculator(wakeHour, wakeMinute,sleepHour, sleepMinute, _viewModel.unitTypeWake, _viewModel.unitTypeSleep);
     //  temp returns a List of the time, AM or PM, and WAKE or BED.
     //  The time that is returned is in the format of a double ex) 12.30 is 12:30.
 
-    _viewModel.units = temp[0];
-    UnitType tempTime = temp[1];
-    UnitType tempMessage = temp[2];
+    _viewModel.message = temp.toString();
+    /*UnitType tempTime = temp[1];
+    UnitType tempMessage = temp[2];*/
 
-    if(tempTime == UnitType.AM) {
+    /*if(tempTime == UnitType.AM) {
       _viewModel.timeType = "AM";
     } else if (tempTime == UnitType.PM) {
       _viewModel.timeType = "PM";
@@ -101,47 +86,33 @@ class BasicPresenter implements UNITSPresenter{
       _viewModel.message = "You should wake up at";
     } else if (tempMessage == UnitType.WAKE) {
       _viewModel.message = "You should go to bed at";
-    }
+    }*/
     _view.updateMessage(_viewModel.message);
-    _view.updateTimeString(_viewModel.timeType);
-    _view.updateResultValue(_viewModel.resultInString);
+    /*_view.updateTimeString(_viewModel.timeType);
+    _view.updateResultValue(_viewModel.resultInString);*/
   }
-  */
+
   @override
-  void onOptionChanged(int value, {required String sleepMinuteString, required String sleepHourString})  {
+  void onWakeTimeOptionChanged(int value)  {
+      print("onOptionChanged");
+    if (value != _viewModel.wakeValue) {
+      _viewModel.wakeValue = value;
+      saveValue(_viewModel.wakeValue);
 
-    if (value != _viewModel.value) {
-      _viewModel.value = value;
-      saveValue(_viewModel.value);
-      var curOdom = 0.0;
-      var fuelUsed = 0.0;
-      if (!isEmptyString(sleepHourString)) {
-        try {
-          curOdom = double.parse(sleepHourString);
-        } catch (e) {
-        }
-      }
-      if (!isEmptyString(sleepMinuteString)) {
-        try {
-          fuelUsed = double.parse(sleepMinuteString);
-        } catch (e) {
-
-        }
-      }
-      _view.updateUnit(_viewModel.value);
-      _view.updateSleepHour(sleepHour: _viewModel.sleepHourInString);
-      _view.updateSleepMinute(sleepMinute: _viewModel.sleepMinuteInString);
+      _view.updateWakeTimeRadio(_viewModel.wakeValue);
     }
   }
 
   @override
-  void onTimeOptionChanged(int value)  {
+  void onSleepTimeOptionChanged(int value)  {
+    print("onTimeOptionChanged");
+    print(value);
+    if (value != _viewModel.sleepValue) {
+      print("in if");
+      _viewModel.sleepValue = value;
+      saveValue(_viewModel.sleepValue);
 
-    if (value != _viewModel.valueTime) {
-      _viewModel.valueTime = value;
-      saveValue(_viewModel.valueTime);
-
-      _view.updateTimeUnit(_viewModel.valueTime);
+      _view.updateSleepTimeRadio(_viewModel.sleepValue);
     }
   }
 
@@ -169,11 +140,11 @@ class BasicPresenter implements UNITSPresenter{
   }
 
   @override
-  void onDateSubmitted(int month, int day, int year) {
+  void onDateSubmitted(String month, String day, String year) {
     // TODO: implement onDateSubmitted
-    _viewModel.month = month;
-    _viewModel.day = day;
-    _viewModel.year = year;
+    _viewModel.month = int.parse(month);
+    _viewModel.day = int.parse(day);
+    _viewModel.year = int.parse(year);
   }
 
   @override
