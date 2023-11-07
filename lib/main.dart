@@ -15,68 +15,68 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Builder(
-        builder: (context) =>
-            Scaffold(
-              appBar: AppBar(
-                title: Text("Login"),
-                backgroundColor: Colors.deepOrange,
-              ),
-              body: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(32),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/sun.jpg'),
-                    fit: BoxFit.cover,
+        home: Builder(
+          builder: (context) =>
+              Scaffold(
+                appBar: AppBar(
+                  title: Text("Login"),
+                  backgroundColor: Colors.deepOrange,
+                ),
+                body: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/sun.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        child: Text(
+                          "Login",
+                          style: const TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent),
+                          textScaleFactor: 3,
+                        ),
+                      ),
+
+                      // Username Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Username'),
+                        ),
+                      ),
+
+                      // Password Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Password'),
+                          obscureText: true, // Hide the password input
+                        ),
+                      ),
+
+                      // Button to bring you to the main page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent),
+                        child: Text('Login'),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return Home();
+                              }));
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        "Login",
-                        style: const TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                        textScaleFactor: 3,
-                      ),
-                    ),
-
-                    // Username Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Username'),
-                      ),
-                    ),
-
-                    // Password Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Password'),
-                        obscureText: true, // Hide the password input
-                      ),
-                    ),
-
-                    // Button to bring you to the main page
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent),
-                      child: Text('Login'),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return Home();
-                            }));
-                      },
-                    ),
-                  ],
-                ),
               ),
-            ),
-      ),
+        )
     );
   }
 }
@@ -94,36 +94,6 @@ class _SplashScreen extends State<SplashScreen> {
   }
 }
 
-
-class CalendarScreen extends StatefulWidget {
-  @override
-  _CalendarScreen createState() => _CalendarScreen();
-}
-
-class _CalendarScreen extends State<CalendarScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Calendar')),
-      backgroundColor: Colors.red,
-    );
-  }
-}
-
-class NotificationScreen extends StatefulWidget {
-  @override
-  _NotificationScreen createState() => _NotificationScreen();
-}
-
-class _NotificationScreen extends State<NotificationScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Notifications')),
-      backgroundColor: Colors.red,
-    );
-  }
-}
 
 class Home extends StatefulWidget {
   @override
@@ -162,7 +132,10 @@ class _Home extends State<Home>{
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Calculate'),
+                        child: Text('Your Log', style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return SplashScreen();
@@ -170,12 +143,20 @@ class _Home extends State<Home>{
                         },
                       ),
 
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your calendar page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Your Calendar'),
+                        child: Text('Your Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             //return SplashScreen();
@@ -184,24 +165,41 @@ class _Home extends State<Home>{
                         },
                       ),
 
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your notifications page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Your Notifications'),
+                        child: Text('Your Notifications',  style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return NotificationScreen();
                           }));
                         },
                       ),
+
+                      //padding
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
                       // Button to bring you to your reminders page
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
                         ),
-                        child: Text('Reminders'),
+                        child: Text('Reminders',  style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return ReminderScreen();
@@ -216,5 +214,3 @@ class _Home extends State<Home>{
     );
   }
 }
-
-
