@@ -7,8 +7,8 @@ class UNITSView {
   void updateSleepMinute({required String sleepMinute}){}
   void updateSleepHour({required String sleepHour}){}
   void updateMinute({required String minute}){}
-  void updateUnit(int value){}
-  void updateTimeUnit(int value){}
+  void updateWakeTimeRadio(int value){}
+  void updateSleepTimeRadio(int value){}
 }
 class LOGView {
 
