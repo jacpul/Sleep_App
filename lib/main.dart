@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
-import 'SignUp_Screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
