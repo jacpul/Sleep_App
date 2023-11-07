@@ -21,14 +21,14 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   var _sleepHourController = TextEditingController();
   var _sleepMinuteController = TextEditingController();
-  var _hourController = TextEditingController();
-  var _minuteController = TextEditingController();
+  var _wakeHourController = TextEditingController();
+  var _wakeMinuteController = TextEditingController();
   var monthController = TextEditingController();
   var dayController = TextEditingController();
   var yearController = TextEditingController();
   var notesController = TextEditingController();
-  String _hour = "0.0";
-  String _minute = "0.0";
+  String _wakeHour = "0.0";
+  String _wakeMinute = "0.0";
   String _sleepMinute = "0.0";
   String _sleepHour = "0.0";
   String month = "0.0";
@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   var _valueSleepTime = 0;
   var _valueWakeTime = 0;
   double currentSliderValue = 0;
+  int errorValue = 0;
   final String yearNow = DateTime.now().year.toString();
 
   var _formKey = GlobalKey<FormState>();
@@ -52,17 +53,26 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     this.widget.presenter.unitsView = this;
   }
 
-  void handleRadioValueChanged(int? value) {
-    this.widget.presenter.onOptionChanged(value!, sleepHourString: _sleepHour, sleepMinuteString: _sleepMinute );
-  }
-  void handleRadioValueChangedTime(int? value) {
-    this.widget.presenter.onTimeOptionChanged(value!);
+  void handleRadioValueChangedWakeTime(int? value) {
+    this.widget.presenter.onWakeTimeOptionChanged(value!);
   }
 
-  void _calculator() {
+  void handleRadioValueChangedSleepTime(int? value) {
+    this.widget.presenter.onSleepTimeOptionChanged(value!);
+  }
+
+  void _logCalculator() {
+    print("in calculator");
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      this.widget.presenter.onCalculateClicked(_hour, _minute, _sleepMinute, _sleepHour);
+      this.widget.presenter.onSleepMinuteSubmitted(_sleepMinute);
+      this.widget.presenter.onSleepHourSubmitted(_sleepHour);
+      this.widget.presenter.onWakeMinuteSubmitted(_wakeMinute);
+      this.widget.presenter.onWakeHourSubmitted(_wakeHour);
+      this.widget.presenter.onDateSubmitted(month, day, year);
+      this.widget.presenter.onSleepQualitySubmitted(currentSliderValue.toInt());
+      this.widget.presenter.onNotesSubmitted(notes);
+      this.widget.presenter.onCalculateClicked(_wakeHour, _wakeMinute, _sleepHour, _sleepMinute);
     }
   }
 
@@ -101,23 +111,24 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   @override
   void updateHour({required String hour}) {
     setState(() {
-      _hourController.text = hour != null ? hour : '';
+      _wakeHourController.text = hour != null ? hour : '';
     });
   }
   @override
   void updateMinute({required String minute}) {
     setState(() {
-      _minuteController.text = minute != null ? minute : '';
+      _wakeMinuteController.text = minute != null ? minute : '';
     });
   }
   @override
-  void updateUnit(int value){
+  void updateWakeTimeRadio(int value){
     setState(() {
-      _value = value;
+      _valueWakeTime = value;
     });
   }
   @override
-  void updateTimeUnit(int value){
+  void updateSleepTimeRadio(int value){
+    print("updating");
     setState(() {
       _valueSleepTime = value;
     });
@@ -131,7 +142,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       children: <Widget>[
         Radio<int>(
           activeColor: Colors.blueAccent.shade400,
-          value: 0, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedTime,
+          value: 0, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedSleepTime,
         ),
         Text(
           'AM',
@@ -139,7 +150,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         ),
         Radio<int>(
           activeColor: Colors.blueAccent.shade400,
-          value: 1, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedTime,
+          value: 1, groupValue: _valueSleepTime, onChanged: handleRadioValueChangedSleepTime,
         ),
         Text(
           'PM',
@@ -152,7 +163,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       children: <Widget>[
         Radio<int>(
           activeColor: Colors.blueAccent.shade400,
-          value: 0, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedTime,
+          value: 0, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedWakeTime,
         ),
         Text(
           'AM',
@@ -160,7 +171,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         ),
         Radio<int>(
           activeColor: Colors.blueAccent.shade400,
-          value: 1, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedTime,
+          value: 1, groupValue: _valueWakeTime, onChanged: handleRadioValueChangedWakeTime,
         ),
         Text(
           'PM',
@@ -185,10 +196,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: wakeHourFormField(context),
+                    child: sleepHourFormField(context),
                   ),
                   Expanded(
-                    child: wakeMinFormField(context),
+                    child: sleepMinuteFormField(context),
                   )
                 ],
               ),
@@ -200,10 +211,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: sleepHourFormField(context),
+                    child: wakeHourFormField(context),
                   ),
                   Expanded(
-                    child: sleepMinuteFormField(),
+                    child: wakeMinuteFormField(context),
                   ),
                 ],
               ),
@@ -255,22 +266,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
           ),
         ),
       ),
-    );
-
-    var _resultView = Column(
-      children: <Widget>[
-        Center(
-          child: Text(
-            '$_message $_resultString $_timeString',
-            style: TextStyle(
-                color: Colors.deepOrange,
-                fontSize: 24.0,
-                fontWeight: FontWeight.w700,
-                fontStyle: FontStyle.italic
-            ),
-          ),
-        ),
-      ],
     );
 
     return Scaffold(
@@ -333,7 +328,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
             Padding(padding: EdgeInsets.all(5.0)),
             _mainPartView,
             Padding(padding: EdgeInsets.all(5.0)),
-            _resultView
           ],
         )
     );
@@ -341,7 +335,27 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   ElevatedButton calculateButton() {
     return ElevatedButton(
-      onPressed: _calculator,
+      onPressed: () {
+        _logCalculator();
+        if(errorValue == 0) {
+          showDialog(
+              context: context,
+              builder: (context) =>
+                  AlertDialog(
+                    title: Text('Time Slept'),
+                    content:
+                    Text("Amount of time slept: " + _message,
+                    ),
+                    actions: [
+                      TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OKAY'))
+                    ],
+                  ));
+          clearText();
+        }
+        clearText();
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepOrangeAccent,
         textStyle: TextStyle(color: Colors.white70)
@@ -353,15 +367,28 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     );
   }
 
-  TextFormField sleepMinuteFormField() {
+  void clearText() {
+    _sleepHourController.clear();
+    _sleepMinuteController.clear();
+    _wakeHourController.clear();
+    _wakeMinuteController.clear();
+    monthController.clear();
+    dayController.clear();
+    yearController.clear();
+    notesController.clear();
+  }
+
+  TextFormField sleepMinuteFormField(BuildContext context) {
     return TextFormField(
       controller: _sleepMinuteController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 0 || double.parse(value) > 59)) {
+          errorValue = 1;
           return ('Minute between 0 - 59');
         }
+        errorValue = 0;
       },
       onSaved: (value) {
         _sleepMinute = value!;
@@ -382,8 +409,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
+          errorValue = 1;
           return ('Hour between 1 - 12');
         }
+        errorValue = 0;
       },
       onSaved: (value) {
         _sleepHour = value!;
@@ -399,16 +428,18 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   TextFormField wakeHourFormField(BuildContext context) {
     return TextFormField(
-      controller: _hourController,
+      controller: _wakeHourController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
+          errorValue = 1;
           return ('Hour between 1 - 12');
         }
+        errorValue = 0;
       },
       onSaved: (value) {
-        _hour = value!;
+        _wakeHour = value!;
       },
       decoration: InputDecoration(
         hintText: 'e.g.) 6',
@@ -419,18 +450,20 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     );
   }
 
-  TextFormField wakeMinFormField(BuildContext context) {
+  TextFormField wakeMinuteFormField(BuildContext context) {
     return TextFormField(
-      controller: _minuteController,
+      controller: _wakeMinuteController,
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 0 || double.parse(value) > 59)) {
+          errorValue = 1;
           return ('Minute between 0 - 59');
         }
+        errorValue = 0;
       },
       onSaved: (value) {
-        _minute = value!;
+        _wakeMinute = value!;
       },
       decoration: InputDecoration(
         hintText: 'e.g.) 30',
@@ -448,8 +481,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
+          errorValue = 1;
           return ('Month between 1 - 12');
         }
+        errorValue = 0;
       },
       onSaved: (value){
         month = value!;
@@ -469,8 +504,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 31)) {
+          errorValue = 1;
           return ('Day between 1 - 31');
         }
+        errorValue = 0;
       },
       onSaved: (value){
         day = value!;
@@ -490,8 +527,10 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       textInputAction: TextInputAction.next,
       validator: (value) {
         if (value != yearNow) {
+          errorValue = 1;
           return ("year must be today's year");
         }
+        errorValue = 0;
       },
       onSaved: (value){
         year = value!;

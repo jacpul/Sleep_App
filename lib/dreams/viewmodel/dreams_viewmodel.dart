@@ -2,16 +2,22 @@ import '../utils/dreams_constant.dart';
 
 class UNITSViewModel {
   double _units = 0.0;
-  UnitType _unitType = UnitType.WAKE;
-  UnitType _unitTypeTime = UnitType.AM;
+  UnitType _unitTypeWake = UnitType.AM;
+  UnitType _unitTypeSleep = UnitType.AM;
 
   String _timeType = "";
   String _message = "";
 
-  double hour = 0.0;
-  double minute = 0.0;
   double sleepHour = 0.0;
   double sleepMinute = 0.0;
+  double wakeHour = 0.0;
+  double wakeMinute = 0.0;
+  int month = 0;
+  int day = 0;
+  int year = 0;
+  int sleepQuality = -1;
+  String sleepNotes = "";
+
 
   double get units => _units;
   set units(double outResult){
@@ -28,31 +34,31 @@ class UNITSViewModel {
     _message = outResult;
   }
 
-  UnitType get unitTypeTime => _unitTypeTime;
+  UnitType get unitTypeSleep => _unitTypeSleep;
   set unitTypeTime(UnitType setValue){
-    _unitTypeTime = setValue;
+    _unitTypeSleep = setValue;
   }
 
-  UnitType get unitType => _unitType;
+  UnitType get unitTypeWake => _unitTypeWake;
   set unitType(UnitType setValue){
-    _unitType = setValue;
+    _unitTypeWake = setValue;
   }
 
-  int get value => _unitType == UnitType.WAKE?0 : 1; //Set unit type - 1 is KPG
-  set value(int value){
+  int get wakeValue => _unitTypeWake == UnitType.AM?0 : 1; //Set unit type - 1 is KPG
+  set wakeValue(int value){
     if(value == 0){
-      _unitType = UnitType.WAKE;
+      _unitTypeWake = UnitType.AM;
     } else {
-      _unitType = UnitType.BED;
+      _unitTypeWake = UnitType.PM;
     }
   }
 
-  int get valueTime => _unitTypeTime == UnitType.AM?0 : 1; //Set unit type - 1 is KPG
-  set valueTime(int value){
+  int get sleepValue => _unitTypeSleep == UnitType.AM?0 : 1; //Set unit type - 1 is KPG
+  set sleepValue(int value){
     if(value == 0){
-      _unitTypeTime = UnitType.AM;
+      _unitTypeSleep = UnitType.AM;
     } else {
-      _unitTypeTime = UnitType.PM;
+      _unitTypeSleep = UnitType.PM;
     }
   }
 
