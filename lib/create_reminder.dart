@@ -11,14 +11,20 @@ class CreateReminder extends StatefulWidget {
 }
 
 class _CreateReminder extends State<CreateReminder> {
-  int currentSelectedTime = 0;
+  int amOrPmSelected = 0;
 
   var _ReminderHourController = TextEditingController();
   var _ReminderMinuteController = TextEditingController();
   var _ReminderNotesController = TextEditingController();
-  String _ReminderMinute = "0.0";
-  String _ReminderHour = "0.0";
-  String _ReminderNotes = "";
+  var _ReminderDayController = TextEditingController();
+  var _ReminderMonthController = TextEditingController();
+
+  String reminderHour = "0.0";
+  String reminderMinute = "0.0";
+  String reminderMonth = "0.0";
+  String reminderDay = "0.0";
+  String reminderNotes = "";
+  int errorValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -88,9 +94,9 @@ class _CreateReminder extends State<CreateReminder> {
                 children: <Widget>[
                   Radio<int>(
                       activeColor: Colors.blueAccent.shade400,
-                      value: 0, groupValue: currentSelectedTime, onChanged: (value) {
+                      value: 0, groupValue: amOrPmSelected, onChanged: (value) {
                         setState(() {
-                          currentSelectedTime = value!;
+                          amOrPmSelected = value!;
                         });
                       }),
                   Text(
@@ -99,9 +105,9 @@ class _CreateReminder extends State<CreateReminder> {
                   ),
                   Radio<int>(
                       activeColor: Colors.blueAccent.shade400,
-                      value: 1, groupValue: currentSelectedTime, onChanged: (value) {
+                      value: 1, groupValue: amOrPmSelected, onChanged: (value) {
                         setState(() {
-                          currentSelectedTime = value!;
+                          amOrPmSelected = value!;
                         });
                       }),
                   Text(
@@ -120,8 +126,8 @@ class _CreateReminder extends State<CreateReminder> {
                   }
                   },
                 onSaved: (value) {
-                  _ReminderHour = value!;
-                  },
+                    reminderHour = value!;
+                    },
                 decoration: InputDecoration(
                   hintText: "e.g.) 7",
                   labelText: "Hour",
@@ -139,7 +145,7 @@ class _CreateReminder extends State<CreateReminder> {
                   }
                   },
                 onSaved: (value) {
-                  _ReminderMinute = value!;
+                  reminderMinute = value!;
                   },
                 decoration: InputDecoration(
                     hintText: 'e.g.) 40',
@@ -149,12 +155,52 @@ class _CreateReminder extends State<CreateReminder> {
                 ),
               ),
               TextFormField(
+                controller: _ReminderMonthController,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 12)) {
+                    errorValue = 1;
+                    return ('Month between 1 - 12');
+                  }
+                  errorValue = 0;
+                },
+                onSaved: (value){
+                  reminderMonth = value!;
+                },
+                decoration: InputDecoration(
+                  hintText: 'e.g.) 11',
+                  labelText: 'Month',
+                  icon: Icon(Icons.date_range),
+                ),
+              ),
+              TextFormField(
+                controller: _ReminderDayController,
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.next,
+                validator: (value) {
+                  if (value!.length == 0 || (double.parse(value) < 1 || double.parse(value) > 31)) {
+                    errorValue = 1;
+                    return ('Day between 1 - 31');
+                  }
+                  errorValue = 0;
+                },
+                onSaved: (value){
+                  reminderDay = value!;
+                },
+                decoration: InputDecoration(
+                  hintText: 'e.g.) 27',
+                  labelText: 'Day',
+                  icon: Icon(Icons.date_range),
+                ),
+              ),
+              TextFormField(
                 controller: _ReminderNotesController,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 maxLength: 20,
                 onSaved: (value){
-                  _ReminderNotes = value!;
+                  reminderNotes = value!;
                 },
                 decoration: InputDecoration(
                   hintText: 'Enter Message Here',
@@ -162,11 +208,21 @@ class _CreateReminder extends State<CreateReminder> {
                   icon: Icon(Icons.book_outlined),
                 ),
               ),
+              ElevatedButton(
+                  onPressed: () {
+                    createReminderNotification(amOrPmSelected, reminderHour, reminderMinute, reminderMonth, reminderDay, reminderNotes);
+                  },
+                  child: Text('Submit Reminder'),
+              ),
               SizedBox(height: 16.0),
             ],
           ),
       ),
     );
+  }
+
+  void createReminderNotification(int pmOrAm, String hour, String minute, String month, String day, String notes) {
+
   }
 
 }
