@@ -108,7 +108,19 @@ class _Home extends State<Home>{
             builder: (context) => Scaffold(
               appBar: AppBar(
                 title: Text("Omega Dreams"),
+                centerTitle: true,
                 backgroundColor: Colors.deepOrange,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.logout_outlined),
+                    tooltip: 'Logout',
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                        return MyApp();
+                      }));
+                    }
+                  )
+                ]
               ),
               body: Container(
                   alignment: Alignment.center,

@@ -270,10 +270,22 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Sleep Log'),
+          //title: Text('Sleep Log'),
           backgroundColor: Colors.deepOrangeAccent,
 
             actions: [ //appbar functions
+
+              //Home button
+              IconButton(
+                icon:const Icon(Icons.add_home_outlined),
+                tooltip: "Home",
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                        return Home();
+                      }));
+                },
+              ),
 
               //log button
               IconButton(
@@ -320,6 +332,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                   }));
                 },
               )
+
             ]
         ),
         backgroundColor: Colors.yellow.shade800,
