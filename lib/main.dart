@@ -5,6 +5,7 @@ import 'dreams/presenter/dreams_presenter.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
+import 'register_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -72,14 +73,26 @@ class MyApp extends StatelessWidget {
                               }));
                         },
                       ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent),
+                        child: Text('Register'),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return RegisterPage(showLoginPage: () {  },);
+                              }));
+                        },
+                      ),
                     ],
                   ),
                 ),
               ),
-        )
+        ),
     );
   }
 }
+
 
 
 class SplashScreen extends StatefulWidget {
