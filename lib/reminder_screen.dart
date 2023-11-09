@@ -15,9 +15,22 @@ class _ReminderScreen extends State<ReminderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Reminders'),
+      appBar: AppBar(
+          //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ // appbar functions
+
+            //Home button
+            IconButton(
+              icon:const Icon(Icons.add_home_outlined),
+              tooltip: "Home",
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return Home();
+                    }));
+              },
+            ),
 
           //log button
           IconButton(
