@@ -76,7 +76,6 @@ class _Loginpage extends State<Loginpage>  {
                       onPressed: () {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                              testLogin(_emailController.text.trim(), _passwordController.text.trim());
                               return Loginpage();
                             }));
                       },
