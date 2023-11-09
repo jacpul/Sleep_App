@@ -20,6 +20,9 @@ class _RegisterPage extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
 
+
+
+
   @override
   void dispose(){
     _emailController.dispose();
