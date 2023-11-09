@@ -13,7 +13,7 @@ void main() async {
     options: FirebaseOptions(
       apiKey: 'AIzaSyA3h5VlDHhZjS5i9KN3eleCTBkw-1yjqu0',
       projectId: 'codingomega-a0d98',
-      appId: 'localhost:62339',
+      appId: '1:497916766002:android:b06f1a063ef1e4c187592b',
       messagingSenderId: '497916766002',
     ),
   );
