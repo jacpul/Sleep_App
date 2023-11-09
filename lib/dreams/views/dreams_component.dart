@@ -47,6 +47,8 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   var _formKey = GlobalKey<FormState>();
 
+  late DatabaseReference
+
   @override
   void initState() {
     super.initState();
@@ -73,7 +75,13 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       this.widget.presenter.onSleepQualitySubmitted(currentSliderValue.toInt());
       this.widget.presenter.onNotesSubmitted(notes);
       this.widget.presenter.onCalculateClicked(_wakeHour, _wakeMinute, _sleepHour, _sleepMinute);
+
     }
+  }
+
+  void enterLogInDB() {
+    print("enterLogInDB");
+
   }
 
   @override
