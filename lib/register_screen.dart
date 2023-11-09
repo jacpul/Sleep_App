@@ -29,12 +29,18 @@ class _RegisterPage extends State<RegisterPage> {
   }
 
   Future signUp() async {
-    if(passwordConfirmed()){
+   // if(passwordConfirmed()){
+      print('Sign Up button tapped'); // Add this line
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
       );
-    }
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          )
+      );
+   // }
   }
 
   bool passwordConfirmed(){
@@ -84,17 +90,20 @@ class _RegisterPage extends State<RegisterPage> {
                   decoration: InputDecoration(labelText: 'Password'),
                 )
             ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.blueAccent),
-                child: Text('Register'),
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return Home();
-                      }));
-                },
-              ),
+              InkWell(
+                onTap: () => signUp(),
+                child: Container(
+                  padding: EdgeInsets.all(16.0),
+                  color: Colors.blue,
+                  child: Text(
+                    'Register',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
 import 'calendar_screen.dart';
@@ -6,8 +7,16 @@ import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'register_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: 'AIzaSyA3h5VlDHhZjS5i9KN3eleCTBkw-1yjqu0',
+      projectId: 'codingomega-a0d98',
+      appId: 'localhost:62339',
+      messagingSenderId: '497916766002',
+    ),
+  );
   runApp(MyApp());
 }
 
