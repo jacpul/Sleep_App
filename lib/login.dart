@@ -13,7 +13,7 @@ class Loginpage extends StatefulWidget {
 
 }
 
-class _Loginpage extends StatelessWidget {
+class _Loginpage extends State<Loginpage>  {
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +77,7 @@ class _Loginpage extends StatelessWidget {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                               testLogin(_emailController.text.trim(), _passwordController.text.trim());
-                              return MyApp();
+                              return Loginpage();
                             }));
                       },
                     ),
@@ -101,9 +101,5 @@ class _Loginpage extends StatelessWidget {
   }
 }
 
-Future testLogin(String email, String password) async {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email, password: password);
-  return Home();
-}
+
 
