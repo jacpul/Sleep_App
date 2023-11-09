@@ -75,16 +75,11 @@ class MyApp extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent),
                         child: Text('Login'),
-                        onPressed: () async{
-                          newTest(_emailController.toString(),_passwordController.toString());
+                        onPressed: () {
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (BuildContext context) {
-                                if  (passLogin == true) {
-                                  return Home();
-                                }else {
-                                  return MyApp();
-                                }
-
+                               testLogin(_emailController.text.trim(), _passwordController.text.trim());
+                               return MyApp();
                                 }));
                         },
                       ),
