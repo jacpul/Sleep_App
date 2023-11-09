@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'calendar_screen.dart';
@@ -11,19 +11,33 @@ class CreateReminder extends StatefulWidget {
 }
 
 class _CreateReminder extends State<CreateReminder> {
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _reminderHourController.dispose();
+    _reminderMinuteController.dispose();
+    _reminderMonthController.dispose();
+    _reminderDayController.dispose();
+    _reminderNotesController.dispose();
+
+    super.dispose();
+  }
+
   int amOrPmSelected = 0;
 
-  var _ReminderHourController = TextEditingController();
-  var _ReminderMinuteController = TextEditingController();
-  var _ReminderNotesController = TextEditingController();
-  var _ReminderDayController = TextEditingController();
-  var _ReminderMonthController = TextEditingController();
+  final _reminderHourController = TextEditingController();
+  final _reminderMinuteController = TextEditingController();
+  final _reminderMonthController = TextEditingController();
+  final _reminderDayController = TextEditingController();
+  final _reminderNotesController = TextEditingController();
 
-  String reminderHour = "0.0";
-  String reminderMinute = "0.0";
-  String reminderMonth = "0.0";
-  String reminderDay = "0.0";
-  String reminderNotes = "";
+  String _reminderHour = "0.0";
+  String _reminderMinute = "0.0";
+  String _reminderMonth = "0";
+  String _reminderDay = "0";
+  String _reminderNotes = "";
   int errorValue = 0;
 
   @override
@@ -117,7 +131,7 @@ class _CreateReminder extends State<CreateReminder> {
                 ],
               ),
               TextFormField(
-                controller: _ReminderHourController,
+                controller: _reminderHourController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -125,9 +139,11 @@ class _CreateReminder extends State<CreateReminder> {
                     return ('Hour between 1 - 12');
                   }
                   },
-                onSaved: (value) {
-                    reminderHour = value!;
-                    },
+                onChanged: (value) {
+                  setState(() {
+                    _reminderHour = value;
+                  });
+                  },
                 decoration: InputDecoration(
                   hintText: "e.g.) 7",
                   labelText: "Hour",
@@ -136,7 +152,7 @@ class _CreateReminder extends State<CreateReminder> {
                 ),
               ),
               TextFormField(
-                controller: _ReminderMinuteController,
+                controller: _reminderMinuteController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
                 validator: (value) {
@@ -144,8 +160,10 @@ class _CreateReminder extends State<CreateReminder> {
                     return ('Minute between 0 - 59');
                   }
                   },
-                onSaved: (value) {
-                  reminderMinute = value!;
+                onChanged: (value) {
+                  setState(() {
+                    _reminderMinute = value;
+                  });
                   },
                 decoration: InputDecoration(
                     hintText: 'e.g.) 40',
@@ -155,7 +173,7 @@ class _CreateReminder extends State<CreateReminder> {
                 ),
               ),
               TextFormField(
-                controller: _ReminderMonthController,
+                controller: _reminderMonthController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -165,8 +183,10 @@ class _CreateReminder extends State<CreateReminder> {
                   }
                   errorValue = 0;
                 },
-                onSaved: (value){
-                  reminderMonth = value!;
+                onChanged: (value){
+                  setState(() {
+                    _reminderMonth = value;
+                  });
                 },
                 decoration: InputDecoration(
                   hintText: 'e.g.) 11',
@@ -175,7 +195,7 @@ class _CreateReminder extends State<CreateReminder> {
                 ),
               ),
               TextFormField(
-                controller: _ReminderDayController,
+                controller: _reminderDayController,
                 keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.next,
                 validator: (value) {
@@ -185,8 +205,10 @@ class _CreateReminder extends State<CreateReminder> {
                   }
                   errorValue = 0;
                 },
-                onSaved: (value){
-                  reminderDay = value!;
+                onChanged: (value){
+                  setState(() {
+                    _reminderDay = value;
+                  });
                 },
                 decoration: InputDecoration(
                   hintText: 'e.g.) 27',
@@ -195,12 +217,14 @@ class _CreateReminder extends State<CreateReminder> {
                 ),
               ),
               TextFormField(
-                controller: _ReminderNotesController,
+                controller: _reminderNotesController,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 maxLength: 20,
-                onSaved: (value){
-                  reminderNotes = value!;
+                onChanged: (value){
+                  setState(() {
+                    _reminderNotes = value;
+                  });
                 },
                 decoration: InputDecoration(
                   hintText: 'Enter Message Here',
@@ -210,7 +234,7 @@ class _CreateReminder extends State<CreateReminder> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    createReminderNotification(amOrPmSelected, reminderHour, reminderMinute, reminderMonth, reminderDay, reminderNotes);
+                    createReminderNotification(amOrPmSelected, _reminderHour, _reminderMinute, _reminderMonth, _reminderDay, _reminderNotes);
                   },
                   child: Text('Submit Reminder'),
               ),
@@ -222,6 +246,12 @@ class _CreateReminder extends State<CreateReminder> {
   }
 
   void createReminderNotification(int pmOrAm, String hour, String minute, String month, String day, String notes) {
+      print(pmOrAm);
+      print(hour);
+      print(minute);
+      print(month);
+      print(day);
+      print(notes);
 
   }
 
