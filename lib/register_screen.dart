@@ -18,18 +18,15 @@ class _RegisterPage extends State<RegisterPage> {
   // Text Controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
   @override
   void dispose(){
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   Future signUp() async {
-   // if(passwordConfirmed()){
       print('Sign Up button tapped'); // Add this line
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
@@ -40,19 +37,8 @@ class _RegisterPage extends State<RegisterPage> {
             builder: (context) => Home(),
           )
       );
-   // }
   }
 
-  bool passwordConfirmed(){
-    if(_passwordController.text.trim() ==
-        _confirmPasswordController.text.trim()) {
-      return true;
-    }else{
-      return false;
-    }
-  }
-
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(
