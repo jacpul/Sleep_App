@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
-
 import 'calendar_screen.dart';
+import 'splash_screen.dart';
+import 'main_screen.dart';
 import 'main.dart';
 
 class NotificationScreen extends StatefulWidget {

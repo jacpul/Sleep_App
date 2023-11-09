@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'main_screen.dart';
+
 import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -18,7 +20,6 @@ class _RegisterPage extends State<RegisterPage> {
   // Text Controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
 
 
 
@@ -27,12 +28,10 @@ class _RegisterPage extends State<RegisterPage> {
   void dispose(){
     _emailController.dispose();
     _passwordController.dispose();
-    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   Future signUp() async {
-   // if(passwordConfirmed()){
       print('Sign Up button tapped'); // Add this line
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
@@ -43,16 +42,6 @@ class _RegisterPage extends State<RegisterPage> {
             builder: (context) => Home(),
           )
       );
-   // }
-  }
-
-  bool passwordConfirmed(){
-    if(_passwordController.text.trim() ==
-        _confirmPasswordController.text.trim()) {
-      return true;
-    }else{
-      return false;
-    }
   }
 
   @override

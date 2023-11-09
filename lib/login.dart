@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:units/main.dart';
 import 'package:flutter/material.dart';
+import 'main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
 import 'register_screen.dart';
@@ -19,6 +20,26 @@ class _Loginpage extends State<Loginpage>  {
   Widget build(BuildContext context) {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
+
+    @override
+    void dispose(){
+      _emailController.dispose();
+      _passwordController.dispose();
+      super.dispose();
+    }
+
+    Future signIn() async {
+      print('Sign In button tapped'); // Add this line
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => Home(),
+          )
+      );
+    }
 
     return MaterialApp(
       home: Builder(
@@ -69,16 +90,19 @@ class _Loginpage extends State<Loginpage>  {
                     ),
 
                     // Button to bring you to the main page
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent),
-                      child: Text('Login'),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return Loginpage();
-                            }));
-                      },
+                    InkWell(
+                      onTap: () => signIn(),
+                      child: Container(
+                        padding: EdgeInsets.all(16.0),
+                        color: Colors.blue,
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ),
                     ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
