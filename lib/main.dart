@@ -79,11 +79,13 @@ class MyApp extends StatelessWidget {
                           newTest(_emailController.toString(),_passwordController.toString());
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (BuildContext context) {
-                                if  (passLogin) {
+                                if  (passLogin == true) {
                                   return Home();
-                                }
+                                }else {
                                   return MyApp();
-                              }));
+                                }
+
+                                }));
                         },
                       ),
                       ElevatedButton(
@@ -108,7 +110,7 @@ class MyApp extends StatelessWidget {
 
 bool passLogin = false;
 Future<void> newTest(String email, String password) async {
-  passLogin = testLogin(email, password);
+  passLogin = await testLogin(email, password);
 }
 
 
