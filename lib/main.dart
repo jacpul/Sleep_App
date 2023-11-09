@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-
+import 'package:firebase_core/firebase_core.dart';
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
+import 'register_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: 'AIzaSyA3h5VlDHhZjS5i9KN3eleCTBkw-1yjqu0',
+      projectId: 'codingomega-a0d98',
+      appId: '1:497916766002:android:b06f1a063ef1e4c187592b',
+      messagingSenderId: '497916766002',
+    ),
+  );
   runApp(MyApp());
 }
 
@@ -15,71 +24,83 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Builder(
-        builder: (context) =>
-            Scaffold(
-              appBar: AppBar(
-                title: Text("Login"),
-                backgroundColor: Colors.deepOrange,
-              ),
-              body: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(32),
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/sun.jpg'),
-                    fit: BoxFit.cover,
+        home: Builder(
+          builder: (context) =>
+              Scaffold(
+                appBar: AppBar(
+                  title: Text("Login"),
+                  backgroundColor: Colors.deepOrange,
+                ),
+                body: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(32),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/sun.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        child: Text(
+                          "Login",
+                          style: const TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent),
+                          textScaleFactor: 3,
+                        ),
+                      ),
+
+                      // Username Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Username'),
+                        ),
+                      ),
+
+                      // Password Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Password'),
+                          obscureText: true, // Hide the password input
+                        ),
+                      ),
+
+                      // Button to bring you to the main page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent),
+                        child: Text('Login'),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return Home();
+                              }));
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent),
+                        child: Text('Register'),
+                        onPressed: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (BuildContext context) {
+                                return RegisterPage(showLoginPage: () {  },);
+                              }));
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        "Login",
-                        style: const TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                        textScaleFactor: 3,
-                      ),
-                    ),
-
-                    // Username Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Username'),
-                      ),
-                    ),
-
-                    // Password Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Password'),
-                        obscureText: true, // Hide the password input
-                      ),
-                    ),
-
-                    // Button to bring you to the main page
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent),
-                      child: Text('Login'),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return Home();
-                            }));
-                      },
-                    ),
-                  ],
-                ),
               ),
-            ),
-      )
+        ),
     );
   }
 }
+
 
 
 class SplashScreen extends StatefulWidget {
@@ -108,7 +129,19 @@ class _Home extends State<Home>{
             builder: (context) => Scaffold(
               appBar: AppBar(
                 title: Text("Omega Dreams"),
+                centerTitle: true,
                 backgroundColor: Colors.deepOrange,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.logout_outlined),
+                    tooltip: 'Logout',
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                        return MyApp();
+                      }));
+                    }
+                  )
+                ]
               ),
               body: Container(
                   alignment: Alignment.center,
@@ -133,9 +166,9 @@ class _Home extends State<Home>{
                             primary: Colors.blueAccent
                         ),
                         child: Text('Your Log', style: const TextStyle(fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                                color: Colors.orange),
-                                                textAlign: TextAlign.center),
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return SplashScreen();
@@ -154,9 +187,9 @@ class _Home extends State<Home>{
                             primary: Colors.blueAccent
                         ),
                         child: Text('Your Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
-                                                      fontSize: 18,
-                                                      color: Colors.orange),
-                                                      textAlign: TextAlign.center),
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             //return SplashScreen();
@@ -176,9 +209,9 @@ class _Home extends State<Home>{
                             primary: Colors.blueAccent
                         ),
                         child: Text('Your Notifications',  style: const TextStyle(fontWeight: FontWeight.bold,
-                                                            fontSize: 18,
-                                                            color: Colors.orange),
-                                                            textAlign: TextAlign.center),
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return NotificationScreen();
@@ -197,9 +230,9 @@ class _Home extends State<Home>{
                             primary: Colors.blueAccent
                         ),
                         child: Text('Reminders',  style: const TextStyle(fontWeight: FontWeight.bold,
-                                                  fontSize: 18,
-                                                  color: Colors.orange),
-                                                  textAlign: TextAlign.center),
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                             return ReminderScreen();
@@ -214,5 +247,3 @@ class _Home extends State<Home>{
     );
   }
 }
-
-

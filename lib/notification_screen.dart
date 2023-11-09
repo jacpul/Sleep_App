@@ -15,9 +15,21 @@ class _NotificationScreen extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Notifications"),
+          //title: Text("Notifications"),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ //appbar functions
+
+            //Home button
+            IconButton(
+              icon:const Icon(Icons.add_home_outlined),
+              tooltip: "Home",
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (BuildContext context) {
+                      return Home();
+                    }));
+              },
+            ),
 
             //log button
             IconButton(
