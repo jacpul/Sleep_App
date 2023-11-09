@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:units/login.dart';
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
@@ -13,12 +16,16 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    final _emailController = TextEditingController();
+    final _passwordController = TextEditingController();
+
     return MaterialApp(
         home: Builder(
           builder: (context) =>
-              Scaffold(
+              Scaffold (
                 appBar: AppBar(
                   title: Text("Login"),
                   backgroundColor: Colors.deepOrange,
@@ -45,10 +52,11 @@ class MyApp extends StatelessWidget {
                       ),
 
                       // Username Textfield
-                      Padding(
+                      Padding (
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           decoration: InputDecoration(labelText: 'Username'),
+                          controller: _emailController,
                         ),
                       ),
 
@@ -57,6 +65,7 @@ class MyApp extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           decoration: InputDecoration(labelText: 'Password'),
+                          controller: _passwordController,
                           obscureText: true, // Hide the password input
                         ),
                       ),
@@ -66,10 +75,14 @@ class MyApp extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent),
                         child: Text('Login'),
-                        onPressed: () {
+                        onPressed: () async{
+                          newTest(_emailController.toString(),_passwordController.toString());
                           Navigator.of(context).push(
                               MaterialPageRoute(builder: (BuildContext context) {
-                                return Home();
+                                if  (passLogin) {
+                                  return Home();
+                                }
+                                  return MyApp();
                               }));
                         },
                       ),
@@ -93,6 +106,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
+bool passLogin = false;
+Future<void> newTest(String email, String password) async {
+  passLogin = testLogin(email, password);
+}
 
 
 class SplashScreen extends StatefulWidget {
