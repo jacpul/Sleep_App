@@ -10,9 +10,13 @@ import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'register_screen.dart';
 
+// Used for navigating between notifications
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
+    name: 'Coding-Omega',
     options: FirebaseOptions(
       apiKey: 'AIzaSyA3h5VlDHhZjS5i9KN3eleCTBkw-1yjqu0',
       projectId: 'codingomega-a0d98',
@@ -37,7 +41,6 @@ class _SplashScreen extends State<SplashScreen> {
   }
 }
 
-
 class Home extends StatefulWidget {
   @override
   _Home createState() => _Home();
@@ -47,6 +50,10 @@ class _Home extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorKey: navigatorKey,
+        routes: {
+          NotificationScreen.route: (context) => NotificationScreen()
+        },
         home: Builder(
             builder: (context) => Scaffold(
               appBar: AppBar(
