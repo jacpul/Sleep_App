@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'register_screen.dart';
+import 'resources_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -238,7 +240,27 @@ class _Home extends State<Home>{
                             return ReminderScreen();
                           }));
                         },
-                      )
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(top: 50.0, bottom: 20.0),
+                      ),
+
+                      // Button to bring you to your Resources page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent
+                        ),
+                        child: Text('Other Resources',  style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return ResourcesScreen();
+                          }));
+                        },
+                      ),
                     ],
                   )
               ),
