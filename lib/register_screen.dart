@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +32,11 @@ class _RegisterPage extends State<RegisterPage> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
+      );
+      CollectionReference collRef = FirebaseFirestore.instance.collection('users');
+      collRef.add({
+        'email': _emailController.text
+      }
       );
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(
