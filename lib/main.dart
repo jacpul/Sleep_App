@@ -4,6 +4,9 @@ import 'package:units/login.dart';
 import 'main_screen.dart';
 import 'api/firebase_api.dart'; // notifications
 
+// Used for navigating between notifications
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
