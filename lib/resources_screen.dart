@@ -2,9 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-import 'dart:html' as html;
-
 
 class ResourcesScreen extends StatefulWidget {
   @override
@@ -17,7 +14,8 @@ class _ResourcesScreen extends State<ResourcesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Resources"),
+        title: Text("Online Resources"),
+          centerTitle: true,
           backgroundColor: Colors.deepOrangeAccent
       ),
 
@@ -34,10 +32,13 @@ class _ResourcesScreen extends State<ResourcesScreen> {
             children: snapshot.data!.docs.map((document){
               return Center(
                 child: Container(
-                  width: MediaQuery.of(context).size.width /1.2,
-                  height: MediaQuery.of(context).size.height/6,
+                  width: MediaQuery.of(context).size.width /1,
+                  height: MediaQuery.of(context).size.height/8,
                   child: Column(
                     children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 10.0),
+                      ),
                       Text(document["title"], style: const TextStyle(fontWeight: FontWeight.bold,
                           fontSize: 22,
                           )),
@@ -61,6 +62,9 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                               );
                             }
                             }
+                      ),
+                      Divider(
+                        color: Colors.blueAccent
                       )
                     ]
                   )

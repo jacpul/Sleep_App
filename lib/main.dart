@@ -243,7 +243,7 @@ class _Home extends State<Home>{
                       ),
 
                       Padding(
-                        padding: EdgeInsets.only(top: 50.0, bottom: 20.0),
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       ),
 
                       // Button to bring you to your Resources page
