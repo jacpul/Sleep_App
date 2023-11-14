@@ -31,8 +31,8 @@ class _ResourcesScreen extends State<ResourcesScreen> {
             children: snapshot.data!.docs.map((document){
               return Center(
                 child: Container(
-                  width: MediaQuery.of(context).size.width /1,
-                  height: MediaQuery.of(context).size.height/8,
+                  width: MediaQuery.of(context).size.width /1.2,
+                  height: MediaQuery.of(context).size.height/5,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -63,7 +63,8 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                             }
                       ),
                       Divider(
-                        color: Colors.blueAccent
+                        color: Colors.blueAccent,
+                        thickness: 3,
                       )
                     ]
                   )

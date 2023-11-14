@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
+import 'main_screen.dart';
 import 'api/firebase_api.dart'; // notifications
 
 // Used for navigating between notifications
@@ -18,6 +19,6 @@ void main() async {
     ),
   );
   await FirebaseApi().initNotifications();
-  runApp(Loginpage());
-  //runApp(MyApp());
+  //runApp(Loginpage());
+  runApp(Home());
 }
