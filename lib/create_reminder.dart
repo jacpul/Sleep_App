@@ -1,6 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'splash_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'main.dart';

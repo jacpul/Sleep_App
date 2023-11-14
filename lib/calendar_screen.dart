@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'splash_screen.dart';
+import 'main_screen.dart';
 
 import 'main.dart';
 import 'notification_screen.dart';

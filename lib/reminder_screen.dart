@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'calendar_screen.dart';
 import 'create_reminder.dart';
+import 'main_screen.dart';
+import 'splash_screen.dart';
 import 'main.dart';
 import 'notification_screen.dart';
 

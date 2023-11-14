@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:units/main.dart';
 import 'package:flutter/material.dart';
+import 'main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
 import 'register_screen.dart';
@@ -65,73 +66,72 @@ class _Loginpage extends State<Loginpage>  {
                   ),
                 ),
                 child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        "Login",
-                        style: const TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                        textScaleFactor: 3,
-                      ),
-                    ),
-
-                    // Username Textfield
-                    Padding (
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Username'),
-                        controller: _emailController,
-                      ),
-                    ),
-
-                    // Password Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Password'),
-                        controller: _passwordController,
-                        obscureText: true, // Hide the password input
-                      ),
-                    ),
-
-                    // login button
-                    InkWell(
-                      onTap: () => signIn(context),
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        color: Colors.blue,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                         child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                          "Login",
+                          style: const TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent),
+                          textScaleFactor: 3,
+                        ),
+                      ),
+
+                      // Username Textfield
+                      Padding (
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Username'),
+                          controller: _emailController,
+                        ),
+                      ),
+
+                      // Password Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Password'),
+                          controller: _passwordController,
+                          obscureText: true, // Hide the password input
+                        ),
+                      ),
+
+                      // login button
+                      InkWell(
+                        onTap: () => signIn(context),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          color: Colors.blue,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
                           ),
                         ),
-                    ),
+                      ),
+                      InkWell(
+                        onTap: () => goToSignUp(context),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          color: Colors.blue,
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    ]
                 ),
-                    InkWell(
-                      onTap: () => goToSignUp(context),
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        color: Colors.blue,
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                          ),
-                        ),
-                      ),
-                    )
-          ]
+              ),
+            ),
       ),
-    ),
-    ),
-    ),
     );
   }
 }
-
 
 
