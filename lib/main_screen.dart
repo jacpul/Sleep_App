@@ -10,6 +10,7 @@ import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'register_screen.dart';
 import 'splash_screen.dart';
+import 'resources_screen.dart';
 
 // Used for navigating between notifications
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -142,7 +143,27 @@ class _Home extends State<Home>{
                             return ReminderScreen();
                           }));
                         },
-                      )
+                      ),
+
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      ),
+
+                      // Button to bring you to your Resources page
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.blueAccent
+                        ),
+                        child: Text('Other Resources',  style: const TextStyle(fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.orange),
+                            textAlign: TextAlign.center),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                            return ResourcesScreen();
+                          }));
+                        },
+                      ),
                     ],
                   )
               ),
