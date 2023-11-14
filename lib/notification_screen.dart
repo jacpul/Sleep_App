@@ -17,16 +17,15 @@ class _NotificationScreen extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     final notificationMessage;
-    bool data = false;
-    String test = "";
-    String test2 = "";
-    String test3 = "";
+    String notificationTitle = "";
+    String notificationBody = "";
+    String notificationData = "";
 
     if (ModalRoute.of(context)!.settings.arguments != null) {
       notificationMessage = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
-       test = '${notificationMessage.notification?.title}';
-       test2 = '${notificationMessage.notification?.body}';
-       test3 = '${notificationMessage.data}';
+      notificationTitle = '${notificationMessage.notification?.title}';
+      notificationBody = '${notificationMessage.notification?.body}';
+      notificationData = '${notificationMessage.data}';
     }
 
     return Scaffold(
@@ -97,9 +96,9 @@ class _NotificationScreen extends State<NotificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(test),
-            Text(test2),
-            Text(test3),
+            Text(notificationTitle),
+            Text(notificationBody),
+            Text(notificationData),
           ],
         ),
       ),
