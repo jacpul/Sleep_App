@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'main_screen.dart';
 import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _RegisterPage extends State<RegisterPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
       );
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => Home(),
           )
