@@ -16,7 +16,18 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreen extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    final notificationMessage = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
+    final notificationMessage;
+    bool data = false;
+    String test = "";
+    String test2 = "";
+    String test3 = "";
+
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      notificationMessage = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
+       test = '${notificationMessage.notification?.title}';
+       test2 = '${notificationMessage.notification?.body}';
+       test3 = '${notificationMessage.data}';
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -86,13 +97,14 @@ class _NotificationScreen extends State<NotificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('${notificationMessage.notification?.title}'),
-            Text('${notificationMessage.notification?.body}'),
-            Text('${notificationMessage.data}'),
+            Text(test),
+            Text(test2),
+            Text(test3),
           ],
         ),
       ),
       backgroundColor: Colors.yellow.shade800,
     );
   }
+
 }
