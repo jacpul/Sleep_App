@@ -12,7 +12,6 @@ import 'splash_screen.dart';
 
 
 
-
 class Home extends StatefulWidget {
   @override
   _Home createState() => _Home();
@@ -22,6 +21,10 @@ class _Home extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorKey: navigatorKey,
+        routes: {
+          NotificationScreen.route: (context) => NotificationScreen()
+        },
         home: Builder(
             builder: (context) => Scaffold(
               appBar: AppBar(
