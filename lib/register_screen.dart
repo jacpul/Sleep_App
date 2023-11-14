@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -34,17 +35,20 @@ class _RegisterPage extends State<RegisterPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
       );
-      CollectionReference collRef = FirebaseFirestore.instance.collection('users');
-      collRef.add({
+      String uID = FirebaseAuth.instance.currentUser!.uid.toString();
+      final data = <String, String> {
         'email': _emailController.text
-      }
-      );
+      };
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      db.collection('users').doc(uID).set(data);
+
       Navigator.of(context).push(
           MaterialPageRoute(
             builder: (context) => Home(),
           )
       );
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../calendar_screen.dart';
@@ -48,12 +51,13 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   var _formKey = GlobalKey<FormState>();
 
-  //late DatabaseReference
+  late String currentUser;
 
   @override
   void initState() {
     super.initState();
     this.widget.presenter.unitsView = this;
+    currentUser = FirebaseAuth.instance.currentUser!.uid;
   }
 
   void handleRadioValueChangedWakeTime(int? value) {
@@ -360,6 +364,15 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       onPressed: () {
         _logCalculator();
         if(errorValue == 0) {
+          CollectionReference colRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
+          colRef.add({
+            'Day': dayController.text,
+            'Month': monthController.text,
+            'Year': yearController.text,
+            'Hours_Slept': _message,
+            'Sleep_Quality': _sleepHourController.text,
+            'Notes': notesController.text,
+          });
           showDialog(
               context: context,
               builder: (context) =>
