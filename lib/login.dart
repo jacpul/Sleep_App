@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:units/main.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,14 @@ import 'main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
 import 'register_screen.dart';
+
+Future goToSignUp(BuildContext context) async {
+  Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => RegisterPage(showLoginPage: () {  },),
+      )
+  );
+}
 
 class Loginpage extends StatefulWidget {
 
@@ -21,15 +28,8 @@ class _Loginpage extends State<Loginpage>  {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
 
-    @override
-    void dispose(){
-      _emailController.dispose();
-      _passwordController.dispose();
-      super.dispose();
-    }
-
-    Future signIn() async {
-      print('Sign In button tapped'); // Add this line
+    Future signIn(BuildContext context) async {
+      print('login button tapped'); // Add this line
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
@@ -39,6 +39,13 @@ class _Loginpage extends State<Loginpage>  {
             builder: (context) => Home(),
           )
       );
+    }
+
+    @override
+    void dispose(){
+      _emailController.dispose();
+      _passwordController.dispose();
+      super.dispose();
     }
 
     return MaterialApp(
@@ -59,63 +66,66 @@ class _Loginpage extends State<Loginpage>  {
                   ),
                 ),
                 child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                      child: Text(
-                        "Login",
-                        style: const TextStyle(fontWeight: FontWeight.bold,
-                            color: Colors.blueAccent),
-                        textScaleFactor: 3,
-                      ),
-                    ),
-
-                    // Username Textfield
-                    Padding (
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Username'),
-                        controller: _emailController,
-                      ),
-                    ),
-
-                    // Password Textfield
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        decoration: InputDecoration(labelText: 'Password'),
-                        controller: _passwordController,
-                        obscureText: true, // Hide the password input
-                      ),
-                    ),
-
-                    // Button to bring you to the main page
-                    InkWell(
-                      onTap: () => signIn(),
-                      child: Container(
-                        padding: EdgeInsets.all(16.0),
-                        color: Colors.blue,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                         child: Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
+                          "Login",
+                          style: const TextStyle(fontWeight: FontWeight.bold,
+                              color: Colors.blueAccent),
+                          textScaleFactor: 3,
+                        ),
+                      ),
+
+                      // Username Textfield
+                      Padding (
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Username'),
+                          controller: _emailController,
+                        ),
+                      ),
+
+                      // Password Textfield
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          decoration: InputDecoration(labelText: 'Password'),
+                          controller: _passwordController,
+                          obscureText: true, // Hide the password input
+                        ),
+                      ),
+
+                      // login button
+                      InkWell(
+                        onTap: () => signIn(context),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          color: Colors.blue,
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent),
-                      child: Text('Register'),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (BuildContext context) {
-                              return RegisterPage(showLoginPage: () {  },);
-                            }));
-                      },
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () => goToSignUp(context),
+                        child: Container(
+                          padding: EdgeInsets.all(16.0),
+                          color: Colors.blue,
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    ]
                 ),
               ),
             ),
@@ -123,6 +133,5 @@ class _Loginpage extends State<Loginpage>  {
     );
   }
 }
-
 
 

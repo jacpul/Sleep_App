@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
+import 'api/firebase_api.dart'; // notifications
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +10,9 @@ import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'register_screen.dart';
 import 'splash_screen.dart';
+
+// Used for navigating between notifications
+final navigatorKey = GlobalKey<NavigatorState>();
 
 
 
