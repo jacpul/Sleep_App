@@ -15,8 +15,6 @@ import 'resources_screen.dart';
 // Used for navigating between notifications
 final navigatorKey = GlobalKey<NavigatorState>();
 
-
-
 class Home extends StatefulWidget {
   @override
   _Home createState() => _Home();
