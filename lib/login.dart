@@ -81,7 +81,7 @@ class _Loginpage extends State<Loginpage>  {
                       Padding (
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
-                          decoration: InputDecoration(labelText: 'Username'),
+                          decoration: InputDecoration(labelText: 'Email'),
                           controller: _emailController,
                         ),
                       ),
