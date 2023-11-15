@@ -11,6 +11,7 @@ import 'reminder_screen.dart';
 import 'register_screen.dart';
 import 'splash_screen.dart';
 import 'resources_screen.dart';
+import 'main.dart';
 
 // Used for navigating between notifications
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -24,7 +25,7 @@ class _Home extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        navigatorKey: navigatorKey,
+       // navigatorKey: navigatorKey,
         routes: {
           NotificationScreen.route: (context) => NotificationScreen()
         },

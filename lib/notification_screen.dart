@@ -40,10 +40,13 @@ class _NotificationScreen extends State<NotificationScreen> {
               icon:const Icon(Icons.add_home_outlined),
               tooltip: "Home",
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return Home();
-                    }));
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (context) => Builder(
+                        builder: (context) => Home(),
+                      ),
+                  ),
+                );
               },
             ),
 
