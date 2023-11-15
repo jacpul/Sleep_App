@@ -39,10 +39,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   String day = "0.0";
   String year = "0.0";
   String notes = "";
-  var _resultString = '';
-  var _timeString = '';
   var _message = '';
-  var _value = 0;
   var _valueSleepTime = 0;
   var _valueWakeTime = 0;
   double currentSliderValue = 0;
@@ -69,7 +66,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   }
 
   void _logCalculator() {
-    print("in calculator");
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       this.widget.presenter.onSleepMinuteSubmitted(_sleepMinute);
@@ -84,59 +80,21 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     }
   }
 
-  void enterLogInDB() {
-    print("enterLogInDB");
-
-  }
-
-  @override
-  void updateResultValue(String resultValue){
-    setState(() {
-      _resultString = resultValue;
-    });
-  }
-  @override
-  void updateTimeString(String timeString){
-    setState(() {
-      _timeString = timeString;
-    });
-  }
   @override
   void updateMessage(String message){
+    print("updateMessage");
+    _message = message;
     setState(() {
-      _message = message;
+      print(message);
+      //_message = message;
     });
   }
-  @override
-  void updateSleepMinute({required String sleepMinute}){
-    setState(() {
-      // ignore: unnecessary_null_comparison
-      _sleepMinuteController.text = sleepMinute != null?sleepMinute:'';
-    });
-  }
-  @override
-  void updateSleepHour({required String sleepHour}){
-    setState(() {
-      // ignore: unnecessary_null_comparison
-      _sleepHourController.text = sleepHour != null?sleepHour:'';
-    });
-  }
-  @override
-  void updateHour({required String hour}) {
-    setState(() {
-      _wakeHourController.text = hour != null ? hour : '';
-    });
-  }
-  @override
-  void updateMinute({required String minute}) {
-    setState(() {
-      _wakeMinuteController.text = minute != null ? minute : '';
-    });
-  }
+
   @override
   void updateWakeTimeRadio(int value){
     setState(() {
       _valueWakeTime = value;
+      print("updateWRadio");
     });
   }
   @override
@@ -144,6 +102,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     print("updating");
     setState(() {
       _valueSleepTime = value;
+      print("updateSRadio");
     });
   }
 
@@ -383,13 +342,14 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                     ),
                     actions: [
                       TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home())),
                           child: Text('OKAY'))
                     ],
                   ));
           clearText();
         }
         clearText();
+        //dispose();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepOrangeAccent,

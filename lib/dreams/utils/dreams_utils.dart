@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 double calculator(double wakeHour, double wakeMinute, double sleepHour, double sleepMinute, UnitType wake, UnitType sleep) {
-
+  print("in calculator");
   //List result = new List.filled(3, null, growable: false);
   double tempHour = 0.0;
   double tempMinute = 0.00;
