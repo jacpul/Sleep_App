@@ -40,10 +40,10 @@ class _CreateReminder extends State<CreateReminder> {
   final _reminderDayController = TextEditingController();
   final _reminderNotesController = TextEditingController();
 
-  String _reminderHour = "0.0";
-  String _reminderMinute = "0.0";
-  String _reminderMonth = "0";
-  String _reminderDay = "0";
+  String _reminderHour = "";
+  String _reminderMinute = "";
+  String _reminderMonth = "";
+  String _reminderDay = "";
   String _reminderNotes = "";
   int errorValue = 0;
 
@@ -239,9 +239,27 @@ class _CreateReminder extends State<CreateReminder> {
                   icon: Icon(Icons.book_outlined),
                 ),
               ),
+
               ElevatedButton(
-                  onPressed: () {
-                    createReminderNotification(amOrPmSelected, _reminderHour, _reminderMinute, _reminderMonth, _reminderDay, _reminderNotes);
+                onPressed: () {
+                  createReminderNotification(amOrPmSelected, _reminderHour, _reminderMinute, _reminderMonth, _reminderDay, _reminderNotes);
+
+                  showDialog(context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text("Reminder Submitted"),
+                      actions: [
+                        TextButton(onPressed: (){
+                          Navigator.of(context).pop();
+                        },
+                          child: const Text("Close"),
+
+                        ),
+                      ],
+                      //title: const Text("here"),
+                      contentPadding: const EdgeInsets.all(20.0),
+                      content: const Text("The reminder has been added"),
+                    ),
+                  );
                   },
                   child: Text('Submit Reminder'),
               ),
@@ -253,6 +271,8 @@ class _CreateReminder extends State<CreateReminder> {
   }
 
   void createReminderNotification(int pmOrAm, String hour, String minute, String month, String day, String notes) {
+    if (hour == "" || minute == "" || month == "" || day == "" || notes == "") return;
+
     currentUser = FirebaseAuth.instance.currentUser!.uid;
     CollectionReference dataRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Notifications');
 
@@ -268,3 +288,4 @@ class _CreateReminder extends State<CreateReminder> {
   }
 
 }
+
