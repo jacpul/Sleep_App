@@ -1,9 +1,16 @@
 //import 'package:flutter/cupertino.dart';
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'splash_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'main.dart';
+
+late String currentUser;
 
 class CreateReminder extends StatefulWidget {
   @override
@@ -246,12 +253,17 @@ class _CreateReminder extends State<CreateReminder> {
   }
 
   void createReminderNotification(int pmOrAm, String hour, String minute, String month, String day, String notes) {
-      print(pmOrAm);
-      print(hour);
-      print(minute);
-      print(month);
-      print(day);
-      print(notes);
+    currentUser = FirebaseAuth.instance.currentUser!.uid;
+    CollectionReference dataRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Notifications');
+
+    dataRef.add({
+      'PmOrAm': pmOrAm,
+      'Hour': hour,
+      'Minute': minute,
+      'Month': month,
+      'Day': day,
+      'Notes': notes,
+    });
 
   }
 
