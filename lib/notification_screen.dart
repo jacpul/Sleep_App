@@ -17,7 +17,17 @@ class NotificationScreen extends StatefulWidget {
 class _NotificationScreen extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    final notificationMessage = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
+    final notificationMessage;
+    String notificationTitle = "";
+    String notificationBody = "";
+    String notificationData = "";
+
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      notificationMessage = ModalRoute.of(context)!.settings.arguments as RemoteMessage;
+      notificationTitle = '${notificationMessage.notification?.title}';
+      notificationBody = '${notificationMessage.notification?.body}';
+      notificationData = '${notificationMessage.data}';
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -30,10 +40,13 @@ class _NotificationScreen extends State<NotificationScreen> {
               icon:const Icon(Icons.add_home_outlined),
               tooltip: "Home",
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (BuildContext context) {
-                      return Home();
-                    }));
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (context) => Builder(
+                        builder: (context) => Home(),
+                      ),
+                  ),
+                );
               },
             ),
 
@@ -87,13 +100,14 @@ class _NotificationScreen extends State<NotificationScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('${notificationMessage.notification?.title}'),
-            Text('${notificationMessage.notification?.body}'),
-            Text('${notificationMessage.data}'),
+            Text(notificationTitle),
+            Text(notificationBody),
+            Text(notificationData),
           ],
         ),
       ),
       backgroundColor: Colors.yellow.shade800,
     );
   }
+
 }
