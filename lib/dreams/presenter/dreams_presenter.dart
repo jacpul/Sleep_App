@@ -87,7 +87,7 @@ class BasicPresenter implements UNITSPresenter{
     } else if (tempMessage == UnitType.WAKE) {
       _viewModel.message = "You should go to bed at";
     }*/
-    print(_viewModel.message);
+    //print(_viewModel.messageInString);
     _view.updateMessage(_viewModel.message);
     /*_view.updateTimeString(_viewModel.timeType);
     _view.updateResultValue(_viewModel.resultInString);*/
@@ -120,6 +120,7 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onSleepHourSubmitted(String sleepHour) {
+    print("submitted sleepHour");
       _viewModel.sleepHour = double.parse(sleepHour);
   }
 
@@ -156,6 +157,8 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onNotesSubmitted(String notes) {
+    print("submitted notes");
+
     // TODO: implement onNotesSubmitted
     _viewModel.sleepNotes = notes;
   }

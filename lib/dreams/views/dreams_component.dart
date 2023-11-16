@@ -82,7 +82,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
   @override
   void updateMessage(String message){
-    print("updateMessage");
     _message = message;
     setState(() {
       print(message);
@@ -94,15 +93,12 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   void updateWakeTimeRadio(int value){
     setState(() {
       _valueWakeTime = value;
-      print("updateWRadio");
     });
   }
   @override
   void updateSleepTimeRadio(int value){
-    print("updating");
     setState(() {
       _valueSleepTime = value;
-      print("updateSRadio");
     });
   }
 

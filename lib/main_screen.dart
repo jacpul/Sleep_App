@@ -11,6 +11,7 @@ import 'reminder_screen.dart';
 import 'register_screen.dart';
 import 'splash_screen.dart';
 import 'resources_screen.dart';
+import 'log_screen.dart';
 import 'main.dart';
 
 // Used for navigating between notifications
@@ -75,7 +76,7 @@ class _Home extends State<Home>{
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                            return SplashScreen();
+                            return LogScreen();
                           }));
                         },
                       ),

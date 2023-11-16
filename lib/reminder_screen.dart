@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:units/log_screen.dart';
 
 import 'calendar_screen.dart';
 import 'create_reminder.dart';
@@ -21,7 +22,6 @@ class _ReminderScreen extends State<ReminderScreen> {
           //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ // appbar functions
-
             //Home button
             IconButton(
               icon:const Icon(Icons.add_home_outlined),
@@ -40,7 +40,7 @@ class _ReminderScreen extends State<ReminderScreen> {
               tooltip: 'Log',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                return SplashScreen();
+                return LogScreen();
                 }));
               },
           ),
@@ -66,8 +66,6 @@ class _ReminderScreen extends State<ReminderScreen> {
               }));
             },
           ),
-
-    //Calendar Button
 
     //Reminder Button
           IconButton(
