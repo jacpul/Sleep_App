@@ -16,9 +16,55 @@ class NotificationScreen extends StatefulWidget {
   _NotificationScreen createState() => _NotificationScreen();
 }
 
+class MyTextStyle {
+  static const TextStyle textStyleHeader = TextStyle(
+    color: Colors.blueAccent,
+    fontSize: 22,
+    fontWeight: FontWeight.bold,
+  );
+
+  static const TextStyle textStyleBody = TextStyle(
+    color: Colors.black,
+    fontSize: 18,
+  );
+}
+
 class _NotificationScreen extends State<NotificationScreen> {
 
   late String currentUser = FirebaseAuth.instance.currentUser!.uid;
+
+  String AMorPM(int num) {
+    String timeOfDay;
+    if (num ==1) {timeOfDay = "PM"; }
+    else timeOfDay = "AM";
+    return timeOfDay;
+  }
+
+  Future<void> deleteNotifications() async {
+    var dataRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Notifications');
+
+    var snapshots = await dataRef.get();
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+  }
+
+  String findMonth(String num) {
+    String month = "";
+    if (num == "1") {month = "January";}
+    else if (num == "2") {month = "February";}
+    else if (num == "3") {month = "March";}
+    else if (num == "4") {month = "April";}
+    else if (num == "5") {month = "May";}
+    else if (num == "6") {month = "June";}
+    else if (num == "7") {month = "July";}
+    else if (num == "8") {month = "August";}
+    else if (num == "9") {month = "September";}
+    else if (num == "10") {month = "October";}
+    else if (num == "11") {month = "November";}
+    else if (num == "12") {month = "December";}
+    return month;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +81,14 @@ class _NotificationScreen extends State<NotificationScreen> {
     }
 
     return Scaffold(
+
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.delete_rounded),
+        tooltip: "Clear Notifications",
+        onPressed: () { deleteNotifications(); },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+
       appBar: AppBar(
           title: Text("Notifications"),
           backgroundColor: Colors.deepOrangeAccent,
@@ -87,8 +141,6 @@ class _NotificationScreen extends State<NotificationScreen> {
               },
             ),
 
-            //Calendar Button
-
             //Reminder Button
             IconButton(
               icon: const Icon(Icons.add_alert_outlined),
@@ -98,11 +150,12 @@ class _NotificationScreen extends State<NotificationScreen> {
                   return ReminderScreen();
                 }));
               },
-            )
-          ]
+            ),
+          ],
       ),
+
       body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("users").doc(currentUser).collection("Reminders").snapshots(),
+          stream: FirebaseFirestore.instance.collection("users").doc(currentUser).collection("Notifications").snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
             if(!snapshot.hasData){
               return Center(
@@ -115,22 +168,30 @@ class _NotificationScreen extends State<NotificationScreen> {
                 return Center(
                   child: Container(
                       width: MediaQuery.of(context).size.width /1.2,
-                      height: MediaQuery.of(context).size.height/5,
+                      height: MediaQuery.of(context).size.height/10,
                       child: Column(
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(top: 10.0),
                             ),
-                            Text("Notification From" + document["Day"], style: const TextStyle(fontWeight: FontWeight.bold,
-                              fontSize: 22,
-                            )),
-                            Text(document["note"], style: const TextStyle(fontSize: 18)),
+
+                            Row(mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(findMonth(document["Month"]), style: MyTextStyle.textStyleHeader),
+                                  Text(", ", style: MyTextStyle.textStyleHeader),
+                                  Text(document["Day"], style: MyTextStyle.textStyleHeader),
+                                  Text("   ", style: MyTextStyle.textStyleHeader),
+                                  Text(document["Hour"], style: MyTextStyle.textStyleHeader),
+                                  Text(":", style: MyTextStyle.textStyleHeader),
+                                  Text(document["Minute"], style: MyTextStyle.textStyleHeader),
+                                  Text(AMorPM(document["PmOrAm"]), style: MyTextStyle.textStyleHeader)]),
+                            Text(document["Notes"], style: MyTextStyle.textStyleBody),
                             Divider(
-                              color: Colors.blueAccent,
-                              thickness: 3,
-                            )
+                              color: Colors.yellow.shade600,
+                              thickness: 1,
+                            ),
                           ]
-                      )
+                      ),
                   ),
                 );
               }).toList(),
