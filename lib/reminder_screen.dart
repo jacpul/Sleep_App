@@ -90,7 +90,11 @@ class _ReminderScreen extends State<ReminderScreen> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(top: 0.0, bottom: 20.0),
-              child: Text("Reminders",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 2,)
+              child: Text("Reminders",style: const TextStyle(
+                  fontWeight:
+                  FontWeight.bold,
+                  color: Colors.blueAccent),
+                textScaleFactor: 2,)
               ,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
