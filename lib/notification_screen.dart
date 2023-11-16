@@ -36,7 +36,6 @@ class _NotificationScreen extends State<NotificationScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text("Notifications"),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ //appbar functions
 
