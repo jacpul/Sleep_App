@@ -82,21 +82,21 @@ class _ResourcesScreen extends State<ResourcesScreen> {
       backgroundColor: Colors.yellow.shade800,
       body: Column(
         children: <Widget>[
-          // Title with top padding
-          Padding(
-            padding: const EdgeInsets.only(top: 24.0),
-            child: Text(
-              'Helpful Sleeping Resources',
-              style: TextStyle(
-                  fontWeight:
-                  FontWeight.bold,
-                  color: Colors.blueAccent),
-              textScaleFactor: 2,)
-              ),
+          // Empty space above the title
+          SizedBox(height: 60.0),
 
+          // Title
+          Text(
+            'Helpful Sleeping Resources',
+            style: TextStyle(
+                fontWeight:
+                FontWeight.bold,
+                color: Colors.blueAccent),
+            textScaleFactor: 2.3,
+          ),
           // Buttons
           Container(
-            height: screenHeight * 2 / 3,
+            height: (screenHeight * 2 / 3) - 200,
             alignment: Alignment.center,
             padding: const EdgeInsets.all(32),
             child: Column(
@@ -110,7 +110,17 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                       }),
                     );
                   },
-                  child: Text('White Noise'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(160, 60),
+                  ),
+                  child: Text(
+                    'White Noise',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24, // Adjust the font size here
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -120,7 +130,17 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                       }),
                     );
                   },
-                  child: Text('Videos'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(160, 60),
+                  ),
+                  child: Text(
+                    'Videos',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24, // Adjust the font size here
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -130,16 +150,21 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                       }),
                     );
                   },
-                  child: Text('Articles'),
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(160, 60),
+                  ),
+                  child: Text(
+                    'Articles',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24, // Adjust the font size here
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ],
             ),
           ),
-          // Add additional widgets for the remaining 1/3 of the screen if needed
-          // Expanded(
-          //   flex: 1,
-          //   child: YourOtherWidget(),
-          // ),
         ],
       ),
     );
