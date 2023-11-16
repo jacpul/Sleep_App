@@ -5,6 +5,7 @@ import 'api/firebase_api.dart'; // notifications
 import 'dreams/views/dreams_component.dart';
 import 'dreams/presenter/dreams_presenter.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'resources_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
@@ -12,6 +13,7 @@ import 'register_screen.dart';
 import 'splash_screen.dart';
 import 'resources_screen.dart';
 import 'log_screen.dart';
+import 'article_tips.dart';
 import 'main.dart';
 
 // Used for navigating between notifications

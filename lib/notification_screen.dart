@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,9 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreen extends State<NotificationScreen> {
+
+  late String currentUser = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   Widget build(BuildContext context) {
     final notificationMessage;
@@ -96,15 +101,41 @@ class _NotificationScreen extends State<NotificationScreen> {
             )
           ]
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(notificationTitle),
-            Text(notificationBody),
-            Text(notificationData),
-          ],
-        ),
+      body: StreamBuilder(
+          stream: FirebaseFirestore.instance.collection("users").doc(currentUser).collection("Reminders").snapshots(),
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+            if(!snapshot.hasData){
+              return Center(
+                  child: Text("No Data Available")
+              );
+            }
+
+            return ListView(
+              children: snapshot.data!.docs.map((document){
+                return Center(
+                  child: Container(
+                      width: MediaQuery.of(context).size.width /1.2,
+                      height: MediaQuery.of(context).size.height/5,
+                      child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.0),
+                            ),
+                            Text("Notification From" + document["Day"], style: const TextStyle(fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            )),
+                            Text(document["note"], style: const TextStyle(fontSize: 18)),
+                            Divider(
+                              color: Colors.blueAccent,
+                              thickness: 3,
+                            )
+                          ]
+                      )
+                  ),
+                );
+              }).toList(),
+            );
+          }
       ),
       backgroundColor: Colors.yellow.shade800,
     );
