@@ -107,7 +107,7 @@ class _CreateReminder extends State<CreateReminder> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Radio<int>(
-                    activeColor: Colors.blueAccent.shade400,
+                    activeColor: Colors.deepOrangeAccent,
                     value: 0,
                     groupValue: amOrPmSelected,
                     onChanged: (value) {
@@ -117,10 +117,10 @@ class _CreateReminder extends State<CreateReminder> {
                     }),
                 Text(
                   'AM',
-                  style: TextStyle(color: Colors.blueAccent.shade400),
+                  style: TextStyle(color: Colors.deepOrangeAccent),
                 ),
                 Radio<int>(
-                    activeColor: Colors.blueAccent.shade400,
+                    activeColor: Colors.deepOrangeAccent,
                     value: 1,
                     groupValue: amOrPmSelected,
                     onChanged: (value) {
@@ -130,7 +130,7 @@ class _CreateReminder extends State<CreateReminder> {
                     }),
                 Text(
                   'PM',
-                  style: TextStyle(color: Colors.blueAccent.shade400),
+                  style: TextStyle(color: Colors.deepOrangeAccent),
                 ),
               ],
             ),
@@ -240,6 +240,10 @@ class _CreateReminder extends State<CreateReminder> {
               ),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.deepOrangeAccent,
+                padding: EdgeInsets.all(10.0),
+              ),
               onPressed: () {
                 createReminderNotification(
                     amOrPmSelected,

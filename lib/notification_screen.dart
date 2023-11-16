@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
 import 'calendar_screen.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
-import 'main.dart';
 
 class NotificationScreen extends StatefulWidget {
   static const route = '/notification_screen';
