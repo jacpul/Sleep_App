@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:core';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
@@ -25,29 +26,32 @@ class _CalendarScreen extends State<CalendarScreen> {
   DateTime? _selectedDay;
   late final ValueNotifier<List<Event>> _selectedEvents;
   late String currentUser;
-  late CollectionReference logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
+  late CollectionReference logCollection;
+  late Map<DateTime, List<Event>> _eventStorage;
+  bool _initialized = false; // Flag to track initialization
 
   @override
   void initState() {
     super.initState();
 
-    currentUser = FirebaseAuth.instance.currentUser!.uid;
     _selectedDay = _focusedDay;
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!) as List<Event>);
+    initialize().then((_) {
+      _selectedEvents = _getEventsForDay(_selectedDay!);
+    });
   }
 
-  Future<LinkedHashMap<DateTime, List<Event>>> fetchAndGroupEvents(String currentUser) async {
-    Map<DateTime, List<Event>> eventStorage = await getEvents(currentUser);
-    return LinkedHashMap<DateTime, List<Event>>(
-      equals: isSameDay,
-      hashCode: getHashCode,
-    )..addAll(eventStorage);
+  Future<void> initialize() async {
+    currentUser = FirebaseAuth.instance.currentUser!.uid;
+    logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
+    _eventStorage = await getEvents(currentUser);
+    print("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage.length}");
+    _initialized = true; // Set the initialization flag
   }
 
   Future<Map<DateTime, List<Event>>> getEvents(String currentUser) async {
     Map<DateTime, List<Event>> eventStorage = {};
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
-    await FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs').get();
+      await FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs').get();
 
     for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot in querySnapshot.docs) {
       Map<String, dynamic> logData = documentSnapshot.data();
@@ -68,9 +72,21 @@ class _CalendarScreen extends State<CalendarScreen> {
   }
 
   List<Event> _getEventsForDay(DateTime day) {
-    LinkedHashMap<DateTime, List<Event>> eventStorage = fetchAndGroupEvents(currentUser) as LinkedHashMap<DateTime, List<Event>>;
-    return eventStorage[day] ?? [];
+    if (_initialized) {
+      return _eventStorage?[day] ?? [];
+    } else {
+      return []; // Return an empty list if not initialized yet
+    }
   }
+  /*
+  Future<LinkedHashMap<DateTime, List<Event>>> fetchAndGroupEvents(String currentUser) async {
+    Map<DateTime, List<Event>> eventStorage = await getEvents(currentUser);
+    return LinkedHashMap<DateTime, List<Event>>(
+      equals: isSameDay,
+      hashCode: getHashCode,
+    )..addAll(eventStorage);
+  } */
+
 
   Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -79,7 +95,7 @@ class _CalendarScreen extends State<CalendarScreen> {
         _focusedDay = focusedDay;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay) as List<Event>;
+      _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
