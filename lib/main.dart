@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:units/login.dart';
 import 'api/firebase_api.dart';
 import 'notification_screen.dart'; // notifications
-
+import 'package:timezone/data/latest.dart' as tz; // timed notifications
 
 // Used for navigating between notifications
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -20,6 +20,7 @@ void main() async {
     ),
   );
   await FirebaseApi().initNotifications();
+  tz.initializeTimeZones();
   runApp(MyApp());
 }
 
