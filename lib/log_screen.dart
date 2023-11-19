@@ -11,6 +11,7 @@ import 'notification_screen.dart';
 
 
 class LogScreen extends StatefulWidget {
+
   @override
   _LogScreen createState() => _LogScreen();
 }
@@ -19,6 +20,7 @@ class _LogScreen extends State<LogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.yellow.shade800,
         appBar: AppBar(
           //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
@@ -32,64 +34,55 @@ class _LogScreen extends State<LogScreen> {
                     MaterialPageRoute(builder: (BuildContext context) {
                       return Home();
                     }));
-            }),
+              }),
+            //log button
+            IconButton(
+              icon: const Icon(Icons.mode_edit_outlined),
+               tooltip: 'Log',
+               onPressed: () {
+                  // do nothing, already at page
+              }),
 
-    //log button
-    IconButton(
-    icon: const Icon(Icons.mode_edit_outlined),
-    tooltip: 'Log',
-    onPressed: () {
-    // do nothing, already at page
-    },
-    ),
+            // Calendar Button
+            IconButton(
+              icon: const Icon(Icons.calendar_month),
+              tooltip: 'Calendar',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return CalendarScreen();
+                }));
+              }),
 
-    // Calendar Button
-    IconButton(
-    icon: const Icon(Icons.calendar_month),
-    tooltip: 'Calendar',
-    onPressed: () {
-    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-    return CalendarScreen();
-    }));
-    },
-    ),
-
-    //Notifications Button
-    IconButton(
-    icon: const Icon(Icons.new_releases_outlined),
-    tooltip: 'Notifications',
-    onPressed: ()  {
-    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-    return NotificationScreen();
-    }));
-    },
-    ),
-
-    //Calendar Button
-
-    //Reminder Button
-    IconButton(
-    icon: const Icon(Icons.add_alert_outlined),
-    tooltip: 'Reminders',
-    onPressed: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (BuildContext context) {
-          return ReminderScreen();
-        }));
-    })
+            //Notifications Button
+            IconButton(
+              icon: const Icon(Icons.new_releases_outlined),
+              tooltip: 'Notifications',
+              onPressed: ()  {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return NotificationScreen();
+                }));
+              }),
+            //Reminder Button
+           IconButton(
+               icon: const Icon(Icons.add_alert_outlined),
+               tooltip: 'Reminders',
+               onPressed: () {
+                 Navigator.of(context).push(
+                     MaterialPageRoute(builder: (BuildContext context) {
+                       return ReminderScreen();
+                     }));
+                }),
           ]),
 
 
-      body: Container(
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(32),
-
+      body: Center(
         child: Column(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(top: 0.0, bottom: 20.0),
+              padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: Text("Logs",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 2,)
-              ,),
+              ),
+             //New Log Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.blueAccent,
@@ -102,10 +95,46 @@ class _LogScreen extends State<LogScreen> {
                 }));
               },
             ),
+             //Log List
+            SizedBox(
+              height: 500,
+              child: _ListOfLogs,
+              )
+
           ],
         ),
       ),
     );
   }
+
+  var _ListOfLogs = ListView.builder(
+      itemCount: 12,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(10),
+          child: ListTile(
+            shape: RoundedRectangleBorder(
+              side: const BorderSide(width: 2),
+              borderRadius: BorderRadius.circular(20)
+            ),
+            leading: const CircleAvatar(
+            backgroundColor: Colors.blueAccent,
+              child: Icon(Icons.list_alt_outlined)
+            ),
+            title: Row(
+              children: [
+                Text("Date"),
+                Text("Wake Time"),
+                Text("Sleep Time")
+              ],
+            ),
+            subtitle:
+              Text("Hopefully this will extend downwards, so that it is more visually appleasing")
+          )
+        );
+      }
+  );
+
+
 }
 

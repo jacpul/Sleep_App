@@ -73,6 +73,7 @@ class BasicPresenter implements UNITSPresenter{
     //  The time that is returned is in the format of a double ex) 12.30 is 12:30.
 
     _viewModel.message = temp.toString();
+
     /*UnitType tempTime = temp[1];
     UnitType tempMessage = temp[2];*/
 
@@ -89,6 +90,9 @@ class BasicPresenter implements UNITSPresenter{
     }*/
     //print(_viewModel.messageInString);
     _view.updateMessage(_viewModel.message);
+
+    _view.updateSleepType(_viewModel.unitTypeSleep);
+    _view.updateWakeType(_viewModel.unitTypeWake);
     /*_view.updateTimeString(_viewModel.timeType);
     _view.updateResultValue(_viewModel.resultInString);*/
   }

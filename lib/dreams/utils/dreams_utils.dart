@@ -22,7 +22,7 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
     tempHour = 12.0 - sleepHour;
     tempHour = tempHour + wakeHour;
     tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute >= 60) {
+    if (tempMinute > 60) {
       tempMinute -= 60;
       tempHour += 1;
     }
@@ -34,7 +34,7 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
     tempHour = 12.0 - sleepHour;
     tempHour = tempHour + wakeHour;
     tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute >= 60) {
+    if (tempMinute > 60) {
       tempMinute -= 60;
       tempHour += 1;
     }

@@ -7,6 +7,8 @@ class UNITSViewModel {
 
   //String _timeType = "";
   String _message = "";
+  String _wakeType = "";
+  String _sleepType = "";
 
   double sleepHour = 0.0;
   double sleepMinute = 0.0;

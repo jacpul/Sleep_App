@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:units/dreams/utils/dreams_constant.dart';
 import '../../calendar_screen.dart';
 import '../../main.dart';
 import '../../notification_screen.dart';
@@ -40,6 +41,8 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   String year = "0.0";
   String notes = "";
   var _message = '';
+  var _wakeType = "";
+  var _sleepType = "";
   var _valueSleepTime = 0;
   var _valueWakeTime = 0;
   double currentSliderValue = 0;
@@ -99,6 +102,26 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   void updateSleepTimeRadio(int value){
     setState(() {
       _valueSleepTime = value;
+    });
+  }
+
+  @override
+  void updateSleepType(UnitType type) {
+    setState(() {
+      if(type == UnitType.AM)
+        _sleepType = "AM";
+      if(type == UnitType.PM)
+        _sleepType = "PM";
+    });
+  }
+
+  @override
+  void updateWakeType(UnitType type) {
+    setState(() {
+      if(type == UnitType.AM)
+        _wakeType = "AM";
+      if(type == UnitType.PM)
+        _wakeType = "PM";
     });
   }
 
@@ -318,12 +341,16 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     return ElevatedButton(
       onPressed: () {
         _logCalculator();
+        print("wake type is: " + _wakeType);
+        print("sleep type is: " + _sleepType);
         if(errorValue == 0) {
           CollectionReference colRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
           colRef.add({
             'Day': dayController.text,
             'Month': monthController.text,
             'Year': yearController.text,
+            'Bed Time': _sleepHourController.text + ":" + _sleepMinuteController.text + _sleepType,
+            'Wake Time': _wakeHourController.text + ":" +_wakeMinuteController.text + _wakeType,
             'Hours_Slept': _message,
             'Sleep_Quality': _sleepHourController.text,
             'Notes': notesController.text,
@@ -564,4 +591,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       ),
     );
   }
+
+
 }
