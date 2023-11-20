@@ -28,6 +28,7 @@ class _CalendarScreen extends State<CalendarScreen> {
   late String currentUser;
   late CollectionReference logCollection;
   late Map<DateTime, List<Event>> _eventStorage;
+  late List<Map<String, dynamic>> logStorage;
   bool _initialized = false; // Flag to track initialization
 
   @override
@@ -35,19 +36,30 @@ class _CalendarScreen extends State<CalendarScreen> {
     super.initState();
 
     _selectedDay = _focusedDay;
-    initialize().then((_) {
-      _selectedEvents = _getEventsForDay(_selectedDay!);
-    });
+    initialize();
+    while (!_initialized) {
+      //do nothing
+    }
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
-  Future<void> initialize() async {
+
+  void initialize() async {
     currentUser = FirebaseAuth.instance.currentUser!.uid;
     logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
-    _eventStorage = await getEvents(currentUser);
-    print("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage.length}");
-    _initialized = true; // Set the initialization flag
+    List<Map<String, dynamic>> tempList = [];
+    var logData = await logCollection.get();
+    logData.docs.forEach((element) {
+      print(element.id);
+    });
+    //_eventStorage = await getEvents(currentUser);
+    debugPrint("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage.length}");
+    setState(() {
+      logStorage = tempList;
+      _initialized = true; // Set the initialization flag
+    });
   }
-
+/*
   Future<Map<DateTime, List<Event>>> getEvents(String currentUser) async {
     Map<DateTime, List<Event>> eventStorage = {};
     QuerySnapshot<Map<String, dynamic>> querySnapshot =
@@ -69,7 +81,7 @@ class _CalendarScreen extends State<CalendarScreen> {
       eventStorage[date]!.add(event);
     }
     return eventStorage;
-  }
+  } */
 
   List<Event> _getEventsForDay(DateTime day) {
     if (_initialized) {
@@ -86,7 +98,6 @@ class _CalendarScreen extends State<CalendarScreen> {
       hashCode: getHashCode,
     )..addAll(eventStorage);
   } */
-
 
   Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -168,7 +179,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
         body: Column(
             children: [
-              TableCalendar<Event>(
+              _initialized?TableCalendar<Event>(
                 firstDay: eventFirstDay,
                 lastDay: eventLastDay,
                 focusedDay: _focusedDay,
@@ -191,7 +202,7 @@ class _CalendarScreen extends State<CalendarScreen> {
                   // No need to call `setState()` here
                   _focusedDay = focusedDay;
                 },
-              ),
+              ):Text("No Data"),
               const SizedBox(height: 7.0),
               Expanded(
                 child: ValueListenableBuilder<List<Event>>(
