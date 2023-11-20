@@ -8,25 +8,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../lib/login.dart';
+import '../lib/dreams/presenter/dreams_presenter.dart';
+import '../lib/dreams/viewmodel/dreams_viewmodel.dart';
+
 
 
 void main() {
-  testWidgets('Test Sleep Log', (WidgetTester tester) async {
+  /*testWidgets('Test Sleep Log', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(Loginpage());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    await tester.enterText(find.textContaining(AutofillHints.username), 'gabe3@gmail.com');
+    await tester.enterText(find.textContaining(AutofillHints.password), '123456');
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    await tester.tap(find.byType(InkWell));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+
+
+  });*/
+  testWidgets('Test Sleep Log', (WidgetTester tester) async {
+    UNITSPresenter testP = new UNITSPresenter();
+    testP.onWakeHourSubmitted("7");
+    testP.onWakeMinuteSubmitted("30");
+    testP.onSleepHourSubmitted("10");
+    testP.onWakeMinuteSubmitted("30");
+    testP.onCalculateClicked("7", "30", "10", "30");
+
+    UNITSViewModel testVM = new UNITSViewModel();
+
+    expect(testVM.messageInString, "9");
   });
 
-
 }
+
