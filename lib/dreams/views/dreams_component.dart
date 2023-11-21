@@ -346,11 +346,9 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         if(errorValue == 0) {
           CollectionReference colRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
           colRef.add({
-            'Day': dayController.text,
-            'Month': monthController.text,
-            'Year': yearController.text,
-            'Bed Time': _sleepHourController.text + ":" + _sleepMinuteController.text + _sleepType,
-            'Wake Time': _wakeHourController.text + ":" +_wakeMinuteController.text + _wakeType,
+            'Day': int.parse(dayController.text),
+            'Month': int.parse(monthController.text),
+            'Year': int.parse(yearController.text),
             'Hours_Slept': _message,
             'Sleep_Quality': _sleepHourController.text,
             'Notes': notesController.text,

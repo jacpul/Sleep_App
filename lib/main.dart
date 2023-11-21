@@ -19,7 +19,7 @@ void main() async {
     ),
   );
   await FirebaseApi().initNotifications();
-  //runApp(Loginpage());
-  runApp(Home());
+  runApp(Loginpage());
+  //runApp(Home());
 }
 

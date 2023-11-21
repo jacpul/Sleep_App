@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
@@ -17,8 +21,43 @@ class LogScreen extends StatefulWidget {
 }
 
 class _LogScreen extends State<LogScreen> {
+  String currentUser = FirebaseAuth.instance.currentUser!.uid;
+  late var logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
+  late List<Map<String, dynamic>> items;
+  bool isLoaded = false;
+
+  _functionCounter() async {
+    List<Map<String, dynamic>> tempList = [];
+    var logData = await logCollection.get();
+    logData.docs.forEach((element) {
+      tempList.add(element.data());
+    });
+
+    tempList.sort((a, b) {
+      // Compare years
+      var yearComparison = a['Year'].compareTo(b['Year']);
+      if (yearComparison != 0) {
+        return yearComparison;
+      }
+
+      // Compare months if years are equal
+      var monthComparison = a['Month'].compareTo(b['Month']);
+      if (monthComparison != 0) {
+        return monthComparison;
+      }
+
+      // Compare days if both years and months are equal
+      return a['Day'].compareTo(b['Day']);
+    });
+
+    setState(() {
+      items = tempList;
+      isLoaded = true;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    _functionCounter();
     return Scaffold(
       backgroundColor: Colors.yellow.shade800,
         appBar: AppBar(
@@ -96,26 +135,24 @@ class _LogScreen extends State<LogScreen> {
               },
             ),
              //Log List
-            SizedBox(
-              height: 500,
-              child: _ListOfLogs,
+            Expanded(
+              child: isLoaded?_ListOfLogs:Text("** NO DATA **"),
               )
-
           ],
         ),
       ),
     );
   }
 
-  var _ListOfLogs = ListView.builder(
-      itemCount: 12,
+  late var _ListOfLogs = ListView.builder(
+      itemCount: items.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.all(10),
           child: ListTile(
             shape: RoundedRectangleBorder(
               side: const BorderSide(width: 2),
-              borderRadius: BorderRadius.circular(20)
+              borderRadius: BorderRadius.circular(20),
             ),
             leading: const CircleAvatar(
             backgroundColor: Colors.blueAccent,
@@ -123,13 +160,15 @@ class _LogScreen extends State<LogScreen> {
             ),
             title: Row(
               children: [
-                Text("Date"),
-                Text("Wake Time"),
-                Text("Sleep Time")
+                Text(items[index]["Month"].toString() + "-"),
+                Text(items[index]["Day"].toString() + "-"),
+                Text(items[index]["Year"].toString()),
+                Text("  Hours Slept: " + items[index]["Hours_Slept"].toString())
               ],
             ),
             subtitle:
-              Text("Hopefully this will extend downwards, so that it is more visually appleasing")
+              Text("Sleep Quality: " + items[index]["Sleep_Quality"] +
+              "  Notes: " + items[index]["Notes"])
           )
         );
       }
