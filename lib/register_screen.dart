@@ -30,7 +30,6 @@ class _RegisterPage extends State<RegisterPage> {
   }
 
   Future signUp() async {
-      print('Sign Up button tapped'); // Add this line
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
