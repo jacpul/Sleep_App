@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoResource extends StatefulWidget {
@@ -8,7 +9,8 @@ class VideoResource extends StatefulWidget {
 }
 
 class _VideoResource extends State<VideoResource> {
-  late YoutubePlayerController controller;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,15 +55,14 @@ class _VideoResource extends State<VideoResource> {
                                     textAlign: TextAlign.center),
                                 onPressed: () async {
                                   final url = document["url"];
-                                    void initState(){
-                                      controller = YoutubePlayerController(initialVideoId: url!);
-                                      super.initState();
-                                    }
-                                    YoutubePlayer(
-                                      controller: controller,
-                                      showVideoProgressIndicator: true,
 
+                                  if (await canLaunch(url)) {
+                                    await launch(
+                                      url,
+                                      forceWebView: true,
+                                      enableJavaScript: true,
                                     );
+                                  }
                                 }
                             ),
                             Divider(
@@ -80,3 +81,12 @@ class _VideoResource extends State<VideoResource> {
     );
   }
 }
+
+/*late YoutubePlayerController controller;
+void initState(){
+  controller = YoutubePlayerController(initialVideoId: https://www.youtube.com/watch?v=eTgNgGO_bLs);
+      super.initState();
+}
+YoutubePlayer(
+controller: controller,
+showVideoProgressIndicator: true, );*/
