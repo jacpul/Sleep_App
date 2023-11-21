@@ -16,7 +16,7 @@ class _VideoResource extends State<VideoResource> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Online Resources"),
+          title: Text("Video Resources"),
           centerTitle: true,
           backgroundColor: Colors.deepOrangeAccent
       ),

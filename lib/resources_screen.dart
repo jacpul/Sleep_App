@@ -120,7 +120,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return TipScreen();
+                        return VideoResource();
                       }),
                     );
                   },
@@ -130,7 +130,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return VideoResource();
+                        return TipScreen();
                       }),
                     );
                   },
