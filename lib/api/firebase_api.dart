@@ -2,8 +2,23 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import '../notification_screen.dart';
-import '../main_screen.dart';
 import '../main.dart';
+import 'package:timezone/standalone.dart' as tz; // timed notifications
+
+final location = tz.getLocation('America/Chicago');
+tz.TZDateTime currentTime = tz.TZDateTime.now(location);
+
+int convertHour(pmOrAm, hour) {
+  int newHour = int.parse(hour);
+
+  if (pmOrAm == 1 && newHour != 12) {
+    newHour += 12;
+  } else if (pmOrAm == 0 && newHour == 12) {
+    newHour = 0;
+  }
+
+  return newHour;
+}
 
 Future<void> handleBackgroundMessage(RemoteMessage message) async {
   print('Title: ${message.notification?.title}');
@@ -39,14 +54,26 @@ class FirebaseApi {
 
     await _localNotifications.initialize(
       settings,
-      onSelectNotification: (payload) {
-        final message = RemoteMessage.fromMap(jsonDecode(payload!));
-        handleMessage(message);
+      onSelectNotification: (payload) async {
+        if (payload != null && payload.isNotEmpty) {
+          try {
+            final message = RemoteMessage.fromMap(jsonDecode(payload!));
+            handleMessage(message);
+          }
+          catch (e) {
+            print("Error processing JSON: $e");
+          }
+        }
+        else {
+          navigatorKey.currentState?.pushNamed(
+            NotificationScreen.route,
+          );
+        }
       },
     );
 
     final platform = _localNotifications.resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>();
+        AndroidFlutterLocalNotificationsPlugin>();
     await platform?.createNotificationChannel(_androidChannel);
   }
 
@@ -80,6 +107,38 @@ class FirebaseApi {
         payload: jsonEncode(message.toMap()),
       );
     });
+
+  }
+
+  Future scheduleNotification(int pmOrAm, String month, String day, String hour, String minute, String notes) async {
+    var scheduledNotificationDateTime = tz.TZDateTime(
+      location,
+      currentTime.year,
+      int.parse(month),
+      int.parse(day),
+      convertHour(pmOrAm, hour),
+      int.parse(minute),
+    );
+
+    await _localNotifications.zonedSchedule(
+        0,
+        'Reminder Message',
+        notes,
+        tz.TZDateTime.from(
+          scheduledNotificationDateTime,
+          location,
+        ),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            _androidChannel.id,
+            _androidChannel.name,
+            channelDescription: _androidChannel.description,
+            icon: '@drawable/os_iconsleep',
+          ),
+        ),
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true
+    );
 
   }
 
