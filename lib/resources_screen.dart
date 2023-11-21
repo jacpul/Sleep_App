@@ -63,8 +63,8 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                             }
                       ),
                       Divider(
-                        color: Colors.blueAccent,
-                        thickness: 3,
+                        color: Colors.yellow.shade600,
+                        thickness: 1,
                       )
                     ]
                   )
