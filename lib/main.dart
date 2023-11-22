@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:units/login.dart';
 import 'api/firebase_api.dart';
 import 'main_screen.dart'; // notifications
+import 'main_screen.dart';
+import 'api/firebase_api.dart'; // notifications
+import 'notification_screen.dart'; // notifications
+import 'package:timezone/data/latest.dart' as tz; // timed notifications
+
 
 // Used for navigating between notifications
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -19,7 +24,21 @@ void main() async {
     ),
   );
   await FirebaseApi().initNotifications();
-  runApp(Loginpage());
-  //runApp(Home());
+  tz.initializeTimeZones();
+  runApp(MyApp());
+}
+
+// Run MyApp so we are able to use the navigator everywhere in the app
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: navigatorKey,
+      routes: {
+        NotificationScreen.route: (context) => NotificationScreen()
+      },
+      home: Loginpage(),
+    );
+  }
 }
 
