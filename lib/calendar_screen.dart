@@ -24,7 +24,7 @@ class _CalendarScreen extends State<CalendarScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  late ValueNotifier<List<Event>> _selectedEvents;
   late String currentUser;
   late CollectionReference logCollection;
   LinkedHashMap<DateTime, List<Event>>? _eventStorage;
@@ -34,6 +34,7 @@ class _CalendarScreen extends State<CalendarScreen> {
   void initState() {
     super.initState();
 
+    _selectedEvents = ValueNotifier([]);
     _selectedDay = _focusedDay;
     initialize();
   }
@@ -45,8 +46,9 @@ class _CalendarScreen extends State<CalendarScreen> {
     var logData = await logCollection.get();
     debugPrint("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage?.length}");
     _eventStorage = await populateLogList(logData);
-    _selectedEvents = ValueNotifier(await _getEventsForDay(_selectedDay!));
+    //_selectedEvents = ValueNotifier(await _getEventsForDay(_selectedDay!));
     setState(() {
+      _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
       _initialized = true; // Set the initialization flag
     });
   }
@@ -66,7 +68,7 @@ class _CalendarScreen extends State<CalendarScreen> {
         _focusedDay = focusedDay;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay) as List<Event>;
+      _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
@@ -162,12 +164,15 @@ class _CalendarScreen extends State<CalendarScreen> {
                   // No need to call `setState()` here
                   _focusedDay = focusedDay;
                 },
-              ): Text("Populating Data..."),
+              ): CircularProgressIndicator(),
               const SizedBox(height: 7.0),
               Expanded(
                 child: ValueListenableBuilder<List<Event>>(
                   valueListenable: _selectedEvents,
                   builder: (context, value, _) {
+                    if (_selectedEvents.value == null) {
+                      return CircularProgressIndicator();
+                    } else {
                     return ListView.builder(
                       itemCount: value.length,
                       itemBuilder: (context, index) {
@@ -186,8 +191,7 @@ class _CalendarScreen extends State<CalendarScreen> {
                           ),
                         );
                       },
-                    );
-                  },
+                    );}},
                 ),
               ),
             ]
