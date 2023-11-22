@@ -27,8 +27,7 @@ class _CalendarScreen extends State<CalendarScreen> {
   late final ValueNotifier<List<Event>> _selectedEvents;
   late String currentUser;
   late CollectionReference logCollection;
-  late Map<DateTime, List<Event>> _eventStorage;
-  late List<Map<String, dynamic>> logStorage;
+  LinkedHashMap<DateTime, List<Event>>? _eventStorage;
   bool _initialized = false; // Flag to track initialization
 
   @override
@@ -37,67 +36,28 @@ class _CalendarScreen extends State<CalendarScreen> {
 
     _selectedDay = _focusedDay;
     initialize();
-    while (!_initialized) {
-      //do nothing
-    }
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
 
   void initialize() async {
     currentUser = FirebaseAuth.instance.currentUser!.uid;
     logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
-    List<Map<String, dynamic>> tempList = [];
     var logData = await logCollection.get();
-    logData.docs.forEach((element) {
-      print(element.id);
-    });
-    //_eventStorage = await getEvents(currentUser);
-    debugPrint("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage.length}");
+    debugPrint("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage?.length}");
+    _eventStorage = await populateLogList(logData);
+    _selectedEvents = ValueNotifier(await _getEventsForDay(_selectedDay!));
     setState(() {
-      logStorage = tempList;
       _initialized = true; // Set the initialization flag
     });
   }
-/*
-  Future<Map<DateTime, List<Event>>> getEvents(String currentUser) async {
-    Map<DateTime, List<Event>> eventStorage = {};
-    QuerySnapshot<Map<String, dynamic>> querySnapshot =
-      await FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs').get();
-
-    for (QueryDocumentSnapshot<Map<String, dynamic>> documentSnapshot in querySnapshot.docs) {
-      Map<String, dynamic> logData = documentSnapshot.data();
-      String title = "Test";
-      String day = logData['Day'];
-      String month = logData['Month'];
-      String year = logData['Year'];
-      String hourSlept = logData['Hours_Slept'];
-
-      DateTime date = DateTime(int.parse(year), int.parse(month), int.parse(day));
-      Event event = Event(title, day, month, year);
-      if (eventStorage[date] == null) {
-        eventStorage[date] = [];
-      }
-      eventStorage[date]!.add(event);
-    }
-    return eventStorage;
-  } */
 
   List<Event> _getEventsForDay(DateTime day) {
     if (_initialized) {
       return _eventStorage?[day] ?? [];
     } else {
-      return []; // Return an empty list if not initialized yet
+      return [];
     }
   }
-  /*
-  Future<LinkedHashMap<DateTime, List<Event>>> fetchAndGroupEvents(String currentUser) async {
-    Map<DateTime, List<Event>> eventStorage = await getEvents(currentUser);
-    return LinkedHashMap<DateTime, List<Event>>(
-      equals: isSameDay,
-      hashCode: getHashCode,
-    )..addAll(eventStorage);
-  } */
 
   Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
     if (!isSameDay(_selectedDay, selectedDay)) {
@@ -106,7 +66,7 @@ class _CalendarScreen extends State<CalendarScreen> {
         _focusedDay = focusedDay;
       });
 
-      _selectedEvents.value = _getEventsForDay(selectedDay);
+      _selectedEvents.value = _getEventsForDay(selectedDay) as List<Event>;
     }
   }
 
@@ -179,7 +139,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
         body: Column(
             children: [
-              _initialized?TableCalendar<Event>(
+              _initialized ? TableCalendar<Event>(
                 firstDay: eventFirstDay,
                 lastDay: eventLastDay,
                 focusedDay: _focusedDay,
@@ -202,7 +162,7 @@ class _CalendarScreen extends State<CalendarScreen> {
                   // No need to call `setState()` here
                   _focusedDay = focusedDay;
                 },
-              ):Text("No Data"),
+              ): Text("Populating Data..."),
               const SizedBox(height: 7.0),
               Expanded(
                 child: ValueListenableBuilder<List<Event>>(
