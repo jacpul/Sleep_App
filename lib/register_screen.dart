@@ -37,6 +37,11 @@ class _RegisterPage extends State<RegisterPage> {
       // Check if the email already exists in the authentication database
       await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
 
+      // Continue with the registration process
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       // If no exception is thrown, the email does not exist
       String uID = FirebaseAuth.instance.currentUser!.uid.toString();
       final data = <String, String>{
@@ -44,12 +49,6 @@ class _RegisterPage extends State<RegisterPage> {
       };
       FirebaseFirestore db = FirebaseFirestore.instance;
       await db.collection('users').doc(uID).set(data);
-
-      // Continue with the registration process
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
 
       Navigator.of(context).push(
         MaterialPageRoute(

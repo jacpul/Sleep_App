@@ -350,7 +350,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
             'Month': int.parse(monthController.text),
             'Year': int.parse(yearController.text),
             'Hours_Slept': _message,
-            'Sleep_Quality': _sleepHourController.text,
+            'Sleep_Quality': currentSliderValue.toString(),
             'Notes': notesController.text,
           });
           showDialog(
@@ -567,6 +567,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         label: currentSliderValue.round().toString(),
         onChanged: (value) {
           setState(() {
+            print("in slider with value: " + value.toString());
             currentSliderValue = value;
           });
         }

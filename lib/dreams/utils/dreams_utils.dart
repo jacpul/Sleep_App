@@ -20,28 +20,41 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
 
   //sleep at night, wake at morning
   if(sleep == UnitType.PM && wake == UnitType.AM) {
-    tempHour = 12.0 - sleepHour;
-    tempHour = tempHour + wakeHour;
-    tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute > 60) {
-      tempMinute -= 60;
-      tempHour += 1;
+    //Convert to Military Time
+    if(sleepHour < 12) {
+      sleepHour = sleepHour + 12;
     }
-    result = tempHour + (tempMinute/100);
+    tempHour = (24 - sleepHour) + wakeHour;
+    if(sleepMinute > wakeMinute) {
+      tempHour--;
+      tempMinute = 60 - (sleepMinute - wakeMinute);
+      result = tempHour + (tempMinute/100);
+    } else {
+      tempMinute = (sleepMinute - wakeMinute).abs();
+      result = tempHour + (tempMinute / 100);
+    }
     return result;
   }
+
+
+
   //sleep in morning, wake at night
   if(sleep == UnitType.AM && wake == UnitType.PM) {
-    tempHour = 12.0 - sleepHour;
-    tempHour = tempHour + wakeHour;
-    tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute > 60) {
-      tempMinute -= 60;
-      tempHour += 1;
+    //Convert to Military
+    if(wakeHour < 12) {
+      wakeHour = wakeHour + 12;
     }
-    result = tempHour + (tempMinute/100);
-    return result;
+    tempHour = wakeHour - sleepHour;
+    if(sleepMinute > wakeMinute) {
+      tempHour--;
+      tempMinute = 60 - (sleepMinute - wakeMinute);
+      result = tempHour + (tempMinute/100);
+    } else {
+      tempMinute = (sleepMinute - wakeMinute).abs();
+      result = tempHour + (tempMinute / 100);
+    }
   }
+
   //sleep at night, wake at night
   if(sleep == UnitType.PM && wake == UnitType.PM) {
     tempHour = wakeHour - sleepHour;
