@@ -1,12 +1,14 @@
 import '../utils/dreams_constant.dart';
 
 class UNITSViewModel {
-  double _units = 0.0;
+  //double _units = 0.0;
   UnitType _unitTypeWake = UnitType.AM;
   UnitType _unitTypeSleep = UnitType.AM;
 
-  String _timeType = "";
+  //String _timeType = "";
   String _message = "";
+  String _wakeType = "";
+  String _sleepType = "";
 
   double sleepHour = 0.0;
   double sleepMinute = 0.0;
@@ -18,7 +20,7 @@ class UNITSViewModel {
   int sleepQuality = -1;
   String sleepNotes = "";
 
-
+/*
   double get units => _units;
   set units(double outResult){
     _units = outResult;
@@ -28,7 +30,7 @@ class UNITSViewModel {
   set timeType(String outResult){
     _timeType = outResult;
   }
-
+ */
   String get message => _message;
   set message(String outResult){
     _message = outResult;
@@ -44,7 +46,7 @@ class UNITSViewModel {
     _unitTypeWake = setValue;
   }
 
-  int get wakeValue => _unitTypeWake == UnitType.AM?0 : 1; //Set unit type - 1 is KPG
+  int get wakeValue => _unitTypeWake == UnitType.AM?0 : 1;
   set wakeValue(int value){
     if(value == 0){
       _unitTypeWake = UnitType.AM;
@@ -53,7 +55,7 @@ class UNITSViewModel {
     }
   }
 
-  int get sleepValue => _unitTypeSleep == UnitType.AM?0 : 1; //Set unit type - 1 is KPG
+  int get sleepValue => _unitTypeSleep == UnitType.AM?0 : 1;
   set sleepValue(int value){
     if(value == 0){
       _unitTypeSleep = UnitType.AM;
@@ -62,11 +64,11 @@ class UNITSViewModel {
     }
   }
 
-  String get timeInString => _timeType;
+  //String get timeInString => _timeType;
   String get messageInString => _message;
-  String get resultInString => units.toStringAsFixed(2);
-  String get sleepHourInString => sleepHour != null ? sleepHour.toString():'';
-  String get sleepMinuteInString => sleepMinute != null ? sleepMinute.toString():'';
+  //String get resultInString => units.toStringAsFixed(2);
+  //String get sleepHourInString => sleepHour != null ? sleepHour.toString():'';
+  //String get sleepMinuteInString => sleepMinute != null ? sleepMinute.toString():'';
 
   UNITSViewModel();
 }

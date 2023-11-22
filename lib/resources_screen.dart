@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:units/reminder_screen.dart';
+import 'package:units/videoresource_screen.dart';
 import 'article_tips.dart';
 import 'calendar_screen.dart';
 import 'main_screen.dart';
@@ -74,7 +76,9 @@ class _ResourcesScreen extends State<ResourcesScreen> {
               icon: const Icon(Icons.add_alert_outlined),
               tooltip: 'Reminders',
               onPressed: () {
-                //returns nothing, already in reminders
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ReminderScreen();
+                }));
               },
             )
           ]
@@ -126,7 +130,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return TipScreen();
+                        return VideoResource();
                       }),
                     );
                   },

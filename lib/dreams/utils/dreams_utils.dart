@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:units/dreams/utils/dreams_constant.dart';
+//import 'package:units/dreams/utils/dreams_constant.dart';
+import 'dreams_constant.dart';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 double calculator(double wakeHour, double wakeMinute, double sleepHour, double sleepMinute, UnitType wake, UnitType sleep) {
-
+  print("in calculator");
   //List result = new List.filled(3, null, growable: false);
   double tempHour = 0.0;
   double tempMinute = 0.00;
@@ -22,7 +23,7 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
     tempHour = 12.0 - sleepHour;
     tempHour = tempHour + wakeHour;
     tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute >= 60) {
+    if (tempMinute > 60) {
       tempMinute -= 60;
       tempHour += 1;
     }
@@ -34,7 +35,7 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
     tempHour = 12.0 - sleepHour;
     tempHour = tempHour + wakeHour;
     tempMinute = wakeMinute + sleepMinute;
-    if (tempMinute >= 60) {
+    if (tempMinute > 60) {
       tempMinute -= 60;
       tempHour += 1;
     }

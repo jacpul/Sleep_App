@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:units/dreams/utils/dreams_constant.dart';
 import '../../calendar_screen.dart';
 import '../../main.dart';
 import '../../notification_screen.dart';
@@ -39,10 +40,9 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   String day = "0.0";
   String year = "0.0";
   String notes = "";
-  var _resultString = '';
-  var _timeString = '';
   var _message = '';
-  var _value = 0;
+  var _wakeType = "";
+  var _sleepType = "";
   var _valueSleepTime = 0;
   var _valueWakeTime = 0;
   double currentSliderValue = 0;
@@ -69,7 +69,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   }
 
   void _logCalculator() {
-    print("in calculator");
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       this.widget.presenter.onSleepMinuteSubmitted(_sleepMinute);
@@ -84,55 +83,15 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     }
   }
 
-  void enterLogInDB() {
-    print("enterLogInDB");
-
-  }
-
-  @override
-  void updateResultValue(String resultValue){
-    setState(() {
-      _resultString = resultValue;
-    });
-  }
-  @override
-  void updateTimeString(String timeString){
-    setState(() {
-      _timeString = timeString;
-    });
-  }
   @override
   void updateMessage(String message){
+    _message = message;
     setState(() {
-      _message = message;
+      print(message);
+      //_message = message;
     });
   }
-  @override
-  void updateSleepMinute({required String sleepMinute}){
-    setState(() {
-      // ignore: unnecessary_null_comparison
-      _sleepMinuteController.text = sleepMinute != null?sleepMinute:'';
-    });
-  }
-  @override
-  void updateSleepHour({required String sleepHour}){
-    setState(() {
-      // ignore: unnecessary_null_comparison
-      _sleepHourController.text = sleepHour != null?sleepHour:'';
-    });
-  }
-  @override
-  void updateHour({required String hour}) {
-    setState(() {
-      _wakeHourController.text = hour != null ? hour : '';
-    });
-  }
-  @override
-  void updateMinute({required String minute}) {
-    setState(() {
-      _wakeMinuteController.text = minute != null ? minute : '';
-    });
-  }
+
   @override
   void updateWakeTimeRadio(int value){
     setState(() {
@@ -141,9 +100,28 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   }
   @override
   void updateSleepTimeRadio(int value){
-    print("updating");
     setState(() {
       _valueSleepTime = value;
+    });
+  }
+
+  @override
+  void updateSleepType(UnitType type) {
+    setState(() {
+      if(type == UnitType.AM)
+        _sleepType = "AM";
+      if(type == UnitType.PM)
+        _sleepType = "PM";
+    });
+  }
+
+  @override
+  void updateWakeType(UnitType type) {
+    setState(() {
+      if(type == UnitType.AM)
+        _wakeType = "AM";
+      if(type == UnitType.PM)
+        _wakeType = "PM";
     });
   }
 
@@ -363,12 +341,14 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     return ElevatedButton(
       onPressed: () {
         _logCalculator();
+        print("wake type is: " + _wakeType);
+        print("sleep type is: " + _sleepType);
         if(errorValue == 0) {
           CollectionReference colRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
           colRef.add({
-            'Day': dayController.text,
-            'Month': monthController.text,
-            'Year': yearController.text,
+            'Day': int.parse(dayController.text),
+            'Month': int.parse(monthController.text),
+            'Year': int.parse(yearController.text),
             'Hours_Slept': _message,
             'Sleep_Quality': _sleepHourController.text,
             'Notes': notesController.text,
@@ -383,13 +363,14 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                     ),
                     actions: [
                       TextButton(
-                          onPressed: () => Navigator.pop(context),
+                          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home())),
                           child: Text('OKAY'))
                     ],
                   ));
           clearText();
         }
         clearText();
+        //dispose();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepOrangeAccent,
@@ -608,4 +589,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
       ),
     );
   }
+
+
 }

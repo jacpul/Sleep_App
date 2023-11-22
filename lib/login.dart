@@ -23,27 +23,51 @@ class Loginpage extends StatefulWidget {
 
 class _Loginpage extends State<Loginpage>  {
 
+  void showInvalidLoginDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Invalid Information'),
+          content: Text('You have entered an incorrect email and or password. Please try again.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
 
     Future signIn(BuildContext context) async {
-      print('login button tapped'); // Add this line
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
-      Navigator.of(context).pushReplacement(
+      try {
+        print('login button tapped');
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        );
+        Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => Home(),
-          )
-      );
+          ),
+        );
+      } on FirebaseAuthException catch (e) {
+        // If an exception is thrown, show the invalid login dialog
+        showInvalidLoginDialog(context);
+      }
     }
 
     @override
     void dispose(){
-      _emailController.dispose();
       _passwordController.dispose();
       super.dispose();
     }
@@ -95,36 +119,39 @@ class _Loginpage extends State<Loginpage>  {
                           obscureText: true, // Hide the password input
                         ),
                       ),
-
-                      // login button
-                      InkWell(
-                        onTap: () => signIn(context),
-                        child: Container(
-                          padding: EdgeInsets.all(16.0),
-                          color: Colors.blue,
-                          child: Text(
-                            'Login',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          InkWell(
+                            onTap: () => goToSignUp(context),
+                            child: Container(
+                              padding: EdgeInsets.all(16.0),
+                              color: Colors.blue,
+                              child: Text(
+                                'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          InkWell(
+                            onTap: () => signIn(context),
+                            child: Container(
+                              padding: EdgeInsets.all(16.0),
+                              color: Colors.blue,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      InkWell(
-                        onTap: () => goToSignUp(context),
-                        child: Container(
-                          padding: EdgeInsets.all(16.0),
-                          color: Colors.blue,
-                          child: Text(
-                            'Register',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                            ),
-                          ),
-                        ),
-                      )
                     ]
                 ),
               ),

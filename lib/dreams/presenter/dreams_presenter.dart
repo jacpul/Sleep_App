@@ -2,6 +2,7 @@ import '../views/dreams_view.dart';
 import '../viewmodel/dreams_viewmodel.dart';
 import '../utils/dreams_constant.dart';
 import '../utils/dreams_utils.dart';
+import 'package:./units/dreams/utils/dreams_constant.dart';
 
 class UNITSPresenter {
 
@@ -73,6 +74,7 @@ class BasicPresenter implements UNITSPresenter{
     //  The time that is returned is in the format of a double ex) 12.30 is 12:30.
 
     _viewModel.message = temp.toString();
+
     /*UnitType tempTime = temp[1];
     UnitType tempMessage = temp[2];*/
 
@@ -87,7 +89,11 @@ class BasicPresenter implements UNITSPresenter{
     } else if (tempMessage == UnitType.WAKE) {
       _viewModel.message = "You should go to bed at";
     }*/
+    //print(_viewModel.messageInString);
     _view.updateMessage(_viewModel.message);
+
+    _view.updateSleepType(_viewModel.unitTypeSleep);
+    _view.updateWakeType(_viewModel.unitTypeWake);
     /*_view.updateTimeString(_viewModel.timeType);
     _view.updateResultValue(_viewModel.resultInString);*/
   }
@@ -108,7 +114,7 @@ class BasicPresenter implements UNITSPresenter{
     print("onTimeOptionChanged");
     print(value);
     if (value != _viewModel.sleepValue) {
-      print("in if");
+
       _viewModel.sleepValue = value;
       saveValue(_viewModel.sleepValue);
 
@@ -119,6 +125,7 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onSleepHourSubmitted(String sleepHour) {
+    print("submitted sleepHour");
       _viewModel.sleepHour = double.parse(sleepHour);
   }
 
@@ -155,6 +162,8 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onNotesSubmitted(String notes) {
+    print("submitted notes");
+
     // TODO: implement onNotesSubmitted
     _viewModel.sleepNotes = notes;
   }
