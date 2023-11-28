@@ -80,6 +80,17 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                   return ReminderScreen();
                 }));
               },
+            ),
+
+            //Resources Button
+            IconButton(
+              icon: const Icon(Icons.book_online_outlined),
+              tooltip: 'Resources',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ResourcesScreen();
+                }));
+              },
             )
           ]
       ),

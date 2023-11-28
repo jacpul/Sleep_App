@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
+import 'package:units/resources_screen.dart';
 import 'calendar_screen.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
@@ -187,6 +188,17 @@ class _NotificationScreen extends State<NotificationScreen> {
                 }));
               },
             ),
+
+            //Resources Button
+            IconButton(
+              icon: const Icon(Icons.book_online_outlined),
+              tooltip: 'Resources',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ResourcesScreen();
+                }));
+              },
+            )
           ],
       ),
 

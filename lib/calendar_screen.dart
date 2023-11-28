@@ -8,6 +8,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:units/resources_screen.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
 
@@ -132,6 +133,17 @@ class _CalendarScreen extends State<CalendarScreen> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                     return ReminderScreen();
+                  }));
+                },
+              ),
+
+              //Resources Button
+              IconButton(
+                icon: const Icon(Icons.book_online_outlined),
+                tooltip: 'Resources',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                    return ResourcesScreen();
                   }));
                 },
               )
