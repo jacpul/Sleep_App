@@ -1,4 +1,3 @@
-//import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'splash_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 
+// Used so we can access the current user that is logged in
 late String currentUser;
 
 class CreateReminder extends StatefulWidget {
@@ -15,6 +15,9 @@ class CreateReminder extends StatefulWidget {
 }
 
 class _CreateReminder extends State<CreateReminder> {
+  /**
+   * Disposes the text editing controllers used in the reminder screen
+   */
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
@@ -144,6 +147,7 @@ class _CreateReminder extends State<CreateReminder> {
                     (double.parse(value) < 1 || double.parse(value) > 12)) {
                   return ('Hour between 1 - 12');
                 }
+                return null;
               },
               onChanged: (value) {
                 setState(() {
@@ -166,6 +170,7 @@ class _CreateReminder extends State<CreateReminder> {
                     (double.parse(value) < 0 || double.parse(value) > 59)) {
                   return ('Minute between 0 - 59');
                 }
+                return null;
               },
               onChanged: (value) {
                 setState(() {
@@ -189,6 +194,7 @@ class _CreateReminder extends State<CreateReminder> {
                   return ('Month between 1 - 12');
                 }
                 errorValue = 0;
+                return null;
               },
               onChanged: (value) {
                 setState(() {
@@ -212,6 +218,7 @@ class _CreateReminder extends State<CreateReminder> {
                   return ('Day between 1 - 31');
                 }
                 errorValue = 0;
+                return null;
               },
               onChanged: (value) {
                 setState(() {
@@ -242,7 +249,7 @@ class _CreateReminder extends State<CreateReminder> {
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.deepOrangeAccent,
+                backgroundColor: Colors.deepOrangeAccent,
                 padding: EdgeInsets.all(10.0),
               ),
               onPressed: () {
@@ -266,7 +273,6 @@ class _CreateReminder extends State<CreateReminder> {
                         child: const Text("Close"),
                       ),
                     ],
-                    //title: const Text("here"),
                     contentPadding: const EdgeInsets.all(20.0),
                     content: const Text("The reminder has been added"),
                   ),
@@ -281,6 +287,19 @@ class _CreateReminder extends State<CreateReminder> {
     );
   }
 
+  /**
+   * Adds a reminder notification to the app, from the current user, this will add the info
+   * to the database and also call the function scheduleNotification, which will schedule a local
+   * push notification to be sent to the user
+   * @pre Date entered is a valid date in the future
+   * @post User data is entered to the database, scheduleNotification is called
+   * @param pmOrAm, 0 = am | 1 = pm
+   * @param hour, hour of the date
+   * @param minute, minute of the date
+   * @param month, month of the date
+   * @param day, day of the date
+   * @param notes, notes for the reminder message to send the user through the notification
+   */
   void createReminderNotification(int pmOrAm, String hour, String minute,
       String month, String day, String notes) {
     if (hour == "" || minute == "" || month == "" || day == "" || notes == "")
