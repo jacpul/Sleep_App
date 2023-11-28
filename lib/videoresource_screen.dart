@@ -45,6 +45,13 @@ class _VideoResource extends State<VideoResource> {
                               fontSize: 22,
                             )),
                             //Text("URL: "+ document["url"]),
+                            /**
+                             * When clicked on the button will bring you to a
+                             * screen that will show you a video resource.
+                             *
+                             * Input: A tap on the button on a screen
+                             * Output: It will bring you to a video on youtube
+                             */
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: Colors.blueAccent

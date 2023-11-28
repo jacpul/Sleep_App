@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:units/main.dart';
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:units/login.dart';
 import 'register_screen.dart';
 
 Future goToSignUp(BuildContext context) async {
@@ -23,6 +20,14 @@ class Loginpage extends StatefulWidget {
 
 class _Loginpage extends State<Loginpage>  {
 
+  /**
+   * Creates a popup if your login information is invalid.
+   *
+   * Inputs: None
+   * Outputs: Creates a popup that tells you there is a error with
+   * the login information
+   *
+   */
   void showInvalidLoginDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -122,6 +127,14 @@ class _Loginpage extends State<Loginpage>  {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          /**
+                           * A click on this button takes you to the register page
+                           *
+                           * Input: A tap on the button that says register
+                           *
+                           *Output: The screen changing to the register screen
+                           *
+                           */
                           InkWell(
                             onTap: () => goToSignUp(context),
                             child: Container(
@@ -136,6 +149,16 @@ class _Loginpage extends State<Loginpage>  {
                               ),
                             ),
                           ),
+                          /**
+                           * Tries and logs you into the app, with the account that
+                           * you already have in firebase
+                           *
+                           * Input: A tap on the login button
+                           *
+                           * Output: If successfully logs in brings you to the home page
+                           * if not a popup tells you what went wrong
+                           *
+                           */
                           InkWell(
                             onTap: () => signIn(context),
                             child: Container(
