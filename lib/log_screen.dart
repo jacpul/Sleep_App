@@ -184,16 +184,20 @@ class _LogScreen extends State<LogScreen> {
             trailing:
               Icon(Icons.delete),
             onTap: () {
-              deleteItem(index);
               showDialog(
                   context: context,
                   builder: (context) =>
                       AlertDialog(
-                        title: Text("Item Deleted!"),
+                        title: Text("Would You Like Delete This Log?"),
                         actions: [
                           TextButton(
                               onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home())),
-                              child: Text('OKAY'))
+                              child: Text('NO')),
+                          TextButton(
+                              onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+                              deleteItem(index);
+                                },
+                              child: Text('YES')),
                         ],
                       )
               );
