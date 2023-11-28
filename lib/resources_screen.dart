@@ -23,7 +23,14 @@ class _ResourcesScreen extends State<ResourcesScreen> {
         //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ // appbar functions
-
+            /**
+             * When you click on an Icon on the page it will bring
+             * you to the page Icon you click on.
+             *
+             * Input: A click on the Icon
+             * Output: Changing your screen to display the screen you clicked on
+             *
+             **/
             //Home button
             IconButton(
               icon:const Icon(Icons.add_home_outlined),
@@ -106,6 +113,12 @@ class _ResourcesScreen extends State<ResourcesScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
+                /**
+                 * Takes you to the type of resources that you want to see.
+                 *
+                 * Inputs: A click on the button
+                 * Outputs: Changes the screen that you are on
+                 */
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(

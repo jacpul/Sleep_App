@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'main_screen.dart';
 import 'login.dart';
-import 'main.dart';
 
 class RegisterPage extends StatefulWidget {
   final VoidCallback showLoginPage;
@@ -22,6 +20,12 @@ class _RegisterPage extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  /**
+   * Clears the email controller and the password controller.
+   *
+   * Input: None
+   * Output: None
+   */
   @override
   void dispose() {
     _emailController.dispose();
@@ -29,6 +33,14 @@ class _RegisterPage extends State<RegisterPage> {
     super.dispose();
   }
 
+
+  /**
+   *
+   * Allows for new users to create a account so there information can be saved.
+   *
+   * Inputs: must add a wanted email and password
+   * Outputs: Creates a new user in the firebase
+   */
   Future signUp() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -61,6 +73,13 @@ class _RegisterPage extends State<RegisterPage> {
     }
   }
 
+  /**
+   * Creates an error that the email has already been registered in the firebase.
+   *
+   * Inputs: None
+   * Outputs: Creates a popup that tells you your login information is invalid
+   *
+   */
   void showEmailAlreadyExistsDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -128,6 +147,13 @@ class _RegisterPage extends State<RegisterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  /**
+                   * When clicked on it brings you back to the login screen
+                   *
+                   * Inputs: Tapping on the button
+                   * Outputs: Brings you back to the login screen
+                   *
+                   */
                   InkWell(
                     onTap: () {
                       // Navigate to the login screen
@@ -150,6 +176,14 @@ class _RegisterPage extends State<RegisterPage> {
                       ),
                     ),
                   ),
+                  /**
+                   * When clicked on it creates a new account for you if
+                   * the information is valid
+                   *
+                   * Inputs: A tap on the button
+                   * Outputs: It logs you into the home screen and creates an account for
+                   * you in firebase
+                   */
                   InkWell(
                     onTap: () => signUp(),
                     child: Container(
