@@ -112,6 +112,7 @@ class _Loginpage extends State<Loginpage>  {
                         child: TextField(
                           decoration: InputDecoration(labelText: 'Email'),
                           controller: _emailController,
+
                         ),
                       ),
 
@@ -139,7 +140,7 @@ class _Loginpage extends State<Loginpage>  {
                             onTap: () => goToSignUp(context),
                             child: Container(
                               padding: EdgeInsets.all(16.0),
-                              color: Colors.blue,
+                              color: Colors.blueAccent,
                               child: Text(
                                 'Register',
                                 style: TextStyle(
@@ -163,7 +164,7 @@ class _Loginpage extends State<Loginpage>  {
                             onTap: () => signIn(context),
                             child: Container(
                               padding: EdgeInsets.all(16.0),
-                              color: Colors.blue,
+                              color: Colors.blueAccent,
                               child: Text(
                                 'Login',
                                 style: TextStyle(

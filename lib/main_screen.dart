@@ -67,7 +67,7 @@ class _Home extends State<Home>{
                         ),
                         child: Text('Your Log', style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orange),
+                            color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -88,7 +88,7 @@ class _Home extends State<Home>{
                         ),
                         child: Text('Your Calendar', style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orange),
+                            color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -110,7 +110,7 @@ class _Home extends State<Home>{
                         ),
                         child: Text('Your Notifications',  style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orange),
+                            color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -131,7 +131,7 @@ class _Home extends State<Home>{
                         ),
                         child: Text('Reminders',  style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orange),
+                            color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -151,7 +151,7 @@ class _Home extends State<Home>{
                         ),
                         child: Text('Other Resources',  style: const TextStyle(fontWeight: FontWeight.bold,
                             fontSize: 18,
-                            color: Colors.orange),
+                            color: Colors.white),
                             textAlign: TextAlign.center),
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
