@@ -56,7 +56,7 @@ class _Home extends State<Home>{
                   child: Column(
                     children: <Widget>[
                       Padding(
-                        padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
                         child: Text("Sweet Dreams!",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 3,)
                         ,),
 

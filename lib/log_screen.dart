@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:units/reminder_screen.dart';
 
 import 'calendar_screen.dart';
@@ -54,6 +55,17 @@ class _LogScreen extends State<LogScreen> {
       items = tempList;
       isLoaded = true;
     });
+
+  }
+  void deleteItem(int index) async {
+    print(items[index]);
+    var listData = await logCollection.get();
+    listData.docs.forEach((element) {
+      if(element.data().toString() == items[index].toString()) {
+        logCollection.doc(element.id).delete();
+      }
+    });
+    _functionCounter();
   }
   @override
   Widget build(BuildContext context) {
@@ -147,8 +159,8 @@ class _LogScreen extends State<LogScreen> {
   late var _ListOfLogs = ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10),
+       return Card(
+         color: Colors.yellow.shade800,
           child: ListTile(
             shape: RoundedRectangleBorder(
               side: const BorderSide(width: 2),
@@ -168,12 +180,32 @@ class _LogScreen extends State<LogScreen> {
             ),
             subtitle:
               Text("Sleep Quality: " + items[index]["Sleep_Quality"] +
-              "  Notes: " + items[index]["Notes"])
+              "  Notes: " + items[index]["Notes"]),
+            trailing:
+              Icon(Icons.delete),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        title: Text("Would You Like Delete This Log?"),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home())),
+                              child: Text('NO')),
+                          TextButton(
+                              onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+                              deleteItem(index);
+                                },
+                              child: Text('YES')),
+                        ],
+                      )
+              );
+            }
           )
         );
       }
   );
-
 
 }
 
