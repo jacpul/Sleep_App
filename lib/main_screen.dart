@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:units/login.dart';
-import 'api/firebase_api.dart'; // notifications
-import 'dreams/views/dreams_component.dart';
-import 'dreams/presenter/dreams_presenter.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'resources_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
-import 'register_screen.dart';
-import 'splash_screen.dart';
-import 'resources_screen.dart';
 import 'log_screen.dart';
-import 'article_tips.dart';
-import 'main.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -32,6 +22,8 @@ class _Home extends State<Home>{
                   centerTitle: true,
                   backgroundColor: Colors.deepOrange,
                   actions: [
+
+                    /// Icon button to log out and bring user back to the login screen
                     IconButton(
                         icon: const Icon(Icons.logout_outlined),
                         tooltip: 'Logout',
@@ -43,6 +35,8 @@ class _Home extends State<Home>{
                     )
                   ]
               ),
+
+              /// Container used for design and input of our specific background image
               body: Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(32),
@@ -53,6 +47,7 @@ class _Home extends State<Home>{
                     ),
 
                   ),
+
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -60,7 +55,10 @@ class _Home extends State<Home>{
                         child: Text("Sweet Dreams!",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 3,)
                         ,),
 
-                      // Button to bring you to the calculate page
+
+                      /**
+                       * Button that on pressed opens up the Log screen
+                       */
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
@@ -76,12 +74,14 @@ class _Home extends State<Home>{
                         },
                       ),
 
-                      //padding
+                      /// padding
                       Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       ),
 
-                      // Button to bring you to your calendar page
+                      /**
+                       * Button that when pressed pens up the calendar screen
+                       */
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
@@ -98,12 +98,14 @@ class _Home extends State<Home>{
                         },
                       ),
 
-                      //padding
+                      /// padding
                       Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       ),
 
-                      // Button to bring you to your notifications page
+                      /**
+                       * Button that on pressed brings you to the notification page
+                       */
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
@@ -119,12 +121,14 @@ class _Home extends State<Home>{
                         },
                       ),
 
-                      //padding
+                      /// padding
                       Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       ),
 
-                      // Button to bring you to your reminders page
+                      /**
+                       * Button that when pressed opens the reminders screen
+                       */
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
@@ -140,11 +144,14 @@ class _Home extends State<Home>{
                         },
                       ),
 
+                      /// padding
                       Padding(
                         padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                       ),
 
-                      // Button to bring you to your Resources page
+                      /**
+                       * Button that when pressed opens resources page
+                       */
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: Colors.blueAccent
