@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:units/dreams/utils/dreams_constant.dart';
+import '../utils/dreams_constant.dart';
 import '../../calendar_screen.dart';
 import '../../main.dart';
 import '../../notification_screen.dart';

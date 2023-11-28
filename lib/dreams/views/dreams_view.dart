@@ -1,4 +1,4 @@
-import 'package:units/dreams/utils/dreams_constant.dart';
+import '../utils/dreams_constant.dart';
 
 import '../viewmodel/dreams_viewmodel.dart';
 class UNITSView {
