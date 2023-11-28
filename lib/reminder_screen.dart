@@ -1,11 +1,9 @@
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/log_screen.dart';
 import 'package:units/resources_screen.dart';
 import 'calendar_screen.dart';
 import 'create_reminder.dart';
 import 'main_screen.dart';
-import 'splash_screen.dart';
 import 'notification_screen.dart';
 
 class ReminderScreen extends StatefulWidget {
@@ -104,13 +102,13 @@ class _ReminderScreen extends State<ReminderScreen> {
               child: Text(
                 "Reminders",
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
+                    fontWeight: FontWeight.bold, color: Colors.blue),
                 textScaleFactor: 2,
               ),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Colors.deepOrangeAccent,
+                backgroundColor: Colors.deepOrangeAccent,
                 padding: EdgeInsets.all(10.0),
               ),
               child: Text('New Reminder'),
