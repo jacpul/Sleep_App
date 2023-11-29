@@ -22,7 +22,7 @@ class _LogScreen extends State<LogScreen> {
   late var logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
   late List<Map<String, dynamic>> items;
   bool isLoaded = false;
-
+  ///Updates the list of logs while sorting them by date
   _functionCounter() async {
     List<Map<String, dynamic>> tempList = [];
     var logData = await logCollection.get();
@@ -53,6 +53,7 @@ class _LogScreen extends State<LogScreen> {
     });
 
   }
+  ///Deletes any log the user wishes
   void deleteItem(int index) async {
     print(items[index]);
     var listData = await logCollection.get();
@@ -69,7 +70,6 @@ class _LogScreen extends State<LogScreen> {
     return Scaffold(
       backgroundColor: Colors.yellow.shade800,
         appBar: AppBar(
-          //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ // appbar functions
 

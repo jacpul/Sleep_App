@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:units/log_screen.dart';
 import '../utils/dreams_constant.dart';
 import '../../calendar_screen.dart';
 import '../../notification_screen.dart';
@@ -66,6 +67,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     this.widget.presenter.onSleepTimeOptionChanged(value!);
   }
 
+  /// updates data to presenter when user enters new log
   void _logCalculator() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -85,8 +87,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
   void updateMessage(String message){
     _message = message;
     setState(() {
-      print(message);
-      //_message = message;
     });
   }
 
@@ -259,12 +259,11 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
     return Scaffold(
         appBar: AppBar(
-          //title: Text('Sleep Log'),
           backgroundColor: Colors.deepOrangeAccent,
 
             actions: [ //appbar functions
 
-              //Home button
+              ///Home button
               IconButton(
                 icon:const Icon(Icons.add_home_outlined),
                 tooltip: "Home",
@@ -276,16 +275,19 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                 },
               ),
 
-              //log button
+              ///Log button
               IconButton(
                 icon: const Icon(Icons.mode_edit_outlined),
                 tooltip: 'Log',
                 onPressed: () {
-                  //returns nothing, already in log
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
+                  {
+                    return LogScreen();
+                  }));
                 },
               ),
 
-              // Calendar Button
+              /// Calendar Button
               IconButton(
                 icon: const Icon(Icons.calendar_month),
                 tooltip: 'Calendar',
@@ -297,7 +299,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                 },
               ),
 
-              //Notifications Button
+              /// Notifications Button
               IconButton(
                 icon: const Icon(Icons.new_releases_outlined),
                 tooltip: 'Notifications',
@@ -309,9 +311,8 @@ class _HomePageState extends State<HomePage> implements UNITSView {
                 },
               ),
 
-              //Calendar Button
 
-              //Reminder Button
+              /// Reminder Button
               IconButton(
                 icon: const Icon(Icons.add_alert_outlined),
                 tooltip: 'Reminders',
@@ -334,13 +335,11 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         )
     );
   }
-
+  ///Function that calculates sleep and enters information into database
   ElevatedButton calculateButton() {
     return ElevatedButton(
       onPressed: () {
         _logCalculator();
-        print("wake type is: " + _wakeType);
-        print("sleep type is: " + _sleepType);
         if(errorValue == 0) {
           CollectionReference colRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
           colRef.add({
@@ -381,6 +380,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     );
   }
 
+  ///Clears all text after user enters log
   void clearText() {
     _sleepHourController.clear();
     _sleepMinuteController.clear();
@@ -565,7 +565,6 @@ class _HomePageState extends State<HomePage> implements UNITSView {
         label: currentSliderValue.round().toString(),
         onChanged: (value) {
           setState(() {
-            print("in slider with value: " + value.toString());
             currentSliderValue = value;
           });
         }
