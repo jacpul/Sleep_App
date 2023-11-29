@@ -2,6 +2,7 @@ import 'dreams_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
+/// This functions is what calculates the time slept
 double calculator(double wakeHour, double wakeMinute, double sleepHour, double sleepMinute, UnitType wake, UnitType sleep) {
 
   double tempHour = 0.0;
