@@ -2,6 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 import 'register_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+
+
 
 Future goToSignUp(BuildContext context) async {
   Navigator.of(context).pushReplacement(
@@ -48,6 +52,8 @@ class _Loginpage extends State<Loginpage>  {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     final _emailController = TextEditingController();
@@ -69,6 +75,11 @@ class _Loginpage extends State<Loginpage>  {
         // If an exception is thrown, show the invalid login dialog
         showInvalidLoginDialog(context);
       }
+    }
+
+    Future resetPassword(BuildContext context) async{
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+          email: _emailController.text.trim());
     }
 
     @override
@@ -143,6 +154,21 @@ class _Loginpage extends State<Loginpage>  {
                               color: Colors.blueAccent,
                               child: Text(
                                 'Register',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          InkWell(
+                            onTap: () => resetPassword(context),
+                            child: Container(
+                              padding: EdgeInsets.all(16.0),
+                              color: Colors.blueAccent,
+                              child: Text(
+                                'Forgot Password',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16.0,
