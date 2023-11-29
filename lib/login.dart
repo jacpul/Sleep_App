@@ -2,10 +2,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'main_screen.dart';
 import 'register_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 
-
+/**
+ * It brings you to the register Page
+ *
+ * Input: None
+ *
+ *Output: Takes you to the register screen
+ *
+ */
 
 Future goToSignUp(BuildContext context) async {
   Navigator.of(context).pushReplacement(
@@ -59,6 +65,16 @@ class _Loginpage extends State<Loginpage>  {
     final _emailController = TextEditingController();
     final _passwordController = TextEditingController();
 
+
+    /**
+     * If you enter a valid username and password it will
+     * bring you to the home screen.
+     *
+     * Inputs: A Valid username and password
+     *
+     * Outputs: If it is valid it brings you to a home screen.
+     *
+     */
     Future signIn(BuildContext context) async {
       try {
         print('login button tapped');
@@ -76,6 +92,15 @@ class _Loginpage extends State<Loginpage>  {
         showInvalidLoginDialog(context);
       }
     }
+
+    /**
+     * Sends you an email to reset your password
+     *
+     * Inputs: an Email address in the email slot
+     *
+     * Outputs: an email to reset your password
+     *
+     */
 
     Future resetPassword(BuildContext context) async{
       await FirebaseAuth.instance.sendPasswordResetEmail(
@@ -162,6 +187,14 @@ class _Loginpage extends State<Loginpage>  {
                             ),
                           ),
 
+                          /**
+                           * A click on this button sends you an email to reset your password.
+                           *
+                           * Input: A tap on the button that says Forgot Password
+                           *
+                           *Output: An email that sends you a link to reset your password
+                           *
+                           */
                           InkWell(
                             onTap: () => resetPassword(context),
                             child: Container(
