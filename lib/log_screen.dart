@@ -1,16 +1,13 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:units/reminder_screen.dart';
-
+import 'package:units/resources_screen.dart';
 import 'calendar_screen.dart';
-import 'create_reminder.dart';
 import 'main_screen.dart';
 import 'splash_screen.dart';
-import 'main.dart';
 import 'notification_screen.dart';
 
 
@@ -54,6 +51,17 @@ class _LogScreen extends State<LogScreen> {
       items = tempList;
       isLoaded = true;
     });
+
+  }
+  void deleteItem(int index) async {
+    print(items[index]);
+    var listData = await logCollection.get();
+    listData.docs.forEach((element) {
+      if(element.data().toString() == items[index].toString()) {
+        logCollection.doc(element.id).delete();
+      }
+    });
+    _functionCounter();
   }
   @override
   Widget build(BuildContext context) {
@@ -64,7 +72,8 @@ class _LogScreen extends State<LogScreen> {
           //title: Text('Reminders'),
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ // appbar functions
-            //Home button
+
+            /// Button that opens up home screen
             IconButton(
               icon:const Icon(Icons.add_home_outlined),
               tooltip: "Home",
@@ -74,7 +83,9 @@ class _LogScreen extends State<LogScreen> {
                       return Home();
                     }));
               }),
-            //log button
+
+            /// Button that opens up log screen
+            /// In this case has no actions
             IconButton(
               icon: const Icon(Icons.mode_edit_outlined),
                tooltip: 'Log',
@@ -82,7 +93,7 @@ class _LogScreen extends State<LogScreen> {
                   // do nothing, already at page
               }),
 
-            // Calendar Button
+            /// Button that opens up calendar screen
             IconButton(
               icon: const Icon(Icons.calendar_month),
               tooltip: 'Calendar',
@@ -92,7 +103,7 @@ class _LogScreen extends State<LogScreen> {
                 }));
               }),
 
-            //Notifications Button
+            /// Button that opens up notification screen
             IconButton(
               icon: const Icon(Icons.new_releases_outlined),
               tooltip: 'Notifications',
@@ -101,7 +112,8 @@ class _LogScreen extends State<LogScreen> {
                   return NotificationScreen();
                 }));
               }),
-            //Reminder Button
+
+           /// Button that opens up reminders screen
            IconButton(
                icon: const Icon(Icons.add_alert_outlined),
                tooltip: 'Reminders',
@@ -111,6 +123,17 @@ class _LogScreen extends State<LogScreen> {
                        return ReminderScreen();
                      }));
                 }),
+
+            /// Resources Button
+            IconButton(
+              icon: const Icon(Icons.book_online_outlined),
+              tooltip: 'Resources',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ResourcesScreen();
+                }));
+              },
+            )
           ]),
 
 
@@ -121,7 +144,8 @@ class _LogScreen extends State<LogScreen> {
               padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
               child: Text("Logs",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 2,)
               ),
-             //New Log Button
+
+            /// Button that on pressed Enters a new log
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.blueAccent,
@@ -134,7 +158,8 @@ class _LogScreen extends State<LogScreen> {
                 }));
               },
             ),
-             //Log List
+
+            /// Lists off logs
             Expanded(
               child: isLoaded?_ListOfLogs:Text("** NO DATA **"),
               )
@@ -144,11 +169,14 @@ class _LogScreen extends State<LogScreen> {
     );
   }
 
+  /**
+   * Function used to list logs entered
+   */
   late var _ListOfLogs = ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(10),
+       return Card(
+         color: Colors.yellow.shade800,
           child: ListTile(
             shape: RoundedRectangleBorder(
               side: const BorderSide(width: 2),
@@ -168,12 +196,32 @@ class _LogScreen extends State<LogScreen> {
             ),
             subtitle:
               Text("Sleep Quality: " + items[index]["Sleep_Quality"] +
-              "  Notes: " + items[index]["Notes"])
+              "  Notes: " + items[index]["Notes"]),
+            trailing:
+              Icon(Icons.delete),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) =>
+                      AlertDialog(
+                        title: Text("Would You Like Delete This Log?"),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home())),
+                              child: Text('NO')),
+                          TextButton(
+                              onPressed: () { Navigator.of(context).push(MaterialPageRoute(builder: (context) => Home()));
+                              deleteItem(index);
+                                },
+                              child: Text('YES')),
+                        ],
+                      )
+              );
+            }
           )
         );
       }
   );
-
 
 }
 

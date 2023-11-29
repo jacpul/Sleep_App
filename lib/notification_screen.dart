@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-//import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
+import 'package:units/resources_screen.dart';
 import 'calendar_screen.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
@@ -14,6 +14,13 @@ class NotificationScreen extends StatefulWidget {
   @override
   _NotificationScreen createState() => _NotificationScreen();
 
+  /**
+   *  Helper function used to display Month rather than a number.
+   *  Uses database input constraints to verify number is between 1 and 12.
+   *
+   *  Inputs: a string which is 1-12
+   *  Output: a string month corresponding to the month number.
+   */
   String findMonth(String num) {
     String month = "";
     if (num == "1") {month = "January";}
@@ -31,6 +38,13 @@ class NotificationScreen extends StatefulWidget {
     return month;
   }
 
+  /**
+   * Helper function to display AM or PM rather than a number
+   * Uses database input constraints to verify num is either 1 or 0
+   *
+   * Input; number that is either 1 for PM, or 0 for AM
+   * Output: Outputs string corresponding to the time
+   */
   String AMorPM(int num) {
     String timeOfDay;
     if(num == 1) timeOfDay = 'PM';
@@ -39,6 +53,8 @@ class NotificationScreen extends StatefulWidget {
   }
 }
 
+/// TextStyle class used to define header and body text styles
+/// Used for display in build function
 class MyTextStyle {
   static const TextStyle textStyleHeader = TextStyle(
     color: Colors.blueAccent,
@@ -53,11 +69,15 @@ class MyTextStyle {
 }
 
 class _NotificationScreen extends State<NotificationScreen> {
-
+  /// Creates instance of notification screen for access to helper functions
   NotificationScreen notificationScreen = new NotificationScreen();
 
+  /// Validates what user is logged in for access to their specific database info
   late String currentUser = FirebaseAuth.instance.currentUser!.uid;
 
+  /**
+   * Helper function to delete all notifications for a desired user
+   */
   Future<void> deleteNotifications() async {
     var dataRef = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Notifications');
 
@@ -81,8 +101,14 @@ class _NotificationScreen extends State<NotificationScreen> {
       notificationData = '${notificationMessage.data}';
     }
 
+
+
     return Scaffold(
 
+      /**
+       * Button that clears all notifications for user
+       * On pressed, calls deleteNotification() function
+       */
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.delete_rounded),
         tooltip: "Clear Notifications",
@@ -94,7 +120,9 @@ class _NotificationScreen extends State<NotificationScreen> {
           backgroundColor: Colors.deepOrangeAccent,
           actions: [ //appbar functions
 
-            //Home button
+            /**
+             * Appbar button that opens the home screen when pressed
+             */
             IconButton(
               icon:const Icon(Icons.add_home_outlined),
               tooltip: "Home",
@@ -109,7 +137,9 @@ class _NotificationScreen extends State<NotificationScreen> {
               },
             ),
 
-            //log button
+            /**
+             * Appbar button that opens the log screen when pressed
+             */
             IconButton(
               icon: const Icon(Icons.mode_edit_outlined),
               tooltip: 'Log',
@@ -120,7 +150,9 @@ class _NotificationScreen extends State<NotificationScreen> {
               },
             ),
 
-            // Calendar Button
+            /**
+             * Appbar button that opens the calendar screen when pressed
+             */
             IconButton(
               icon: const Icon(Icons.calendar_month),
               tooltip: 'Calendar',
@@ -132,7 +164,10 @@ class _NotificationScreen extends State<NotificationScreen> {
               },
             ),
 
-            //Notifications Button
+            /**
+             * Appbar button that opens notification screen when pressed
+             * Has not action on this page
+             */
             IconButton(
               icon: const Icon(Icons.new_releases_outlined),
               tooltip: 'Notifications',
@@ -141,7 +176,9 @@ class _NotificationScreen extends State<NotificationScreen> {
               },
             ),
 
-            //Reminder Button
+            /**
+             * Appbar button that opens the reminders screen when pressed
+             */
             IconButton(
               icon: const Icon(Icons.add_alert_outlined),
               tooltip: 'Reminders',
@@ -151,9 +188,24 @@ class _NotificationScreen extends State<NotificationScreen> {
                 }));
               },
             ),
+
+            //Resources Button
+            IconButton(
+              icon: const Icon(Icons.book_online_outlined),
+              tooltip: 'Resources',
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                  return ResourcesScreen();
+                }));
+              },
+            )
           ],
       ),
 
+      /**
+       * Body for build, displays all notifications that have been added by the user
+       * Will be empty if no notifications have been added through the reminders page
+       */
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection("users").doc(currentUser).collection("Notifications").snapshots(),
           builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){

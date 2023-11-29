@@ -1,17 +1,14 @@
 import 'dart:collection';
 import 'dart:core';
-import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/reminder_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:units/resources_screen.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
-
-import 'main.dart';
 import 'notification_screen.dart';
 import 'calendar_model.dart';
 
@@ -39,20 +36,27 @@ class _CalendarScreen extends State<CalendarScreen> {
     initialize();
   }
 
-
+  /**
+   * async initialize function for firestore communication and parsing
+   */
   void initialize() async {
-    currentUser = FirebaseAuth.instance.currentUser!.uid;
-    logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs');
-    var logData = await logCollection.get();
+    currentUser = FirebaseAuth.instance.currentUser!.uid; // gets the current user
+    logCollection = FirebaseFirestore.instance.collection('users').doc(currentUser).collection('Logs'); // gets an instance of the logs documents from the current user
+    var logData = await logCollection.get(); // puts log docs into the logData
     debugPrint("currentuser: $currentUser, log: ${logCollection.id}, event: ${_eventStorage?.length}");
-    _eventStorage = await populateLogList(logData);
-    //_selectedEvents = ValueNotifier(await _getEventsForDay(_selectedDay!));
+    _eventStorage = await populateLogList(logData); // calls populateLogList from calendar_model and waits for it to return
+    //sets state once everything is finished, to update the app
     setState(() {
       _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
       _initialized = true; // Set the initialization flag
     });
   }
 
+  /**
+   * gets all events stored on a day
+   * @param DateTime day
+   * @return A list of events for DateTime
+   */
   List<Event> _getEventsForDay(DateTime day) {
     if (_initialized) {
       return _eventStorage?[day] ?? [];
@@ -61,6 +65,11 @@ class _CalendarScreen extends State<CalendarScreen> {
     }
   }
 
+  /**
+   * called by the table calendar, sets the selected and focused day
+   * @param DateTime selectedDay
+   * @param DateTime focusedDay
+   */
   Future<void> _onDaySelected(DateTime selectedDay, DateTime focusedDay) async {
     if (!isSameDay(_selectedDay, selectedDay)) {
       setState(() {
@@ -132,6 +141,17 @@ class _CalendarScreen extends State<CalendarScreen> {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
                     return ReminderScreen();
+                  }));
+                },
+              ),
+
+              //Resources Button
+              IconButton(
+                icon: const Icon(Icons.book_online_outlined),
+                tooltip: 'Resources',
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                    return ResourcesScreen();
                   }));
                 },
               )

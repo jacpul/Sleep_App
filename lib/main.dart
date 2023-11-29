@@ -2,9 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:units/login.dart';
 import 'api/firebase_api.dart';
-import 'main_screen.dart'; // notifications
-import 'main_screen.dart';
-import 'api/firebase_api.dart'; // notifications
 import 'notification_screen.dart'; // notifications
 import 'package:timezone/data/latest.dart' as tz; // timed notifications
 

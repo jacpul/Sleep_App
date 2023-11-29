@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoResource extends StatefulWidget {
   @override
@@ -45,6 +44,13 @@ class _VideoResource extends State<VideoResource> {
                               fontSize: 22,
                             )),
                             //Text("URL: "+ document["url"]),
+                            /**
+                             * When clicked on the button will bring you to a
+                             * screen that will show you a video resource.
+                             *
+                             * Input: A tap on the button on a screen
+                             * Output: It will bring you to a video on youtube
+                             */
                             ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: Colors.blueAccent
