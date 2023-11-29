@@ -6,17 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
 double calculator(double wakeHour, double wakeMinute, double sleepHour, double sleepMinute, UnitType wake, UnitType sleep) {
-  print("in calculator");
-  //List result = new List.filled(3, null, growable: false);
+
   double tempHour = 0.0;
   double tempMinute = 0.00;
   double result = 0.0;
-  print(sleepHour);
-  print(sleepMinute);
-  print(sleep);
-  print(wakeHour);
-  print(wakeMinute);
-  print(wake);
 
   //sleep at night, wake at morning
   if(sleep == UnitType.PM && wake == UnitType.AM) {
@@ -53,71 +46,69 @@ double calculator(double wakeHour, double wakeMinute, double sleepHour, double s
       tempMinute = (sleepMinute - wakeMinute).abs();
       result = tempHour + (tempMinute / 100);
     }
+    return result;
   }
 
   //sleep at night, wake at night
   if(sleep == UnitType.PM && wake == UnitType.PM) {
-    tempHour = wakeHour - sleepHour;
-    tempMinute = wakeMinute - sleepMinute;
-    if(tempMinute < 0){
-      tempMinute += 60.00;
-      tempHour -= 1;
+   //Convert to Military
+    wakeHour = wakeHour + 12;
+    sleepHour = sleepHour + 12;
+
+    if(sleepHour >= wakeHour && sleepMinute >= wakeMinute) {
+      //User woke up the next day
+      tempHour = 24 - (sleepHour - wakeHour);
+      if(sleepMinute > wakeMinute) {
+        tempHour--;
+        tempMinute = 60 - (sleepMinute - wakeMinute);
+        result = tempHour + (tempMinute/100);
+      } else {
+        tempMinute = (sleepMinute - wakeMinute).abs();
+        result = tempHour + (tempMinute / 100);
+      }
+    } else {
+      //User woke up the same day
+      tempHour = wakeHour - sleepHour;
+      if(sleepMinute > wakeMinute) {
+        tempHour--;
+        tempMinute = 60 - (sleepMinute - wakeMinute);
+        result = tempHour + (tempMinute/100);
+      } else {
+        tempMinute = (sleepMinute - wakeMinute).abs();
+        result = tempHour + (tempMinute / 100);
+      }
     }
-    result = tempHour + (tempMinute/100);
     return result;
   }
+
   //sleep at morning, wake at morning
   if(sleep == UnitType.AM && wake == UnitType.AM) {
-    tempHour = wakeHour - sleepHour;
-    print(tempHour);
-    tempMinute = wakeMinute - sleepMinute;
-    if(tempMinute < 0){
-      tempMinute += 60.00;
-      tempHour -= 1;
+    if(sleepHour >= wakeHour && sleepMinute >= wakeMinute) {
+      //User woke up the next day
+      tempHour = 24 - (sleepHour - wakeHour);
+      if(sleepMinute > wakeMinute) {
+        tempHour--;
+        tempMinute = 60 - (sleepMinute - wakeMinute);
+        result = tempHour + (tempMinute/100);
+      } else {
+        tempMinute = (sleepMinute - wakeMinute).abs();
+        result = tempHour + (tempMinute / 100);
+      }
+    } else {
+      //User woke up the same day
+      tempHour = wakeHour - sleepHour;
+      if(sleepMinute > wakeMinute) {
+        tempHour--;
+        tempMinute = 60 - (sleepMinute - wakeMinute);
+        result = tempHour + (tempMinute/100);
+      } else {
+        tempMinute = (sleepMinute - wakeMinute).abs();
+        result = tempHour + (tempMinute / 100);
+      }
     }
-    result = tempHour + (tempMinute/100);
     return result;
   }
 
-  /*if(wake == UnitType.AM) {
-    tempHour = hour + sleepHour;
-    tempMinute = minute + sleepMinute;
-
-    if (tempMinute >= 60) {
-      tempMinute -= 60;
-      tempHour += 1;
-    }
-  }
-  if (wake == UnitType.PM) {
-    tempHour = hour - sleepHour;
-    tempMinute = minute - sleepMinute;
-
-    if(tempMinute < 0){
-      tempMinute += 60.00;
-      tempHour -= 1;
-    }
-  }
-
-  if(tempHour > 12 || tempHour < 0) {
-    switch(sleep) {
-      case UnitType.AM: { sleep = UnitType.PM; }
-      break;
-      case UnitType.PM: { sleep = UnitType.AM; }
-      break;
-      default: {}
-      break;
-    }
-
-    tempHour %= 12;
-  }
-  if(tempHour ==0){
-    tempHour = 12;
-  }
-
-  //result = tempHour + (tempMinute/100);
-  result[0] = (tempHour + (tempMinute/100));
-
-  return result[0];*/
   return result;
 }
 
