@@ -101,7 +101,7 @@ class _CreateReminder extends State<CreateReminder> {
       int.parse(minute),
     );
 
-    if (scheduledNotificationDateTime.difference(currentTime) < Duration(minutes: 1)) {
+    if (scheduledNotificationDateTime.difference(currentTime) < Duration(seconds: 5)) {
       return false;
     }
 
