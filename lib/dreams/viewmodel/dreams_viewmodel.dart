@@ -1,5 +1,7 @@
 import '../utils/dreams_constant.dart';
 
+///Class that initializes the variable we use for the model in the calculations
+
 class UNITSViewModel {
 
   UnitType _unitTypeWake = UnitType.AM;

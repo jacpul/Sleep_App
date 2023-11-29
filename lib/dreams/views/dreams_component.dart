@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:units/log_screen.dart';
+import '../../resources_screen.dart';
 import '../utils/dreams_constant.dart';
 import '../../calendar_screen.dart';
 import '../../notification_screen.dart';
@@ -259,72 +260,73 @@ class _HomePageState extends State<HomePage> implements UNITSView {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.deepOrangeAccent,
+            backgroundColor: Colors.deepOrangeAccent,
+            actions: [ // appbar functions
 
-            actions: [ //appbar functions
-
-              ///Home button
+              /// Button that opens up home screen
               IconButton(
-                icon:const Icon(Icons.add_home_outlined),
-                tooltip: "Home",
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (BuildContext context) {
-                        return Home();
-                      }));
-                },
-              ),
+                  icon:const Icon(Icons.add_home_outlined),
+                  tooltip: "Home",
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return Home();
+                        }));
+                  }),
 
-              ///Log button
+              /// Button that opens up log screen
+              /// In this case has no actions
               IconButton(
-                icon: const Icon(Icons.mode_edit_outlined),
-                tooltip: 'Log',
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
-                  {
-                    return LogScreen();
-                  }));
-                },
-              ),
+                  icon: const Icon(Icons.mode_edit_outlined),
+                  tooltip: 'Log',
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      return LogScreen();
+                    }));
+                  }),
 
-              /// Calendar Button
+              /// Button that opens up calendar screen
               IconButton(
-                icon: const Icon(Icons.calendar_month),
-                tooltip: 'Calendar',
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
-                  {
-                    return CalendarScreen();
-                  }));
-                },
-              ),
+                  icon: const Icon(Icons.calendar_month),
+                  tooltip: 'Calendar',
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      return CalendarScreen();
+                    }));
+                  }),
 
-              /// Notifications Button
+              /// Button that opens up notification screen
               IconButton(
-                icon: const Icon(Icons.new_releases_outlined),
-                tooltip: 'Notifications',
-                onPressed: ()  {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context)
-                  {
-                    return NotificationScreen();
-                  }));
-                },
-              ),
+                  icon: const Icon(Icons.new_releases_outlined),
+                  tooltip: 'Notifications',
+                  onPressed: ()  {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
+                      return NotificationScreen();
+                    }));
+                  }),
 
-
-              /// Reminder Button
+              /// Button that opens up reminders screen
               IconButton(
-                icon: const Icon(Icons.add_alert_outlined),
-                tooltip: 'Reminders',
+                  icon: const Icon(Icons.add_alert_outlined),
+                  tooltip: 'Reminders',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return ReminderScreen();
+                        }));
+                  }),
+
+              /// Resources Button
+              IconButton(
+                icon: const Icon(Icons.book_online_outlined),
+                tooltip: 'Resources',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                    return ReminderScreen();
+                    return ResourcesScreen();
                   }));
                 },
               )
-
-            ]
-        ),
+            ]),
         backgroundColor: Colors.yellow.shade800,
         body: ListView(
           children: <Widget>[
