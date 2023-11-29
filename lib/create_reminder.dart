@@ -5,6 +5,11 @@ import 'package:units/api/firebase_api.dart';
 import 'splash_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
+import 'package:timezone/standalone.dart' as tz; // timed notifications
+
+// Timezone variables so we can use TZDateTime
+final location = tz.getLocation('America/Chicago');
+tz.TZDateTime currentTime = tz.TZDateTime.now(location);
 
 // Used so we can access the current user that is logged in
 late String currentUser;
@@ -29,6 +34,79 @@ class _CreateReminder extends State<CreateReminder> {
     _reminderNotesController.dispose();
 
     super.dispose();
+  }
+
+  /**
+   * Helper function used to decide which alert dialog to show when a user
+   * enters a reminder date
+   * @param dialogType a string if the dialog has valid input or not
+   * @param context the context from where we came from
+   * @post an alert dialog will appear on the screen
+   */
+  void _showDialog(BuildContext context, String dialogType) {
+    if (dialogType == 'validInput') {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Reminder Submitted"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+          contentPadding: const EdgeInsets.all(20.0),
+          content: const Text("The reminder has been added"),
+        ),
+      );
+    }
+    else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Reminder Not Submitted"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+          contentPadding: const EdgeInsets.all(20.0),
+          content: const Text("Please enter a valid date in the future."),
+        ),
+      );
+    }
+  }
+
+  /**
+   * Helper function used to validate the date that the user entered for the reminders
+   * @param pmOrAm, 0 = am | 1 = pm
+   * @param hour, hour of the date
+   * @param minute, minute of the date
+   * @param month, month of the date
+   * @param day, day of the date
+   * @return false if the date is not in the future | true otherwise
+   */
+  bool validateDate(int pmOrAm, String month, String day, String hour, String minute) {
+    var scheduledNotificationDateTime = tz.TZDateTime(
+      location,
+      currentTime.year,
+      int.parse(month),
+      int.parse(day),
+      convertHour(pmOrAm, hour),
+      int.parse(minute),
+    );
+
+    if (scheduledNotificationDateTime.difference(currentTime) < Duration(minutes: 1)) {
+      return false;
+    }
+
+    return true;
+
   }
 
   // 0 = am | 1 = pm
@@ -260,23 +338,6 @@ class _CreateReminder extends State<CreateReminder> {
                     _reminderMonth,
                     _reminderDay,
                     _reminderNotes);
-
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text("Reminder Submitted"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text("Close"),
-                      ),
-                    ],
-                    contentPadding: const EdgeInsets.all(20.0),
-                    content: const Text("The reminder has been added"),
-                  ),
-                );
               },
               child: Text('Submit Reminder'),
             ),
@@ -305,6 +366,11 @@ class _CreateReminder extends State<CreateReminder> {
     if (hour == "" || minute == "" || month == "" || day == "" || notes == "")
       return;
 
+    if(validateDate(pmOrAm, month, day, hour, minute) == false) {
+      _showDialog(context, 'invalidInput');
+      return;
+    }
+
     currentUser = FirebaseAuth.instance.currentUser!.uid;
     CollectionReference dataRef = FirebaseFirestore.instance
         .collection('users')
@@ -321,5 +387,7 @@ class _CreateReminder extends State<CreateReminder> {
     });
 
     FirebaseApi().scheduleNotification(pmOrAm, month, day, hour, minute, notes);
+
+    _showDialog(context, 'validInput');
   }
 }
