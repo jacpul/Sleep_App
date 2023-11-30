@@ -9,6 +9,9 @@ import 'package:timezone/standalone.dart' as tz; // timed notifications
 final location = tz.getLocation('America/Chicago');
 tz.TZDateTime currentTime = tz.TZDateTime.now(location);
 
+// Used for keeping track of multiple notifications
+var _notificationId = 0;
+
 /**
  * Helper function that converts a given hour and pm/am into a 24 hour format
  * @param pmOrAm, 0 = am | 1 = pm
@@ -166,7 +169,7 @@ class FirebaseApi {
     );
 
     await _localNotifications.zonedSchedule(
-        0,
+        _notificationId,
         'Reminder Message',
         notes,
         tz.TZDateTime.from(
@@ -184,7 +187,7 @@ class FirebaseApi {
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
         androidAllowWhileIdle: true
     );
-
+    _notificationId++;
   }
 
   /**

@@ -62,6 +62,25 @@ class _CreateReminder extends State<CreateReminder> {
         ),
       );
     }
+    else if (dialogType == 'invalidInput') {
+      showDialog(
+        context: context,
+        builder: (context) =>
+            AlertDialog(
+              title: Text("Reminder Not Submitted"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Close"),
+                ),
+              ],
+              contentPadding: const EdgeInsets.all(20.0),
+              content: const Text("Please enter a valid date in the future."),
+            ),
+      );
+    }
     else {
       showDialog(
         context: context,
@@ -76,10 +95,11 @@ class _CreateReminder extends State<CreateReminder> {
             ),
           ],
           contentPadding: const EdgeInsets.all(20.0),
-          content: const Text("Please enter a valid date in the future."),
+          content: const Text("Please enter information into all fields."),
         ),
       );
     }
+
   }
 
   /**
@@ -363,8 +383,10 @@ class _CreateReminder extends State<CreateReminder> {
    */
   void createReminderNotification(int pmOrAm, String hour, String minute,
       String month, String day, String notes) {
-    if (hour == "" || minute == "" || month == "" || day == "" || notes == "")
-      return;
+    if (hour == "" || minute == "" || month == "" || day == "" || notes == "") {
+        _showDialog(context, 'noInput');
+        return;
+    }
 
     if(validateDate(pmOrAm, month, day, hour, minute) == false) {
       _showDialog(context, 'invalidInput');
