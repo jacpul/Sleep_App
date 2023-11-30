@@ -7,6 +7,7 @@ import 'calendar_screen.dart';
 import 'main_screen.dart';
 import 'splash_screen.dart';
 import 'notification_screen.dart';
+import 'audio_screen.dart';
 
 class ResourcesScreen extends StatefulWidget {
   @override
@@ -134,7 +135,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(builder: (BuildContext context) {
-                        return TipScreen();
+                        return AudioScreen();
                       }),
                     );
                   },

@@ -3,25 +3,40 @@ import '../viewmodel/dreams_viewmodel.dart';
 import '../utils/dreams_utils.dart';
 
 class UNITSPresenter {
-
+  ///sends value to calculator code
   void onCalculateClicked(String hourString, String minuteString, String sleepMinuteString, String sleepHourString){
 
   }
-
+  /// updates radio for bed time
   void onWakeTimeOptionChanged(int value) {
 
   }
+  /// updates radio for sleep time
   void onSleepTimeOptionChanged(int value) {
 
   }
+  /// sets the units needed for calculation
   set unitsView(UNITSView value){}
 
+  /// sends value to model
   void onSleepHourSubmitted(String sleepHour){}
+
+  /// sends value to model
   void onSleepMinuteSubmitted(String sleepMinute){}
+
+  /// sends value to model
   void onWakeMinuteSubmitted(String wakeMinute){}
+
+  /// sends value to model
   void onWakeHourSubmitted(String wakeHour){}
+
+  /// sends value to model
   void onDateSubmitted(String month, String day, String year){}
+
+  /// sends value to model
   void onSleepQualitySubmitted(int sleepQuality){}
+
+  /// sends value to model
   void onNotesSubmitted(String notes){}
 
 }
@@ -62,43 +77,21 @@ class BasicPresenter implements UNITSPresenter{
     sleepHour = double.parse(sleepHourString);
     sleepMinute = double.parse(sleepMinuteString);
 
-    /*List temp = new List.filled(3, null, growable: false);
-    _viewModel.hour = hour;
-    _viewModel.minute = minute;
-    _viewModel.sleepHour = sleepHour;
-    _viewModel.sleepMinute = sleepMinute;*/
     double temp = calculator(wakeHour, wakeMinute,sleepHour, sleepMinute, _viewModel.unitTypeWake, _viewModel.unitTypeSleep);
-    //  temp returns a List of the time, AM or PM, and WAKE or BED.
-    //  The time that is returned is in the format of a double ex) 12.30 is 12:30.
 
     _viewModel.message = temp.toString();
 
-    /*UnitType tempTime = temp[1];
-    UnitType tempMessage = temp[2];*/
 
-    /*if(tempTime == UnitType.AM) {
-      _viewModel.timeType = "AM";
-    } else if (tempTime == UnitType.PM) {
-      _viewModel.timeType = "PM";
-    }
-
-    if(tempMessage == UnitType.BED) {
-      _viewModel.message = "You should wake up at";
-    } else if (tempMessage == UnitType.WAKE) {
-      _viewModel.message = "You should go to bed at";
-    }*/
-    //print(_viewModel.messageInString);
     _view.updateMessage(_viewModel.message);
 
     _view.updateSleepType(_viewModel.unitTypeSleep);
     _view.updateWakeType(_viewModel.unitTypeWake);
-    /*_view.updateTimeString(_viewModel.timeType);
-    _view.updateResultValue(_viewModel.resultInString);*/
+
   }
 
   @override
   void onWakeTimeOptionChanged(int value)  {
-      print("onOptionChanged");
+
     if (value != _viewModel.wakeValue) {
       _viewModel.wakeValue = value;
       saveValue(_viewModel.wakeValue);
@@ -109,8 +102,7 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onSleepTimeOptionChanged(int value)  {
-    print("onTimeOptionChanged");
-    print(value);
+
     if (value != _viewModel.sleepValue) {
 
       _viewModel.sleepValue = value;
@@ -123,7 +115,7 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onSleepHourSubmitted(String sleepHour) {
-    print("submitted sleepHour");
+
       _viewModel.sleepHour = double.parse(sleepHour);
   }
 
@@ -134,19 +126,19 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onWakeHourSubmitted(String wakeHour) {
-    // TODO: implement onWakeHourSubmitted
+
     _viewModel.wakeHour = double.parse(wakeHour);
   }
 
   @override
   void onWakeMinuteSubmitted(String wakeMinute) {
-    // TODO: implement onWakeMinuteSubmitted
+
     _viewModel.wakeMinute = double.parse(wakeMinute);
   }
 
   @override
   void onDateSubmitted(String month, String day, String year) {
-    // TODO: implement onDateSubmitted
+
     _viewModel.month = int.parse(month);
     _viewModel.day = int.parse(day);
     _viewModel.year = int.parse(year);
@@ -154,15 +146,13 @@ class BasicPresenter implements UNITSPresenter{
 
   @override
   void onSleepQualitySubmitted(int sleepQuality) {
-    // TODO: implement onSleepQualitySubmitted
+
     _viewModel.sleepQuality = sleepQuality;
   }
 
   @override
   void onNotesSubmitted(String notes) {
-    print("submitted notes");
 
-    // TODO: implement onNotesSubmitted
     _viewModel.sleepNotes = notes;
   }
 

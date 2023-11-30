@@ -45,26 +45,26 @@ Future<LinkedHashMap<DateTime, List<Event>>> populateLogList(var logData) async 
     String wake = "Wake Time Not Found";
     String hours = "Hours Slept Not Found";
     print(element.id);
-    if (element['Day']) {
+    //if (element['Day']) {
       day = element['Day'];
       strDay = day.toString();
-    }
-    if (element['Month']) {
+    //}
+    //if (element['Month']) {
       month = element['Month'];
       strMonth = month.toString();
-    }
-    if (element['Year']) {
+    //}
+    //if (element['Year']) {
       year = element['Year'];
       strYear = year.toString();
-    }
+    //}
     DateTime eventDay = DateTime(year, month, day);
     tempLinkedMap.putIfAbsent(eventDay, () => []);
-    if (element['Wake Time']) {
-      wake = element['Wake Time'];
-    }
-    if (element['Hours_Slept']) {
+    //if (element['Wake Time']) {
+    //  wake = element['Wake Time'];
+    //}
+    //if (element['Hours_Slept']) {
       hours = element['Hours_Slept'];
-    }
+    //}
     String title = "$month/$day/$year: woke up at $wake, with $hours of sleep";
     tempLinkedMap[eventDay]?.add(Event(title, strDay, strMonth, strYear));
     debugPrint('title: $title Length of Map: ${tempLinkedMap.length}');
