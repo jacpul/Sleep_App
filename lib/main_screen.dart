@@ -5,6 +5,7 @@ import 'calendar_screen.dart';
 import 'notification_screen.dart';
 import 'reminder_screen.dart';
 import 'log_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -42,7 +43,7 @@ class _Home extends State<Home>{
                   padding: const EdgeInsets.all(32),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/sun.jpg'),
+                      image: AssetImage('assets/sun.png'),
                       fit: BoxFit.cover,
                     ),
 
@@ -50,10 +51,13 @@ class _Home extends State<Home>{
 
                   child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(top: 10.0, bottom: 20.0),
-                        child: Text("Sweet Dreams!",style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent), textScaleFactor: 3,)
-                        ,),
+                      SizedBox.fromSize(
+                        size: Size.fromRadius(80),
+                        child: FittedBox(
+                          child: Icon(SleepIcons.os_iconwhitesvg,
+                          color: Colors.white),
+                        ),
+                      ),
 
 
                       /**

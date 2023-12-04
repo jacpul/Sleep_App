@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 final eventToday = DateTime.now();
-final eventFirstDay = DateTime(eventToday.year, eventToday.month - 5, eventToday.day);
-final eventLastDay = DateTime(eventToday.year, eventToday.month + 5, eventToday.day);
+late final eventFirstDay = DateTime(eventToday.year, eventToday.month - 5, eventToday.day);
+late final eventLastDay = DateTime(eventToday.year, eventToday.month + 3, eventToday.day);
 
 class Event {
   final String title;

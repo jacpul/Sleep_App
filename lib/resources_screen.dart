@@ -8,6 +8,7 @@ import 'main_screen.dart';
 import 'splash_screen.dart';
 import 'notification_screen.dart';
 import 'audio_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 
 class ResourcesScreen extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
              **/
             //Home button
             IconButton(
-              icon:const Icon(Icons.add_home_outlined),
+              icon:const Icon(SleepIcons.os_homewhitesvg),
               tooltip: "Home",
               onPressed: () {
                 Navigator.of(context).push(
@@ -46,7 +47,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
 
             //log button
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined),
+              icon: const Icon(SleepIcons.os_log2whitesvg),
               tooltip: 'Log',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -57,7 +58,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
 
             // Calendar Button
             IconButton(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(SleepIcons.os_calendarwhitesvg),
               tooltip: 'Calendar',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -68,7 +69,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
 
             //Notifications Button
             IconButton(
-              icon: const Icon(Icons.new_releases_outlined),
+              icon: const Icon(SleepIcons.os_notif2svg),
               tooltip: 'Notifications',
               onPressed: ()  {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -81,7 +82,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
 
             //Reminder Button
             IconButton(
-              icon: const Icon(Icons.add_alert_outlined),
+              icon: const Icon(SleepIcons.os_remindsvg),
               tooltip: 'Reminders',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -92,7 +93,7 @@ class _ResourcesScreen extends State<ResourcesScreen> {
 
             //Resources Button
             IconButton(
-              icon: const Icon(Icons.book_online_outlined),
+              icon: const Icon(SleepIcons.os_resourceswhitesvg),
               tooltip: 'Resources',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

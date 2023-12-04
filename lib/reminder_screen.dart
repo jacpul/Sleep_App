@@ -5,6 +5,7 @@ import 'calendar_screen.dart';
 import 'create_reminder.dart';
 import 'main_screen.dart';
 import 'notification_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 
 class ReminderScreen extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _ReminderScreen extends State<ReminderScreen> {
             // appbar functions
             //Home button
             IconButton(
-              icon: const Icon(Icons.add_home_outlined),
+              icon: const Icon(SleepIcons.os_homewhitesvg),
               tooltip: "Home",
               onPressed: () {
                 Navigator.of(context)
@@ -34,7 +35,7 @@ class _ReminderScreen extends State<ReminderScreen> {
 
             //log button
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined),
+              icon: const Icon(SleepIcons.os_log2whitesvg),
               tooltip: 'Log',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -45,7 +46,7 @@ class _ReminderScreen extends State<ReminderScreen> {
 
             // Calendar Button
             IconButton(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(SleepIcons.os_calendarwhitesvg),
               tooltip: 'Calendar',
               onPressed: () {
                 Navigator.of(context)
@@ -57,7 +58,7 @@ class _ReminderScreen extends State<ReminderScreen> {
 
             //Notifications Button
             IconButton(
-              icon: const Icon(Icons.new_releases_outlined),
+              icon: const Icon(SleepIcons.os_notif2svg),
               tooltip: 'Notifications',
               onPressed: () {
                 Navigator.of(context)
@@ -69,7 +70,7 @@ class _ReminderScreen extends State<ReminderScreen> {
 
             //Reminder Button
             IconButton(
-              icon: const Icon(Icons.add_alert_outlined),
+              icon: const Icon(SleepIcons.os_remindsvg),
               tooltip: 'Reminders',
               onPressed: () {
                 //returns nothing, already in reminders
@@ -78,7 +79,7 @@ class _ReminderScreen extends State<ReminderScreen> {
 
             //Resources Button
             IconButton(
-              icon: const Icon(Icons.book_online_outlined),
+              icon: const Icon(SleepIcons.os_resourceswhitesvg),
               tooltip: 'Resources',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

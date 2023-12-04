@@ -9,6 +9,7 @@ import 'calendar_screen.dart';
 import 'main_screen.dart';
 import 'splash_screen.dart';
 import 'notification_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 
 
 class LogScreen extends StatefulWidget {
@@ -75,7 +76,7 @@ class _LogScreen extends State<LogScreen> {
 
             /// Button that opens up home screen
             IconButton(
-              icon:const Icon(Icons.add_home_outlined),
+              icon:const Icon(SleepIcons.os_homewhitesvg),
               tooltip: "Home",
               onPressed: () {
                 Navigator.of(context).push(
@@ -87,7 +88,7 @@ class _LogScreen extends State<LogScreen> {
             /// Button that opens up log screen
             /// In this case has no actions
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined),
+              icon: const Icon(SleepIcons.os_log2whitesvg),
                tooltip: 'Log',
                onPressed: () {
                   // do nothing, already at page
@@ -95,7 +96,7 @@ class _LogScreen extends State<LogScreen> {
 
             /// Button that opens up calendar screen
             IconButton(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(SleepIcons.os_calendarwhitesvg),
               tooltip: 'Calendar',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -105,7 +106,7 @@ class _LogScreen extends State<LogScreen> {
 
             /// Button that opens up notification screen
             IconButton(
-              icon: const Icon(Icons.new_releases_outlined),
+              icon: const Icon(SleepIcons.os_notif2svg),
               tooltip: 'Notifications',
               onPressed: ()  {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -115,7 +116,7 @@ class _LogScreen extends State<LogScreen> {
 
            /// Button that opens up reminders screen
            IconButton(
-               icon: const Icon(Icons.add_alert_outlined),
+               icon: const Icon(SleepIcons.os_remindsvg),
                tooltip: 'Reminders',
                onPressed: () {
                  Navigator.of(context).push(
@@ -126,7 +127,7 @@ class _LogScreen extends State<LogScreen> {
 
             /// Resources Button
             IconButton(
-              icon: const Icon(Icons.book_online_outlined),
+              icon: const Icon(SleepIcons.os_resourceswhitesvg),
               tooltip: 'Resources',
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {

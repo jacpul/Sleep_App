@@ -7,10 +7,13 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:units/resources_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 import 'splash_screen.dart';
 import 'main_screen.dart';
 import 'notification_screen.dart';
 import 'calendar_model.dart';
+
+
 
 class CalendarScreen extends StatefulWidget {
   @override
@@ -112,7 +115,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               //Home button
               IconButton(
-                icon:const Icon(Icons.add_home_outlined),
+                icon:const Icon(SleepIcons.os_homewhitesvg),
                 tooltip: "Home",
                 onPressed: () {
                   Navigator.of(context).push(
@@ -124,7 +127,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               //log button
               IconButton(
-                icon: const Icon(Icons.mode_edit_outlined),
+                icon: const Icon(SleepIcons.os_log2whitesvg),
                 tooltip: 'Log',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -135,7 +138,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               // Calendar Button
               IconButton(
-                icon: const Icon(Icons.calendar_month),
+                icon: const Icon(SleepIcons.os_calendarwhitesvg),
                 tooltip: 'Calendar',
                 onPressed: () {
                   // returns nothing, already in calendar
@@ -144,7 +147,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               //Notifications Button
               IconButton(
-                icon: const Icon(Icons.new_releases_outlined),
+                icon: const Icon(SleepIcons.os_notif2svg),
                 tooltip: 'Notifications',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -157,7 +160,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               //Reminder Button
               IconButton(
-                icon: const Icon(Icons.add_alert_outlined),
+                icon: const Icon(SleepIcons.os_remindsvg),
                 tooltip: 'Reminders',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
@@ -168,7 +171,7 @@ class _CalendarScreen extends State<CalendarScreen> {
 
               //Resources Button
               IconButton(
-                icon: const Icon(Icons.book_online_outlined),
+                icon: const Icon(SleepIcons.os_resourceswhitesvg),
                 tooltip: 'Resources',
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
