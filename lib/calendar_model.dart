@@ -12,8 +12,11 @@ class Event {
   final String day;
   final String month;
   final String year;
+  final String hours;
+  final String quality;
+  final String notes;
 
-  Event(this.title, this.day, this.month, this.year);
+  Event(this.title, this.day, this.month, this.year, this.hours, this.quality, this.notes);
 
   @override
   String toString() => title;
@@ -25,7 +28,7 @@ class Event {
  * @return a value corresponding to the DateTime
  */
 int getHashCode(DateTime key) {
-return key.day * 1000000 + key.month * 10000 + key.year;
+  return key.day * 1000000 + key.month * 10000 + key.year;
 }
 
 /**
@@ -40,33 +43,25 @@ Future<LinkedHashMap<DateTime, List<Event>>> populateLogList(var logData) async 
     int month = -1;
     int year = -1;
     String strDay = "Day Not Found";
+    day = element['Day'];
+    strDay = day.toString();
     String strMonth = "Month Not Found";
+    month = element['Month'];
+    strMonth = month.toString();
     String strYear = "Year Not Found";
-    String wake = "Wake Time Not Found";
+    year = element['Year'];
+    strYear = year.toString();
     String hours = "Hours Slept Not Found";
+    hours = element['Hours_Slept'];
+    String quality = "Quality Not Found";
+    quality = element['Sleep_Quality'];
+    String notes = "Notes Not Found";
+    notes = element['Notes'];
     print(element.id);
-    //if (element['Day']) {
-      day = element['Day'];
-      strDay = day.toString();
-    //}
-    //if (element['Month']) {
-      month = element['Month'];
-      strMonth = month.toString();
-    //}
-    //if (element['Year']) {
-      year = element['Year'];
-      strYear = year.toString();
-    //}
+    String title =  element.id;
     DateTime eventDay = DateTime(year, month, day);
     tempLinkedMap.putIfAbsent(eventDay, () => []);
-    //if (element['Wake Time']) {
-    //  wake = element['Wake Time'];
-    //}
-    //if (element['Hours_Slept']) {
-      hours = element['Hours_Slept'];
-    //}
-    String title = "$month/$day/$year: woke up at $wake, with $hours of sleep";
-    tempLinkedMap[eventDay]?.add(Event(title, strDay, strMonth, strYear));
+    tempLinkedMap[eventDay]?.add(Event(title, strDay, strMonth, strYear, hours, quality, notes));
     debugPrint('title: $title Length of Map: ${tempLinkedMap.length}');
   });
   return LinkedHashMap<DateTime, List<Event>>(
@@ -74,6 +69,3 @@ Future<LinkedHashMap<DateTime, List<Event>>> populateLogList(var logData) async 
       hashCode: getHashCode
   )..addAll(tempLinkedMap);
 }
-
-
-

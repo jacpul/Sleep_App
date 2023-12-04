@@ -81,6 +81,27 @@ class _CalendarScreen extends State<CalendarScreen> {
     }
   }
 
+  /**
+   * Deletes a selected Event and reloads the calendar
+   * @param selected DateTime day
+   * @param index of the Event in the List<Event>
+   */
+  void deleteEvent(DateTime day, int index) async {
+    var listData = await logCollection.get();
+    if (_eventStorage!.containsKey(day)) {
+      List<Event>? events = _eventStorage?[day];
+      listData.docs.forEach((element) {
+        if(element.id.toString() == events?[index].toString()) {
+          logCollection.doc(element.id).delete();
+        }
+      });
+    }
+    setState(() {
+      _initialized = false;
+      initialize();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -193,25 +214,53 @@ class _CalendarScreen extends State<CalendarScreen> {
                     if (_selectedEvents.value == null) {
                       return CircularProgressIndicator();
                     } else {
-                    return ListView.builder(
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 10.0,
-                            vertical: 4.0,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: ListTile(
-                            onTap: () => print('${value[index]}'),
-                            title: Text('${value[index]}'),
-                          ),
-                        );
-                      },
-                    );}},
+                      return ListView.builder(
+                        itemCount: value.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                              color: Colors.yellow.shade800,
+                              child: ListTile(
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(width: 2),
+                                  borderRadius: BorderRadius.circular(20),
+
+                                ),
+                                leading: const CircleAvatar(
+                                  backgroundColor: Colors.blueAccent,
+                                  child: Icon(Icons.list_alt_outlined),
+                                ),
+                                title: Row(
+                                  children: [
+
+                                    Text('${value[index].month}-${value[index].day}-${value[index].year}  Hours Slept: ${value[index].hours}'
+                                    )
+                                  ],
+                                ),
+                                subtitle:
+                                Text('Sleep Quality: ${value[index].quality}  Notes: ${value[index].notes}'
+                                ),
+                                trailing:
+                                Icon(Icons.delete),onTap: () {
+                                showDialog(context: context, builder: (context) =>
+                                    AlertDialog(
+                                      title: Text("Would You Like Delete This Log?"),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () => Navigator.pop(context),
+                                            child: Text('NO')),
+                                        TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                              deleteEvent(_selectedDay!, index);
+                                            },
+                                            child: Text('YES')),
+                                      ],
+                                    ));
+                              },
+                              )
+                          );
+                        },
+                      );}},
                 ),
               ),
             ]
