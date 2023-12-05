@@ -14,7 +14,6 @@ import 'notification_screen.dart';
 import 'calendar_model.dart';
 
 
-
 class CalendarScreen extends StatefulWidget {
   @override
   _CalendarScreen createState() => _CalendarScreen();
@@ -181,17 +180,58 @@ class _CalendarScreen extends State<CalendarScreen> {
               )
             ]
         ),
-        backgroundColor: Colors.yellow.shade800,
+        backgroundColor: Colors.amber,
 
         body: Column(
             children: [
               _initialized ? TableCalendar<Event>(
+                headerStyle: const HeaderStyle(
+                  titleTextStyle:
+                  TextStyle(color: Colors.white, fontSize: 20.0),
+                  decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                      borderRadius: BorderRadius.only()),
+                  formatButtonTextStyle:
+                  TextStyle(color: Colors.deepOrangeAccent, fontSize: 16.0),
+                  formatButtonDecoration: BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+                daysOfWeekStyle: const DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(color: Colors.white),
+                  weekendStyle: TextStyle(color: Colors.blueAccent)
+                ),
+                calendarStyle: const CalendarStyle(
+                  weekendTextStyle: TextStyle(color: Colors.blue),
+                  weekNumberTextStyle: TextStyle(color: Colors.black),
+                  outsideTextStyle: TextStyle(color: Colors.white),
+                  todayDecoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    shape: BoxShape.circle,
+                  ),
+                  // highlighted color for selected day
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.amberAccent,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+
                 firstDay: eventFirstDay,
                 lastDay: eventLastDay,
                 focusedDay: _focusedDay,
                 calendarFormat: _calendarFormat,
                 eventLoader: _getEventsForDay,
-                startingDayOfWeek: StartingDayOfWeek.monday,
+                startingDayOfWeek: StartingDayOfWeek.sunday,
                 selectedDayPredicate: (day) {
                   return isSameDay(_selectedDay, day);
                 },
@@ -208,6 +248,7 @@ class _CalendarScreen extends State<CalendarScreen> {
                   // No need to call `setState()` here
                   _focusedDay = focusedDay;
                 },
+
               ): CircularProgressIndicator(),
               const SizedBox(height: 7.0),
               Expanded(
@@ -221,29 +262,35 @@ class _CalendarScreen extends State<CalendarScreen> {
                         itemCount: value.length,
                         itemBuilder: (context, index) {
                           return Card(
-                              color: Colors.yellow.shade800,
                               child: ListTile(
+                                tileColor: Colors.deepOrangeAccent,
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 2),
-                                  borderRadius: BorderRadius.circular(20),
-
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: BorderSide(
+                                    color: Colors.white, // Set the color of the border here
+                                    width: 3.5,
+                                  ),
                                 ),
                                 leading: const CircleAvatar(
                                   backgroundColor: Colors.blueAccent,
-                                  child: Icon(Icons.list_alt_outlined),
+                                  child: Icon(SleepIcons.os_log2whitesvg,
+                                      color: Colors.white),
                                 ),
                                 title: Row(
                                   children: [
-
-                                    Text('${value[index].month}-${value[index].day}-${value[index].year}  Hours Slept: ${value[index].hours}'
+                                    Text('${value[index].month}-${value[index].day}-${value[index].year}  Hours Slept: ${value[index].hours}',
+                                      style: TextStyle(color: Colors.white)
                                     )
                                   ],
                                 ),
                                 subtitle:
-                                Text('Sleep Quality: ${value[index].quality}  Notes: ${value[index].notes}'
-                                ),
+                                Text('Sleep Quality: ${value[index].quality}  Notes: ${value[index].notes}',
+                                    style: TextStyle(color: Colors.white)
+                              ),
                                 trailing:
-                                Icon(Icons.delete),onTap: () {
+                                Icon(Icons.delete,
+                                    color: Colors.white),
+                                onTap: () {
                                 showDialog(context: context, builder: (context) =>
                                     AlertDialog(
                                       title: Text("Would You Like Delete This Log?"),

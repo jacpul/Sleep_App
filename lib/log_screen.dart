@@ -176,30 +176,45 @@ class _LogScreen extends State<LogScreen> {
   late var _ListOfLogs = ListView.builder(
       itemCount: items.length,
       itemBuilder: (context, index) {
-       return Card(
-         color: Colors.yellow.shade800,
-          child: ListTile(
-            shape: RoundedRectangleBorder(
-              side: const BorderSide(width: 2),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            leading: const CircleAvatar(
-            backgroundColor: Colors.blueAccent,
-              child: Icon(Icons.list_alt_outlined)
-            ),
+        return Card(
+            child: ListTile(
+                tileColor: Colors.deepOrangeAccent,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(
+                    color: Colors.white, // Set the color of the border here
+                    width: 3.5,
+                  ),
+                ),
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.blueAccent,
+                  child: Icon(SleepIcons.os_log2whitesvg,
+                      color: Colors.white),
+                ),
             title: Row(
               children: [
-                Text(items[index]["Month"].toString() + "-"),
-                Text(items[index]["Day"].toString() + "-"),
-                Text(items[index]["Year"].toString()),
-                Text("  Hours Slept: " + items[index]["Hours_Slept"].toString())
+                Text(items[index]["Month"].toString() + "-",
+                    style: TextStyle(color: Colors.white)
+                ),
+                Text(items[index]["Day"].toString() + "-",
+                    style: TextStyle(color: Colors.white)
+                ),
+                Text(items[index]["Year"].toString(),
+                    style: TextStyle(color: Colors.white)
+                ),
+                Text("  Hours Slept: " + items[index]["Hours_Slept"].toString(),
+                    style: TextStyle(color: Colors.white)
+                )
               ],
             ),
             subtitle:
               Text("Sleep Quality: " + items[index]["Sleep_Quality"] +
-              "  Notes: " + items[index]["Notes"]),
+              "  Notes: " + items[index]["Notes"],
+                  style: TextStyle(color: Colors.white)
+              ),
             trailing:
-              Icon(Icons.delete),
+              Icon(Icons.delete,
+                  color: Colors.white),
             onTap: () {
               showDialog(
                   context: context,
@@ -223,6 +238,5 @@ class _LogScreen extends State<LogScreen> {
         );
       }
   );
-
 }
 

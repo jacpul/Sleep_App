@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> implements UNITSView {
     );
 
     var _mainPartView = Container(
-      color: Colors.yellowAccent.shade100,
+      color: Colors.amberAccent,
       margin: EdgeInsets.all(8.0),
       padding: EdgeInsets.all(8.0),
       child: SingleChildScrollView(
