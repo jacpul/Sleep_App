@@ -6,6 +6,7 @@ import 'log_screen.dart';
 import 'splash_screen.dart';
 import 'calendar_screen.dart';
 import 'notification_screen.dart';
+import 'Icons/sleep_icons_icons.dart';
 import 'package:timezone/standalone.dart' as tz; // timed notifications
 
 // Timezone variables so we can use TZDateTime
@@ -156,7 +157,7 @@ class _CreateReminder extends State<CreateReminder> {
             // appbar functions
             //log button
             IconButton(
-              icon: const Icon(Icons.mode_edit_outlined),
+              icon: const Icon(SleepIcons.os_log2whitesvg),
               tooltip: 'Log',
               onPressed: () {
                 Navigator.of(context)
@@ -167,7 +168,7 @@ class _CreateReminder extends State<CreateReminder> {
             ),
             // Calendar Button
             IconButton(
-              icon: const Icon(Icons.calendar_month),
+              icon: const Icon(SleepIcons.os_calendarwhitesvg),
               tooltip: 'Calendar',
               onPressed: () {
                 Navigator.of(context)
@@ -178,7 +179,7 @@ class _CreateReminder extends State<CreateReminder> {
             ),
             //Notifications Button
             IconButton(
-              icon: const Icon(Icons.new_releases_outlined),
+              icon: const Icon(SleepIcons.os_notif2svg),
               tooltip: 'Notifications',
               onPressed: () {
                 Navigator.of(context)
@@ -191,7 +192,7 @@ class _CreateReminder extends State<CreateReminder> {
 
             //Reminder Button
             IconButton(
-              icon: const Icon(Icons.add_alert_outlined),
+              icon: const Icon(SleepIcons.os_remindsvg),
               tooltip: 'Reminders',
               onPressed: () {
                 //returns nothing, already in reminders
